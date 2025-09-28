@@ -16,21 +16,8 @@ program LevelDevilGame {
     keyboard.right().onPressDo { jugador.mover(derecha) }
     keyboard.r().onPressDo { nivelManager.reiniciarNivel() }
     
-    // Inicializar nivel primero
+    // Inicializar nivel
     nivelManager.inicializar()
-    
-    // Configurar colisiones después de crear los objetos
-    game.whenCollideDo(jugador, { objeto => 
-        game.say(jugador, "¡Colisión detectada con: " + objeto.className())
-        if (objeto.className() == "Pincho") {
-            jugador.perderVida()
-            game.say(jugador, "¡Auch! Perdiste una vida. Vidas: " + jugador.vidas())
-        }
-        if (objeto.className() == "Meta") {
-            jugador.ganarPuntos(500)
-            game.say(jugador, "¡Nivel completado! Puntaje: " + jugador.puntaje())
-        }
-    })
     
     // Mostrar información de debug
     game.showAttributes(jugador)

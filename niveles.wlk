@@ -1,5 +1,6 @@
 import jugador.*
 import trampas.*
+import elementos.*
 
 // Manager de niveles simplificado
 object nivelManager {

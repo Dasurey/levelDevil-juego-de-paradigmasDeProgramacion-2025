@@ -1,5 +1,7 @@
 import jugador.*
 import trampas.*
+import elementos.*
+
 
 describe "Level Devil Game Tests - Version Simple" {
 

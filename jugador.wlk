@@ -1,9 +1,10 @@
 // Jugador principal
 object jugador {
     var property position = game.at(1, 1)
-    var property vidas = 3
+    var property vidas = 1
     var property puntaje = 0
     var nivelActual = 1
+    const posicionInicial = game.at(1, 1)
     
     method image() = "jugador.jpg"
     
@@ -11,7 +12,6 @@ object jugador {
         const nuevaPosicion = direccion.calcularNuevaPosicion(position)
         if (self.puedeMoverse(nuevaPosicion)) {
             position = nuevaPosicion
-            game.say(self, "Posición: " + position.x() + "," + position.y())
             self.verificarInteracciones()
         }
     }
@@ -22,32 +22,38 @@ object jugador {
     }
     
     method verificarInteracciones() {
-        const objetosEnColision = game.colliders(self)
-        objetosEnColision.forEach { obj => 
-            if (obj.className() == "Pincho") {
-                self.perderVida()
-                game.say(self, "¡Auch! Perdiste una vida")
+        const objetosEnPosicion = game.getObjectsIn(position)
+        
+        // Debug: mostrar cuántos objetos hay
+        game.say(self, "Objetos en posición: " + objetosEnPosicion.size())
+        
+        // Verificar cada objeto individualmente
+        objetosEnPosicion.forEach { obj => 
+            const nombreClase = obj.className()
+            game.say(self, "Objeto: " + nombreClase)
+            
+            // Detectar trampas y elementos por separado
+            if (nombreClase === "trampas.Pincho") {
+                game.say(self, "¡ES UN PINCHO!")
+                position = posicionInicial
+                game.say(self, "¡De vuelta al inicio!")
             }
-            if (obj.className() == "Meta") {
-                self.ganarPuntos(500)
-                game.say(self, "¡Nivel completado! +500 puntos")
+            
+            if (nombreClase === "elementos.Meta") {
+                puntaje += 500
+                game.say(self, "¡Nivel completado! Puntaje: " + puntaje)
             }
         }
     }
     
     method perderVida() {
-        vidas -= 1
-        if (vidas <= 0) {
-            game.say(self, "¡Game Over!")
-            // Reiniciar o terminar juego
-        } else {
-            self.respawnear()
-        }
+        game.say(self, "¡Método perderVida ejecutado!")
+        self.respawnear()
     }
     
     method respawnear() {
-        position = game.at(1, 1) // Posición inicial por defecto
-        game.say(self, "Vidas restantes: " + vidas)
+        position = posicionInicial
+        game.say(self, "¡De vuelta al inicio!")
     }
     
     method ganarPuntos(puntos) {
