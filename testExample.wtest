@@ -1,9 +1,35 @@
-import example.pepita
+import jugador.*
+import trampas.*
 
-describe "group of tests for pepita" {
+describe "Level Devil Game Tests - Version Simple" {
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+  method initialize() {
+    jugador.position(game.at(0, 0))
+    jugador.vidas(3)
+    jugador.puntaje(0)
+  }
+
+  test "jugador inicial tiene 3 vidas y 0 puntos" {
+    assert.equals(3, jugador.vidas())
+    assert.equals(0, jugador.puntaje())
+  }
+
+  test "jugador puede moverse a posición válida" {
+    const posicionInicial = jugador.position()
+    jugador.mover(derecha)
+    assert.notEquals(posicionInicial, jugador.position())
+  }
+
+  test "pincho puede ser creado" {
+    const pincho = new Pincho(position = game.at(1, 1))
+    assert.equals(game.at(1, 1), pincho.position())
+    assert.equals("pincho.jpg", pincho.image())
+  }
+
+  test "meta puede ser creada" {
+    const meta = new Meta(position = game.at(8, 8))
+    assert.equals(game.at(8, 8), meta.position())
+    assert.equals("meta.jpg", meta.image())
   }
 
 }

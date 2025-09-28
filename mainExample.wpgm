@@ -1,18 +1,39 @@
 import wollok.game.*
+import jugador.*
+import niveles.*
 
-import example.pepita
-
-program PepitaGame {
-	game.title("Pepita")
-	game.height(10)
-	game.width(10)
-
-	// add assets in asset folder, for example, for the background
-  // game.boardGround("fondo2.jpg")
-
-	//
-
-	game.showAttributes(pepita) //Debug
-
-	game.start()
+program LevelDevilGame {
+    // Configurar juego
+    game.title("Level Devil - Version Simple")
+    game.height(10)
+    game.width(10)
+    game.boardGround("fondo.jpg")
+    
+    // Configurar controles
+    keyboard.up().onPressDo { jugador.mover(arriba) }
+    keyboard.down().onPressDo { jugador.mover(abajo) }
+    keyboard.left().onPressDo { jugador.mover(izquierda) }
+    keyboard.right().onPressDo { jugador.mover(derecha) }
+    keyboard.r().onPressDo { nivelManager.reiniciarNivel() }
+    
+    // Inicializar nivel primero
+    nivelManager.inicializar()
+    
+    // Configurar colisiones después de crear los objetos
+    game.whenCollideDo(jugador, { objeto => 
+        game.say(jugador, "¡Colisión detectada con: " + objeto.className())
+        if (objeto.className() == "Pincho") {
+            jugador.perderVida()
+            game.say(jugador, "¡Auch! Perdiste una vida. Vidas: " + jugador.vidas())
+        }
+        if (objeto.className() == "Meta") {
+            jugador.ganarPuntos(500)
+            game.say(jugador, "¡Nivel completado! Puntaje: " + jugador.puntaje())
+        }
+    })
+    
+    // Mostrar información de debug
+    game.showAttributes(jugador)
+    
+    game.start()
 }
