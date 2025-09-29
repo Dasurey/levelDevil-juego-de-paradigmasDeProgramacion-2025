@@ -35,8 +35,7 @@ object jugador {
             // Detectar trampas y elementos por separado
             if (nombreClase === "trampas.Pincho") {
                 game.say(self, "¡ES UN PINCHO!")
-                position = posicionInicial
-                game.say(self, "¡De vuelta al inicio!")
+                self.perderVida()
             }
             
             if (nombreClase === "elementos.Meta") {
