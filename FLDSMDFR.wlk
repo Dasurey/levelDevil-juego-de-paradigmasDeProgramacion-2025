@@ -41,7 +41,7 @@ object player {
     var nivelActual = 1
     const posicionInicial = game.at(1, 1)
     
-    method image() = "player.jpg"
+    method image() = "jugador.jpg"
     
     method mover(direccion) {
         const nuevaPosicion = direccion.calcularNuevaPosicion(position)
@@ -59,10 +59,10 @@ object player {
         game.getObjectsIn(position).forEach({objeto => objeto.interactuarConPersonaje(self)}) //? Utilizamos esto como onCollideDo ya que on colide se saltea colisiones y va mas lento
     }
     
-    method perderVida() {
+    method dead() {
         self.desconectarControles()
         game.say(self, "¡Moriste!")
-        game.schedule(1000, {
+        game.schedule(2000, {
             self.respawnear()
         })
     }
@@ -102,7 +102,7 @@ class Pincho {
     method image() = "pincho.jpg"
     
     method interactuarConPersonaje(pc) {
-        pc.perderVida()
+        pc.dead()
     }
 }
 

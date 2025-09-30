@@ -25,6 +25,14 @@ object nivel1 {
         // Agregar meta
         const meta = new Meta(position = game.at(8, 8))
         game.addVisual(meta)
+
+        game.onTick(100, "verificarTrampa", {
+            if (player.position() == game.at(1, 3)) {
+                pincho1.position(game.at(1, 3))
+                game.say(player, "¡Cuidado! Apareció un pincho.")
+                player.dead()
+            }
+        })
     }
 }
 
