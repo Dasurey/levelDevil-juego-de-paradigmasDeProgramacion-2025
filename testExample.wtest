@@ -1,4 +1,4 @@
-import fLDSMDFR.*
+import FLDSMDFR.*
 import menuYTeclado.*
 
 describe "Level Devil Game Tests - Version Simple" {
