@@ -1,0 +1,9 @@
+import wollok.game.*
+import FLDSMDFR.*
+
+program FLDSMDFRGame {
+    // El manager se encarga de toda la configuración e inicialización
+    juegoFLDSMDFR.iniciar()
+    // Iniciar juego
+    game.start()
+}

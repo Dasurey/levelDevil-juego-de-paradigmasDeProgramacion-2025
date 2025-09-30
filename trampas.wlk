@@ -1,7 +1,0 @@
-import jugador.*
-
-class Pincho {
-    var property position = game.at(0, 0)
-    
-    method image() = "pincho.jpg"
-}
