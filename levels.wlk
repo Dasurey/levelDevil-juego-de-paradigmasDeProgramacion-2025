@@ -58,7 +58,18 @@ object nivel1 inherits NivelBase {
             game.at(8,0), game.at(9,0), game.at(9,1)
         ])
         
-        
+        game.addVisual(pinchoInvisible)
+
+    game.onTick(100, "mostrarPincho", {
+    const dx = (player.position().x() - pinchoInvisible.position().x()).abs()
+    const dy = (player.position().y() - pinchoInvisible.position().y()).abs()
+
+    if (dx == 1 and dy == 1) {
+        game.removeVisual(pinchoInvisible)
+        game.addVisual(new Pincho(position = pinchoInvisible.position()))
+    }
+})
+
         // Agregar meta
         const meta = new Meta(position = game.at(8, 8))
         game.addVisual(meta)

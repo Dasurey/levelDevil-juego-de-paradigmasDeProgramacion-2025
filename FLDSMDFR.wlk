@@ -53,21 +53,21 @@ object player {
     method image() = "zombie.png"
 
     method mover(direccion) {
-    const nuevaPosicion = direccion.calcularNuevaPosicion(position)
-    const objetos = game.getObjectsIn(nuevaPosicion)
+        const nuevaPosicion = direccion.calcularNuevaPosicion(position)
+        const objetos = game.getObjectsIn(nuevaPosicion)
 
-    const hayPared = objetos.any({ obj => obj.isA(Pared) })
+        // Verificar si hay pared
+        const hayPared = objetos.any({ obj => obj.isA(Pared) })
 
-    if (self.puedeMoverse(nuevaPosicion) and not hayPared) {
-        // Mover al jugador
-        position = nuevaPosicion
-    } else if (hayPared) {
-        game.say(self, "¡No puedes pasar por la pared!")
-    }
+        if (self.puedeMoverse(nuevaPosicion) and not hayPared) {
+            // Mover al jugador
+            position = nuevaPosicion
+        } else if (hayPared) {
+            game.say(self, "¡No puedes pasar por la pared!")
+        }
 
-    // Llamar a collideWith sobre **todos los objetos de la celda actual**,
-    // incluyendo la nueva celda si te moviste
-    game.getObjectsIn(position).forEach({objeto => objeto.interactuarConPersonaje(self)})
+        // Colisiones con todos los objetos de la **nueva celda**
+        game.getObjectsIn(position).forEach({objeto => objeto.interactuarConPersonaje(self)})
     }
 
 
@@ -113,6 +113,18 @@ class Pared {
     
     method interactuarConPersonaje(pc) {
     
+    }
+}
+
+object pinchoInvisible {
+    var property position = game.at(9,4) // posición final donde aparecerá
+    var property visible = false          // inicial invisible
+     method image() {
+        if (visible) {
+            return "pincho.jpg"
+        } else {
+            return null   // para q no se muestre nada
+        }
     }
 }
 
