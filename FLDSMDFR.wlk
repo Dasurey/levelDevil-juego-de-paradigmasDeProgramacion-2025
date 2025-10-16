@@ -6,8 +6,8 @@ import teclado.*
 object juegoFLDSMDFR {
     method iniciar() {
     game.title("FLDSMDFR")
-    game.height(12)
-    game.width(24)
+    game.height(8)
+    game.width(11)
     game.boardGround("fondo.jpg")
 
     configTeclado.iniciar()
@@ -45,20 +45,33 @@ object gestorNiveles {
 
 //         Jugador principal
 object player {
-    var property position = game.at(1, 1)
+    var property position = game.at(0, 6)
     var property vidas = 1
     var property puntaje = 0
-    const posicionInicial = game.at(1, 1)
+    const posicionInicial = game.at(0, 6)
     
     method image() = "zombie.png"
 
     method mover(direccion) {
-        const nuevaPosicion = direccion.calcularNuevaPosicion(position)
-        if (self.puedeMoverse(nuevaPosicion)) {
-            position = nuevaPosicion
-            self.collideWith()
-        }
+    const nuevaPosicion = direccion.calcularNuevaPosicion(position)
+    const objetos = game.getObjectsIn(nuevaPosicion)
+
+    const hayPared = objetos.any({ obj => obj.isA(Pared) })
+
+    if (self.puedeMoverse(nuevaPosicion) and not hayPared) {
+        // Mover al jugador
+        position = nuevaPosicion
+    } else if (hayPared) {
+        game.say(self, "¡No puedes pasar por la pared!")
     }
+
+    // Llamar a collideWith sobre **todos los objetos de la celda actual**,
+    // incluyendo la nueva celda si te moviste
+    game.getObjectsIn(position).forEach({objeto => objeto.interactuarConPersonaje(self)})
+    }
+
+
+
     
     method puedeMoverse(nuevaPosicion) {
         return nuevaPosicion.x().between(0, game.width() - 1) and nuevaPosicion.y().between(0, game.height() - 1)
@@ -90,6 +103,16 @@ class Pincho {
     
     method interactuarConPersonaje(pc) {
         pc.dead()
+    }
+}
+
+class Pared {
+    var property position = game.at(0, 0)
+    
+    method image() = "muro.png"
+    
+    method interactuarConPersonaje(pc) {
+    
     }
 }
 

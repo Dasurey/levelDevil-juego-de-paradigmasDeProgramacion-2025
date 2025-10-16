@@ -2,7 +2,29 @@ import FLDSMDFR.*
 import teclado.*
 
 //*==========================| Niveles |==========================
-object nivel1 {
+
+class NivelBase {
+    
+    method crearParedes(posiciones) {
+        posiciones.forEach({ pos =>
+            game.addVisual(new Pared(position = pos))
+        })
+    }
+
+    method crearPinchos(posiciones) {
+        posiciones.forEach({ pos =>
+            game.addVisual(new Pincho(position = pos))
+        })
+    }
+
+    method agregarMeta(pos) {
+        const meta = new Meta(position = pos)
+        game.addVisual(meta)
+    }
+}
+
+
+object nivel1 inherits NivelBase {
     const property siguienteNivel = endOfTheGame
     
     method iniciar() {
@@ -11,8 +33,8 @@ object nivel1 {
         
         // Agregar player
         game.addVisual(player)
-        player.position(game.at(1, 1))
-        
+        player.position(game.at(0, 6))
+        /*
         // Agregar algunos pinchos
         const pincho1 = new Pincho(position = game.at(3, 3))
         const pincho2 = new Pincho(position = game.at(5, 2))
@@ -21,18 +43,33 @@ object nivel1 {
         game.addVisual(pincho1)
         game.addVisual(pincho2)
         game.addVisual(pincho3)
+        */
+        // Agregar paredes usando helper
+        self.crearParedes([
+            game.at(1,7), game.at(2,7), game.at(3,7), game.at(4,7),
+            game.at(5,7), game.at(6,7), game.at(7,7), game.at(8,7),
+            game.at(9,7), game.at(4,6), game.at(9,6), game.at(1,5), 
+            game.at(6,5), game.at(7,5), game.at(9,5),
+            game.at(1,4), game.at(2,4), game.at(4,4), game.at(5,3), game.at(7,4),
+            game.at(4,3), game.at(6,3), game.at(7,3), game.at(8,3),
+            game.at(1,2), game.at(2,2), game.at(4,2), game.at(1,1), 
+            game.at(6,1), game.at(7,1), game.at(8,1), game.at(1,0),
+            game.at(2,0), game.at(3,0), game.at(5,0), game.at(6,0), 
+            game.at(8,0), game.at(9,0), game.at(9,1)
+        ])
+        
         
         // Agregar meta
         const meta = new Meta(position = game.at(8, 8))
         game.addVisual(meta)
-
+/*
         game.onTick(100, "verificarTrampa", {
             if (player.position() == game.at(1, 3)) {
                 pincho1.position(game.at(1, 3))
                 game.say(player, "¡Cuidado! Apareció un pincho.")
                 player.dead()
             }
-        })
+        })*/
     }
 }
 
