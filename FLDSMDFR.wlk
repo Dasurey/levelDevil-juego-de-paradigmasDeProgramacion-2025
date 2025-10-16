@@ -1,48 +1,57 @@
 import levels.*
-import menuYTeclado.*
+import teclado.*
 
-//*==========================| Manager Principal del Juego |==========================
+//        Configura el juego, arranca todo, inicializa teclado, etc.
+
 object juegoFLDSMDFR {
+    method iniciar() {
+    game.title("FLDSMDFR")
+    game.height(12)
+    game.width(24)
+    game.boardGround("fondo.jpg")
+
+    configTeclado.iniciar()
+    gestorNiveles.iniciarNivel()
+}
+}
+
+//          Administra los niveles
+object gestorNiveles {
     var property nivelActual = nivel1
     
-    method iniciar() {
-        // Set game properties
-        game.title("FLDSMDFR")
-        game.height(12)
-        game.width(24)
-        game.boardGround("fondo.jpg")
-        
-        // Inicializar teclado
-        configTeclado.iniciar()
-        
-        // Cargar primer nivel
+    method iniciarNivel() {
         nivelActual.iniciar()
-        
-        // Mostrar información de debug
-        game.showAttributes(player)
     }
-    
-    method clear() {
-        game.allVisuals().forEach { visual => game.removeVisual(visual) }
-    }
-    
+
     method siguienteNivel() {
         nivelActual = nivelActual.siguienteNivel()
         nivelActual.iniciar()
     }
+
+    method clear() { 
+        game.allVisuals().forEach { 
+            visual => game.removeVisual(visual) 
+        } 
+    }
+
+    method reiniciarNivel() {
+    self.clear()
+    nivelActual.iniciar()
+    configTeclado.gameOn()   // Rehabilitar controles 
 }
 
-//*==========================| Jugador Principal |==========================
-// Jugador principal
+}
+
+
+//         Jugador principal
 object player {
     var property position = game.at(1, 1)
     var property vidas = 1
     var property puntaje = 0
-    var nivelActual = 1
     const posicionInicial = game.at(1, 1)
     
-    method image() = "jugador.jpg"
-    
+    method image() = "zombie.png"
+
     method mover(direccion) {
         const nuevaPosicion = direccion.calcularNuevaPosicion(position)
         if (self.puedeMoverse(nuevaPosicion)) {
@@ -60,34 +69,12 @@ object player {
     }
     
     method dead() {
-        self.desconectarControles()
-        game.say(self, "¡Moriste!")
-        game.schedule(2000, {
-            self.respawnear()
-        })
+    gestorNiveles.reiniciarNivel()  // delegás en el gestor lo que pasa al morir
     }
-    
-    method respawnear() {
-        position = posicionInicial
-        game.say(self, "¡De vuelta al inicio!")
-        self.reconectarControles()
-    }
-    
-    method desconectarControles() {
-        configTeclado.gameBlocked()
-    }
-    
-    method reconectarControles() {
-        configTeclado.gameOn()
-    }
+
     
     method ganarPuntos(puntos) {
         puntaje += puntos
-    }
-    
-    method nivelActual() = nivelActual
-    method cambiarNivel(nuevoNivel) {
-        nivelActual = nuevoNivel
     }
     
     // Método necesario para el polimorfismo de interacciones
@@ -117,7 +104,7 @@ class Meta {
         
         // Pasar al siguiente nivel después de 2 segundos
         game.schedule(2000, {
-            juegoFLDSMDFR.siguienteNivel()
+            gestorNiveles.siguienteNivel()
         })
     }
 }

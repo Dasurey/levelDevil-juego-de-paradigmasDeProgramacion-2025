@@ -1,5 +1,5 @@
 import FLDSMDFR.*
-import menuYTeclado.*
+import teclado.*
 
 //*==========================| Niveles |==========================
 object nivel1 {
@@ -7,7 +7,7 @@ object nivel1 {
     
     method iniciar() {
         // Limpiar pantalla
-        juegoFLDSMDFR.clear()
+        gestorNiveles.clear()
         
         // Agregar player
         game.addVisual(player)
@@ -38,7 +38,7 @@ object nivel1 {
 
 object endOfTheGame {
     method iniciar() {
-        juegoFLDSMDFR.clear()
+        gestorNiveles.clear()
         game.say(player, "¡Juego completado!")
         game.schedule(3000, {
             game.stop()

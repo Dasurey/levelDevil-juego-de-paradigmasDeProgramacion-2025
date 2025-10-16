@@ -1,5 +1,5 @@
 import FLDSMDFR.*
-import menuYTeclado.*
+import teclado.*
 
 describe "Level Devil Game Tests - Version Simple" {
 
