@@ -25,7 +25,7 @@ class NivelBase {
 
 
 object nivel1 inherits NivelBase {
-    const property siguienteNivel = endOfTheGame
+    const property siguienteNivel = nivel2
     
     method iniciar() {
         // Limpiar pantalla
@@ -60,19 +60,83 @@ object nivel1 inherits NivelBase {
         
         game.addVisual(pinchoInvisible)
 
-    game.onTick(100, "mostrarPincho", {
-    const dx = (player.position().x() - pinchoInvisible.position().x()).abs()
-    const dy = (player.position().y() - pinchoInvisible.position().y()).abs()
+        game.onTick(100, "mostrarPincho", {
+        const dx = (player.position().x() - pinchoInvisible.position().x()).abs()
+        const dy = (player.position().y() - pinchoInvisible.position().y()).abs()
 
-    if (dx == 1 and dy == 1) {
-        game.removeVisual(pinchoInvisible)
-        game.addVisual(new Pincho(position = pinchoInvisible.position()))
-    }
-})
+        if (dx == 1 and dy == 1) {
+            game.removeVisual(pinchoInvisible)
+            game.addVisual(new Pincho(position = pinchoInvisible.position()))
+        }
+        })
+
+        // cada dos segundos muevo la caja
+        game.onTick(2000, "movimiento", { caja.movete() })
+        //
 
         // Agregar meta
-        const meta = new Meta(position = game.at(8, 8))
-        game.addVisual(meta)
+        self.agregarMeta(game.at(10,4))
+/*
+        game.onTick(100, "verificarTrampa", {
+            if (player.position() == game.at(1, 3)) {
+                pincho1.position(game.at(1, 3))
+                game.say(player, "¡Cuidado! Apareció un pincho.")
+                player.dead()
+            }
+        })*/
+    }
+}
+
+object nivel2 inherits NivelBase {
+    const property siguienteNivel = endOfTheGame
+    
+    method iniciar() {
+        // Limpiar pantalla
+        gestorNiveles.clear()
+        
+        // Agregar player
+        game.addVisual(player)
+        player.position(game.at(5, 0))
+        /*
+        // Agregar algunos pinchos
+        const pincho1 = new Pincho(position = game.at(3, 3))
+        const pincho2 = new Pincho(position = game.at(5, 2))
+        const pincho3 = new Pincho(position = game.at(7, 4))
+        
+        game.addVisual(pincho1)
+        game.addVisual(pincho2)
+        game.addVisual(pincho3)
+        */
+        // Agregar paredes usando helper
+        self.crearParedes([
+            game.at(1,7), game.at(2,7), game.at(0,7), game.at(8,7),
+            game.at(9,7), game.at(1,6), game.at(4,6), game.at(5,6),
+            game.at(6,6), game.at(0,5), game.at(3,5), game.at(7,5), 
+            game.at(0,4), game.at(2,4), game.at(5,4),
+            game.at(7,4), game.at(8,4), game.at(4,3), game.at(1,2), game.at(3,2),
+            game.at(4,3), game.at(8,3),
+            game.at(4,2), game.at(6,2), game.at(4,1), game.at(8,1), 
+            game.at(9,1)
+        ])
+        
+        game.addVisual(pinchoInvisible)
+
+        game.onTick(100, "mostrarPincho", {
+        const dx = (player.position().x() - pinchoInvisible.position().x()).abs()
+        const dy = (player.position().y() - pinchoInvisible.position().y()).abs()
+
+        if (dx <= 1 and dy <= 1) {
+            game.removeVisual(pinchoInvisible)
+            game.addVisual(new Pincho(position = pinchoInvisible.position()))
+        }
+        })
+
+        // cada dos segundos muevo la caja
+        game.onTick(2000, "movimiento", { caja.movete() })
+        //
+
+        // Agregar meta
+        self.agregarMeta(game.at(5,7))
 /*
         game.onTick(100, "verificarTrampa", {
             if (player.position() == game.at(1, 3)) {

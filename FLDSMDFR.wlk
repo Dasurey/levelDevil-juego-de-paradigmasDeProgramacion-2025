@@ -35,10 +35,10 @@ object gestorNiveles {
     }
 
     method reiniciarNivel() {
-    self.clear()
-    nivelActual.iniciar()
-    configTeclado.gameOn()   // Rehabilitar controles 
-}
+        self.clear()
+        nivelActual.iniciar()
+        configTeclado.gameOn()   // Rehabilitar controles 
+    }
 
 }
 
@@ -56,6 +56,9 @@ object player {
         const nuevaPosicion = direccion.calcularNuevaPosicion(position)
         const objetos = game.getObjectsIn(nuevaPosicion)
 
+        // Primero, interactuar con objetos de la celda destino
+        objetos.forEach({objeto => objeto.interactuarConPersonaje(self)})
+
         // Verificar si hay pared
         const hayPared = objetos.any({ obj => obj.isA(Pared) })
 
@@ -65,10 +68,8 @@ object player {
         } else if (hayPared) {
             game.say(self, "¡No puedes pasar por la pared!")
         }
-
-        // Colisiones con todos los objetos de la **nueva celda**
-        game.getObjectsIn(position).forEach({objeto => objeto.interactuarConPersonaje(self)})
     }
+
 
 
 
@@ -126,6 +127,19 @@ object pinchoInvisible {
             return null   // para q no se muestre nada
         }
     }
+}
+
+object caja {
+  var property position = game.at(3,0)
+  method image() = "caja.png"
+  method movete() {
+    const x = 0.randomUpTo(game.width()).truncate(0)
+    const y = 0.randomUpTo(game.height()).truncate(0)
+    // otra forma de generar números aleatorios
+    // const x = (0.. game.width()-1).anyOne()
+    // const y = (0.. game.height()-1).anyOne()
+    position = game.at(x,y)
+  }
 }
 
 class Meta {
