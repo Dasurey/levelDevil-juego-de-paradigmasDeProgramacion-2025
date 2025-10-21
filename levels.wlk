@@ -4,6 +4,18 @@ import teclado.*
 //*==========================| Niveles |==========================
 
 class NivelBase {
+    method puedeAvanzar(objeto, posicion) = game.getObjectsIn(posicion).all({elem => elem.esPisable()}) && self.puedeMoverse(posicion)
+
+    method mover(objeto, movimiento) {
+        const nuevaPosicion = movimiento.calcularNuevaPosicion(objeto.position())
+        if (self.puedeAvanzar(objeto, nuevaPosicion)) {
+            objeto.position(nuevaPosicion)
+        }
+    }
+
+    method puedeMoverse(nuevaPosicion) {
+        return nuevaPosicion.x().between(0, game.width() - 1) and nuevaPosicion.y().between(0, game.height() - 1)
+    }
     
     method crearParedes(posiciones) {
         posiciones.forEach({ pos =>
@@ -21,17 +33,6 @@ class NivelBase {
         const meta = new Meta(position = pos)
         game.addVisual(meta)
     }
-
-    /*
-    method puedeMoverse(nuevaPosicion) {
-        // Verifica límites y que no haya una pared
-        const dentroDeLimites = nuevaPosicion.x().between(0, game.width() - 1) and nuevaPosicion.y().between(0, game.height() - 1)
-        if (dentroDeLimites) return false
-        const objetos = game.getObjectsIn(nuevaPosicion)
-        const hayPared = objetos.any({ obj => obj.isA(Pared) })
-        return !hayPared
-    }
-    */
 }
 
 
@@ -81,18 +82,16 @@ object nivel1 inherits NivelBase {
         }
         })
 
-        
+        pinchoMovil.position(game.at(1, 3))
+        game.addVisual(pinchoMovil)
+
+        // el pincho cada se mueve cada 0,3 seg
+        game.onTick(300, "moverPinchoMovil", {
+            pinchoMovil.moverseAleatoriamente()
+        })
 
         // Agregar meta
         self.agregarMeta(game.at(10,4))
-/*
-        game.onTick(100, "verificarTrampa", {
-            if (player.position() == game.at(1, 3)) {
-                pincho1.position(game.at(1, 3))
-                game.say(player, "¡Cuidado! Apareció un pincho.")
-                player.dead()
-            }
-        })*/
     }
 }
 
@@ -140,7 +139,7 @@ object nivel2 inherits NivelBase {
     }
 }
 
-object endOfTheGame {
+object endOfTheGame inherits NivelBase {
     method iniciar() {
         gestorNiveles.clear()
         game.say(player, "¡Juego completado!")

@@ -9,11 +9,15 @@ object juegoFLDSMDFR {
         game.width(11)
         game.boardGround("fondo.jpg")
 
+        // Configurar las colisiones con los pinchos
+        game.onCollideDo(player, { elemento => elemento.interactuarConPersonaje(player) })
+
         configTeclado.iniciar()
         gestorNiveles.iniciarNivel()
     }
-} //          Administra los niveles
+}
 
+//          Administra los niveles
 object gestorNiveles {
     var property nivelActual = nivel1
 
@@ -35,8 +39,9 @@ object gestorNiveles {
         nivelActual.iniciar()
         configTeclado.gameOn() // Rehabilitar controles 
     }
-} //         Jugador principal
+}
 
+//         Jugador principal
 object player {
     var property position = game.at(0, 6)
     var property vidas = 1
@@ -44,27 +49,8 @@ object player {
     
     method image() = "zombie-derecha.png"
 
-    
-    method mover(direccion) {
-        const nuevaPosicion = direccion.calcularNuevaPosicion(position)
-        const objetos = game.getObjectsIn(nuevaPosicion)
-
-        // Primero, interactuar con objetos de la celda destino
-        objetos.forEach({ objeto => objeto.interactuarConPersonaje(self) })
-
-        // Verificar si hay pared
-        const hayPared = objetos.any({ obj => obj.isA(Pared) })
-
-        if (self.puedeMoverse(nuevaPosicion) and (not hayPared)) {
-            // Mover al jugador
-            position = nuevaPosicion
-        } else {
-            if (hayPared) game.say(self, "¡No puedes pasar por la pared!")
-        }
-    }
-
-    method puedeMoverse(nuevaPosicion) {
-        return nuevaPosicion.x().between(0, game.width() - 1) and nuevaPosicion.y().between(0, game.height() - 1)
+    method mover(movimiento) {
+        gestorNiveles.nivelActual().mover(self, movimiento)
     }
 
     method dead() {
@@ -77,7 +63,6 @@ object player {
     
     // Método necesario para el polimorfismo de interacciones
     method interactuarConPersonaje(pc) {
-
       // El player no hace nada especial al interactuar consigo mismo
     }
 }
@@ -86,6 +71,8 @@ class Pincho {
     var property position = game.at(0, 0)
     
     method image() = "pincho_triple.png"
+
+    method esPisable() = true
     
     method interactuarConPersonaje(pc) {
         pc.dead()
@@ -93,18 +80,20 @@ class Pincho {
 }
 
 class Pared {
-    var property position = game.at(0, 0)
+    const property position
     
     method image() = "muro.png"
-    
-    method interactuarConPersonaje(pc) {
-        game.say(pc, "¡No puedes pasar por la pared!")
-    }
+
+    //Colision
+    method esPisable() = false
+
+    method interactuarConPersonaje(pc){}
 }
 
 object pinchoInvisible {
-  var property position = game.at(9, 4) // posición final donde aparecerá
-  var property visible = false // inicial invisible
+    var property position = game.at(9, 4) // posición final donde aparecerá
+    var property visible = false // inicial invisible
+    method esPisable() = true
 
     method image() {
         if (visible) {
@@ -113,45 +102,36 @@ object pinchoInvisible {
           return null // para q no se muestre nada
         }
     }
+
+    method interactuarConPersonaje(pc) {
+        pc.dead()
+    }
 }
 
 object pinchoMovil {
     var property position = game.at(4, 3)
+    method esPisable() = true
+
+    method image() = "pincho_triple.png"
 
     method moverseAleatoriamente() {
         const direcciones = [arriba, abajo, izquierda, derecha]
         const direccionAleatoria = direcciones.anyOne()
-
-        const nuevaPos = direccionAleatoria.calcularNuevaPosicion(position)
-
-        if (self.esPosicionValida(nuevaPos)) {
-            position = nuevaPos
-        }
-    }
-
-    method esPosicionValida(pos) {
-        // Verificar que esté dentro de los límites del mapa
-        // y que no haya una pared en esa posición
-        const objetosEnPosicion = game.getObjectsIn(pos)
-        const hayPared = objetosEnPosicion.any({ obj => obj.isA(Pared) })
-
-        return pos.x() >= 0 && pos.x() <= 10 && 
-                pos.y() >= 0 && pos.y() <= 7 &&
-                !hayPared
+        gestorNiveles.nivelActual().mover(self, direccionAleatoria)
     }
 
     // Método para interactuar con el jugador (igual que Pincho)
     method interactuarConPersonaje(pc) {
         pc.dead()
     }
-
-    method image() = "pincho.jpg"
 }
 
 object caja {
     var property position = game.at(3, 0)
 
     method image() = "caja.png"
+
+    method esPisable() = false
 
     method movete() {
         const x = 0.randomUpTo(game.width()).truncate(0)
@@ -169,11 +149,12 @@ class Meta {
 
     method image() = "meta.jpg"
 
+    method esPisable() = true
+
     method interactuarConPersonaje(pc) {
         pc.ganarPuntos(500)
         game.say(pc, "¡Nivel completado! Puntaje: " + pc.puntaje())
 
-        // Pasar al siguiente nivel después de 2 segundos
-        game.schedule(2000, { gestorNiveles.siguienteNivel() })
+        gestorNiveles.siguienteNivel()
     }
 }
