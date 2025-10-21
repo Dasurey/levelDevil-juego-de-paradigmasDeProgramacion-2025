@@ -42,10 +42,7 @@ object nivel1 inherits NivelBase {
     method iniciar() {
         // Limpiar pantalla
         gestorNiveles.clear()
-        
-        // Agregar player
-        game.addVisual(player)
-        player.position(game.at(0, 6))
+
         /*
         // Agregar algunos pinchos
         const pincho1 = new Pincho(position = game.at(3, 3))
@@ -92,6 +89,10 @@ object nivel1 inherits NivelBase {
 
         // Agregar meta
         self.agregarMeta(game.at(10,4))
+
+        // Agregar player
+        game.addVisual(player)
+        player.position(game.at(0, 6))
     }
 }
 
@@ -101,10 +102,6 @@ object nivel2 inherits NivelBase {
     method iniciar() {
         // Limpiar pantalla
         gestorNiveles.clear()
-        
-        // Agregar player
-        game.addVisual(player)
-        player.position(game.at(5, 0))
 
         // Agregar paredes usando helper
         self.crearParedes([
@@ -136,6 +133,10 @@ object nivel2 inherits NivelBase {
 
         // Agregar meta
         self.agregarMeta(game.at(5,7))
+
+        // Agregar player
+        game.addVisual(player)
+        player.position(game.at(5, 0))
     }
 }
 

@@ -1,5 +1,6 @@
 import levels.*
 import teclado.*
+import wollok.game.*
 
 //        Configura el juego, arranca todo, inicializa teclado, etc.
 object juegoFLDSMDFR {
@@ -153,8 +154,15 @@ class Meta {
 
     method interactuarConPersonaje(pc) {
         pc.ganarPuntos(500)
+        configTeclado.gameBlocked() // deshabilita los controles
+        
         game.say(pc, "¡Nivel completado! Puntaje: " + pc.puntaje())
-
-        gestorNiveles.siguienteNivel()
+        
+        // Cambiamos de nivel después de 2 segundos
+        game.schedule(2000, {
+            gestorNiveles.siguienteNivel()
+            // Rehabilitamos los controles después del cambio de nivel
+            configTeclado.gameOn()
+        })
     }
 }
