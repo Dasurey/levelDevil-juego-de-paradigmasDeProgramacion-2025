@@ -23,7 +23,7 @@ describe "Level Devil Game Tests - Version Simple" {
   test "pincho puede ser creado" {
     const pincho = new Pincho(position = game.at(1, 1))
     assert.equals(game.at(1, 1), pincho.position())
-    assert.equals("pincho.jpg", pincho.image())
+    assert.equals("pincho_triple.png", pincho.image())
   }
 
   test "meta puede ser creada" {
