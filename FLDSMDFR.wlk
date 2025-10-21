@@ -68,7 +68,7 @@ object player {
     }
 
     method dead() {
-      gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
+        gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
     }
     
     method ganarPuntos(puntos) {
@@ -113,6 +113,39 @@ object pinchoInvisible {
           return null // para q no se muestre nada
         }
     }
+}
+
+object pinchoMovil {
+    var property position = game.at(4, 3)
+
+    method moverseAleatoriamente() {
+        const direcciones = [arriba, abajo, izquierda, derecha]
+        const direccionAleatoria = direcciones.anyOne()
+
+        const nuevaPos = direccionAleatoria.calcularNuevaPosicion(position)
+
+        if (self.esPosicionValida(nuevaPos)) {
+            position = nuevaPos
+        }
+    }
+
+    method esPosicionValida(pos) {
+        // Verificar que esté dentro de los límites del mapa
+        // y que no haya una pared en esa posición
+        const objetosEnPosicion = game.getObjectsIn(pos)
+        const hayPared = objetosEnPosicion.any({ obj => obj.isA(Pared) })
+
+        return pos.x() >= 0 && pos.x() <= 10 && 
+                pos.y() >= 0 && pos.y() <= 7 &&
+                !hayPared
+    }
+
+    // Método para interactuar con el jugador (igual que Pincho)
+    method interactuarConPersonaje(pc) {
+        pc.dead()
+    }
+
+    method image() = "pincho.jpg"
 }
 
 object caja {
