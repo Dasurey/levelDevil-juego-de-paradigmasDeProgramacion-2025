@@ -1,17 +1,16 @@
-import levels.*
+import niveles.*
 import teclado.*
-import wollok.game.*
 
 //        Configura el juego, arranca todo, inicializa teclado, etc.
-object juegoFLDSMDFR {
+object juegoLevelDevil {
     method iniciar() {
-        game.title("FLDSMDFR")
+        game.title("Level Devil")
         game.height(8)
         game.width(11)
         game.boardGround("fondo.jpg")
 
         // Configurar las colisiones con los pinchos
-        game.onCollideDo(player, { elemento => elemento.interactuarConPersonaje(player) })
+        game.onCollideDo(jugador, { elemento => elemento.interactuarConPersonaje(jugador) })
 
         configTeclado.iniciar()
         gestorNiveles.iniciarNivel()
@@ -31,72 +30,67 @@ object gestorNiveles {
         nivelActual.iniciar()
     }
 
-    method clear() {
+    method limpiar() {
         game.allVisuals().forEach({ visual => game.removeVisual(visual) })
     }
     
     method reiniciarNivel() {
-        self.clear()
+        self.limpiar()
         nivelActual.iniciar()
-        configTeclado.gameOn() // Rehabilitar controles 
+        configTeclado.juegoEnMarcha() // Rehabilitar controles 
     }
 }
 
 //         Jugador principal
-object player {
-    var property position = game.at(0, 6)
+object jugador {
+    var property posicion = game.at(0, 6)
     var property vidas = 1
     var property puntaje = 0
     
-    method image() = "zombie-derecha.png"
+    method imagen() = "zombie-derecha.png"
 
     method mover(movimiento) {
         gestorNiveles.nivelActual().mover(self, movimiento)
     }
 
-    method dead() {
+    method morir() {
         gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
     }
     
     method ganarPuntos(puntos) {
         puntaje += puntos
     }
-    
-    // Método necesario para el polimorfismo de interacciones
-    method interactuarConPersonaje(pc) {
-      // El player no hace nada especial al interactuar consigo mismo
-    }
 }
 
 class Pincho {
-    var property position = game.at(0, 0)
+    var property posicion = game.at(0, 0)
     
-    method image() = "pincho_triple.png"
+    method imagen() = "pincho_triple.png"
 
     method esPisable() = true
     
-    method interactuarConPersonaje(pc) {
-        pc.dead()
+    method interactuarConPersonaje(jugador) {
+        jugador.morir()
     }
 }
 
 class Pared {
-    const property position
+    const property posicion
     
-    method image() = "muro.png"
+    method imagen() = "muro.png"
 
     //Colision
     method esPisable() = false
 
-    method interactuarConPersonaje(pc){}
+    method interactuarConPersonaje(jugador){}
 }
 
 object pinchoInvisible {
-    var property position = game.at(9, 4) // posición final donde aparecerá
+    var property posicion = game.at(9, 4) // posición final donde aparecerá
     var property visible = false // inicial invisible
     method esPisable() = true
 
-    method image() {
+    method imagen() {
         if (visible) {
             return "pincho_triple.png"
         } else {
@@ -104,16 +98,16 @@ object pinchoInvisible {
         }
     }
 
-    method interactuarConPersonaje(pc) {
-        pc.dead()
+    method interactuarConPersonaje(jugador) {
+        jugador.morir()
     }
 }
 
 object pinchoMovil {
-    var property position = game.at(4, 3)
+    var property posicion = game.at(4, 3)
     method esPisable() = true
 
-    method image() = "pincho_triple.png"
+    method imagen() = "pincho_triple.png"
 
     method moverseAleatoriamente() {
         const direcciones = [arriba, abajo, izquierda, derecha]
@@ -122,15 +116,15 @@ object pinchoMovil {
     }
 
     // Método para interactuar con el jugador (igual que Pincho)
-    method interactuarConPersonaje(pc) {
-        pc.dead()
+    method interactuarConPersonaje(jugador) {
+        jugador.morir()
     }
 }
 
 object caja {
-    var property position = game.at(3, 0)
+    var property posicion = game.at(3, 0)
 
-    method image() = "caja.png"
+    method imagen() = "caja.png"
 
     method esPisable() = false
 
@@ -141,28 +135,28 @@ object caja {
         // otra forma de generar números aleatorios
         // const x = (0.. game.width()-1).anyOne()
         // const y = (0.. game.height()-1).anyOne()
-        position = game.at(x, y)
+        posicion = game.at(x, y)
     }
 }
 
 class Meta {
-    var property position = game.at(0, 0)
+    var property posicion = game.at(0, 0)
 
-    method image() = "meta.jpg"
+    method imagen() = "meta.jpg"
 
     method esPisable() = true
 
-    method interactuarConPersonaje(pc) {
-        pc.ganarPuntos(500)
-        configTeclado.gameBlocked() // deshabilita los controles
+    method interactuarConPersonaje(jugador) {
+        jugador.ganarPuntos(500)
+        configTeclado.juegoBloqueado() // deshabilita los controles
         
-        game.say(pc, "¡Nivel completado! Puntaje: " + pc.puntaje())
+        game.say(jugador, "¡Nivel completado! Puntaje: " + jugador.puntaje())
         
         // Cambiamos de nivel después de 2 segundos
         game.schedule(2000, {
             gestorNiveles.siguienteNivel()
             // Rehabilitamos los controles después del cambio de nivel
-            configTeclado.gameOn()
+            configTeclado.juegoEnMarcha()
         })
     }
 }

@@ -1,4 +1,4 @@
-import FLDSMDFR.*
+import levelDevil.*
 import teclado.*
 
 //*==========================| Niveles |==========================
@@ -7,9 +7,9 @@ class NivelBase {
     method puedeAvanzar(objeto, posicion) = game.getObjectsIn(posicion).all({elem => elem.esPisable()}) && self.puedeMoverse(posicion)
 
     method mover(objeto, movimiento) {
-        const nuevaPosicion = movimiento.calcularNuevaPosicion(objeto.position())
+        const nuevaPosicion = movimiento.calcularNuevaPosicion(objeto.posicion())
         if (self.puedeAvanzar(objeto, nuevaPosicion)) {
-            objeto.position(nuevaPosicion)
+            objeto.posicion(nuevaPosicion)
         }
     }
 
@@ -19,18 +19,18 @@ class NivelBase {
     
     method crearParedes(posiciones) {
         posiciones.forEach({ pos =>
-            game.addVisual(new Pared(position = pos))
+            game.addVisual(new Pared(posicion = pos))
         })
     }
 
     method crearPinchos(posiciones) {
         posiciones.forEach({ pos =>
-            game.addVisual(new Pincho(position = pos))
+            game.addVisual(new Pincho(posicion = pos))
         })
     }
 
     method agregarMeta(pos) {
-        const meta = new Meta(position = pos)
+        const meta = new Meta(posicion = pos)
         game.addVisual(meta)
     }
 }
@@ -41,13 +41,13 @@ object nivel1 inherits NivelBase {
     
     method iniciar() {
         // Limpiar pantalla
-        gestorNiveles.clear()
+        gestorNiveles.limpiar()
 
         /*
         // Agregar algunos pinchos
-        const pincho1 = new Pincho(position = game.at(3, 3))
-        const pincho2 = new Pincho(position = game.at(5, 2))
-        const pincho3 = new Pincho(position = game.at(7, 4))
+        const pincho1 = new Pincho(posicion = game.at(3, 3))
+        const pincho2 = new Pincho(posicion = game.at(5, 2))
+        const pincho3 = new Pincho(posicion = game.at(7, 4))
         
         game.addVisual(pincho1)
         game.addVisual(pincho2)
@@ -70,16 +70,16 @@ object nivel1 inherits NivelBase {
         game.addVisual(pinchoInvisible)
 
         game.onTick(100, "mostrarPincho", {
-        const dx = (player.position().x() - pinchoInvisible.position().x()).abs()
-        const dy = (player.position().y() - pinchoInvisible.position().y()).abs()
+        const dx = (jugador.posicion().x() - pinchoInvisible.posicion().x()).abs()
+        const dy = (jugador.posicion().y() - pinchoInvisible.posicion().y()).abs()
 
         if (dx == 1 and dy == 1) {
             game.removeVisual(pinchoInvisible)
-            game.addVisual(new Pincho(position = pinchoInvisible.position()))
+            game.addVisual(new Pincho(posicion = pinchoInvisible.posicion()))
         }
         })
 
-        pinchoMovil.position(game.at(1, 3))
+        pinchoMovil.posicion(game.at(1, 3))
         game.addVisual(pinchoMovil)
 
         // el pincho cada se mueve cada 0,3 seg
@@ -90,9 +90,9 @@ object nivel1 inherits NivelBase {
         // Agregar meta
         self.agregarMeta(game.at(10,4))
 
-        // Agregar player
-        game.addVisual(player)
-        player.position(game.at(0, 6))
+        // Agregar jugador
+        game.addVisual(jugador)
+        jugador.posicion(game.at(0, 6))
     }
 }
 
@@ -101,7 +101,7 @@ object nivel2 inherits NivelBase {
     
     method iniciar() {
         // Limpiar pantalla
-        gestorNiveles.clear()
+        gestorNiveles.limpiar()
 
         // Agregar paredes usando helper
         self.crearParedes([
@@ -118,12 +118,12 @@ object nivel2 inherits NivelBase {
         game.addVisual(pinchoInvisible)
 
         game.onTick(100, "mostrarPincho", {
-        const dx = (player.position().x() - pinchoInvisible.position().x()).abs()
-        const dy = (player.position().y() - pinchoInvisible.position().y()).abs()
+        const dx = (jugador.posicion().x() - pinchoInvisible.posicion().x()).abs()
+        const dy = (jugador.posicion().y() - pinchoInvisible.posicion().y()).abs()
 
         if (dx <= 1 and dy <= 1) {
             game.removeVisual(pinchoInvisible)
-            game.addVisual(new Pincho(position = pinchoInvisible.position()))
+            game.addVisual(new Pincho(posicion = pinchoInvisible.posicion()))
         }
         })
 
@@ -134,16 +134,16 @@ object nivel2 inherits NivelBase {
         // Agregar meta
         self.agregarMeta(game.at(5,7))
 
-        // Agregar player
-        game.addVisual(player)
-        player.position(game.at(5, 0))
+        // Agregar jugador
+        game.addVisual(jugador)
+        jugador.posicion(game.at(5, 0))
     }
 }
 
 object endOfTheGame inherits NivelBase {
     method iniciar() {
-        gestorNiveles.clear()
-        game.say(player, "¡Juego completado!")
+        gestorNiveles.limpiar()
+        game.say(jugador, "¡Juego completado!")
         game.schedule(3000, {
             game.stop()
         })

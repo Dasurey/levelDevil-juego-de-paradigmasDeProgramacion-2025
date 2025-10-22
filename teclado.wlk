@@ -1,5 +1,5 @@
-import FLDSMDFR.*
-import levels.*
+import levelDevil.*
+import niveles.*
 
 //          Configuración del Teclado 
 
@@ -16,7 +16,7 @@ object configTeclado {
 
     method mover(direccion) {
         if (controlesHabilitados) {
-            player.mover(direccion)
+            jugador.mover(direccion)
         }
     }
 
@@ -24,11 +24,11 @@ object configTeclado {
         gestorNiveles.nivelActual().iniciar()
     }
 
-    method gameOn() {
+    method juegoEnMarcha() {
         controlesHabilitados = true
     }
 
-    method gameBlocked() {
+    method juegoBloqueado() {
         controlesHabilitados = false
     }
 }

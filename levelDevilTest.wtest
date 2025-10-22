@@ -1,0 +1,35 @@
+import levelDevil.*
+import teclado.*
+
+describe "Level Devil Game Tests - Version Simple" {
+
+  method initialize() {
+    jugador.posicion(game.at(0, 0))
+    jugador.vidas(3)
+    jugador.puntaje(0)
+  }
+
+  test "jugador inicial tiene 3 vidas y 0 puntos" {
+    assert.equals(3, jugador.vidas())
+    assert.equals(0, jugador.puntaje())
+  }
+
+  test "jugador puede moverse a posición válida" {
+    const posicionInicial = jugador.posicion()
+    jugador.mover(derecha)
+    assert.notEquals(posicionInicial, jugador.posicion())
+  }
+
+  test "pincho puede ser creado" {
+    const pincho = new Pincho(posicion = game.at(1, 1))
+    assert.equals(game.at(1, 1), pincho.posicion())
+    assert.equals("pincho_triple.png", pincho.imagen())
+  }
+
+  test "meta puede ser creada" {
+    const meta = new Meta(posicion = game.at(8, 8))
+    assert.equals(game.at(8, 8), meta.posicion())
+    assert.equals("meta.jpg", meta.imagen())
+  }
+
+}

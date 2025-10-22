@@ -1,7 +1,0 @@
-import wollok.game.*
-import FLDSMDFR.*
-
-program FLDSMDFRGame {
-    juegoFLDSMDFR.iniciar()
-    game.start()
-}
