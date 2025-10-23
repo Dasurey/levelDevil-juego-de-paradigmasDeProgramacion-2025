@@ -4,19 +4,6 @@ import teclado.*
 //*==========================| Niveles |==========================
 
 class NivelBase {
-    method puedeAvanzar(objeto, position) = game.getObjectsIn(position).all({elem => elem.esPisable()}) && self.puedeMoverse(position)
-
-    method mover(objeto, movimiento) {
-        const nuevaposition = movimiento.calcularNuevaposition(objeto.position())
-        if (self.puedeAvanzar(objeto, nuevaposition)) {
-            objeto.position(nuevaposition)
-        }
-    }
-
-    method puedeMoverse(nuevaposition) {
-        return nuevaposition.x().between(0, game.width() - 1) and nuevaposition.y().between(0, game.height() - 1)
-    }
-    
     method crearParedes(positiones) {
         positiones.forEach({ pos =>
             game.addVisual(new Pared(position = pos))
