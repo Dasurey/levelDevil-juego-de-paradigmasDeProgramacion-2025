@@ -110,7 +110,7 @@ object pinchoMovil {
     method moverseAleatoriamente() {
         const direcciones = [arriba, abajo, izquierda, derecha]
         const direccionAleatoria = direcciones.anyOne()
-        position = direccionAleatoria.calcularNuevaposition(position)
+        position = direccionAleatoria.calcularNuevaPosition(position)
     }
 
     // Método para interactuar con el jugador (igual que Pincho)

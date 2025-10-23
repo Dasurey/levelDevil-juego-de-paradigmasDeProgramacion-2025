@@ -16,7 +16,8 @@ object configTeclado {
 
     method mover(direccion) {
         if (controlesHabilitados) {
-            direccion.mover(jugador)
+            const nuevaPosition = direccion.calcularNuevaPosition(jugador.position())
+            jugador.position(nuevaPosition)
         }
     }
 
@@ -37,53 +38,36 @@ object configTeclado {
 //              Direcciones
 
 class Movimiento {
-    method puedeMoverse(nuevaposition) {
-        return nuevaposition.x().between(0, game.width() - 1) and nuevaposition.y().between(0, game.height() - 1)
+    method puedeMoverse(nuevaPosition) {
+        return nuevaPosition.x().between(0, game.width() - 1) and nuevaPosition.y().between(0, game.height() - 1)
     }
 
     method validarPosition(position) = game.getObjectsIn(position).all({elem => elem.esPisable()}) && self.puedeMoverse(position)
+    
+    method calcularNuevaPosition(positionActual) {
+        const nuevaPosition = self.moverEnDireccion(positionActual)
+        if(self.validarPosition(nuevaPosition)){
+            return nuevaPosition
+        } else {
+            return positionActual
+        }
+    }
+    
+    method moverEnDireccion(position)
 }
 
 object arriba inherits Movimiento {
-    method calcularNuevaposition(positionActual) {
-        const nuevaPosition = positionActual.up(1)
-        if(self.validarPosition(nuevaPosition)){
-            return nuevaPosition
-        } else {
-            return positionActual
-        }
-    }
+    override method moverEnDireccion(position) = position.up(1)
 }
 
 object abajo inherits Movimiento {
-    method calcularNuevaposition(positionActual) {
-        const nuevaPosition = positionActual.down(1)
-        if(self.validarPosition(nuevaPosition)){
-            return nuevaPosition
-        } else {
-            return positionActual
-        }
-    }
+    override method moverEnDireccion(position) = position.down(1)
 }
 
 object izquierda inherits Movimiento {
-    method calcularNuevaposition(positionActual) {
-        const nuevaPosition = positionActual.left(1)
-        if(self.validarPosition(nuevaPosition)){
-            return nuevaPosition
-        } else {
-            return positionActual
-        }
-    }
+    override method moverEnDireccion(position) = position.left(1)
 }
 
 object derecha inherits Movimiento {
-    method calcularNuevaposition(positionActual) {
-        const nuevaPosition = positionActual.right(1)
-        if(self.validarPosition(nuevaPosition)){
-            return nuevaPosition
-        } else {
-            return positionActual
-        }
-    }
+    override method moverEnDireccion(position) = position.right(1)
 }

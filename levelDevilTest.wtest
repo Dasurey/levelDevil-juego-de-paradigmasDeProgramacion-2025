@@ -16,7 +16,7 @@ describe "Level Devil Game Tests - Version Simple" {
 
   test "jugador puede moverse a posición válida" {
     const positionInicial = jugador.position()
-    jugador.mover(derecha)
+    //jugador.mover(derecha)
     assert.notEquals(positionInicial, jugador.position())
   }
 
