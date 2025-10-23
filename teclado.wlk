@@ -16,7 +16,7 @@ object configTeclado {
 
     method mover(direccion) {
         if (controlesHabilitados) {
-            jugador.mover(direccion)
+            direccion.mover(jugador)
         }
     }
 
@@ -36,27 +36,54 @@ object configTeclado {
 
 //              Direcciones
 
+class Movimiento {
+    method puedeMoverse(nuevaposition) {
+        return nuevaposition.x().between(0, game.width() - 1) and nuevaposition.y().between(0, game.height() - 1)
+    }
 
-object arriba {
+    method validarPosition(position) = game.getObjectsIn(position).all({elem => elem.esPisable()}) && self.puedeMoverse(position)
+}
+
+object arriba inherits Movimiento {
     method calcularNuevaposition(positionActual) {
-        return positionActual.up(1)
+        const nuevaPosition = positionActual.up(1)
+        if(self.validarPosition(nuevaPosition)){
+            return nuevaPosition
+        } else {
+            return positionActual
+        }
     }
 }
 
-object abajo {
+object abajo inherits Movimiento {
     method calcularNuevaposition(positionActual) {
-        return positionActual.down(1)
+        const nuevaPosition = positionActual.down(1)
+        if(self.validarPosition(nuevaPosition)){
+            return nuevaPosition
+        } else {
+            return positionActual
+        }
     }
 }
 
-object izquierda {
+object izquierda inherits Movimiento {
     method calcularNuevaposition(positionActual) {
-        return positionActual.left(1)
+        const nuevaPosition = positionActual.left(1)
+        if(self.validarPosition(nuevaPosition)){
+            return nuevaPosition
+        } else {
+            return positionActual
+        }
     }
 }
 
-object derecha {
+object derecha inherits Movimiento {
     method calcularNuevaposition(positionActual) {
-        return positionActual.right(1)
+        const nuevaPosition = positionActual.right(1)
+        if(self.validarPosition(nuevaPosition)){
+            return nuevaPosition
+        } else {
+            return positionActual
+        }
     }
 }
