@@ -51,10 +51,6 @@ object jugador {
     
     method esPisable() = true
 
-    method mover(movimiento) {
-        gestorNiveles.nivelActual().mover(self, movimiento)
-    }
-
     method morir() {
         gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
     }
@@ -114,7 +110,7 @@ object pinchoMovil {
     method moverseAleatoriamente() {
         const direcciones = [arriba, abajo, izquierda, derecha]
         const direccionAleatoria = direcciones.anyOne()
-        gestorNiveles.nivelActual().mover(self, direccionAleatoria)
+        position = direccionAleatoria.calcularNuevaposition(position)
     }
 
     // Método para interactuar con el jugador (igual que Pincho)
