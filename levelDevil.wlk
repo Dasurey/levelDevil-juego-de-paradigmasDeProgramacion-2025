@@ -5,8 +5,8 @@ import teclado.*
 object juegoLevelDevil {
     method iniciar() {
         game.title("Level Devil")
-        game.height(8)
-        game.width(11)
+        game.height(12)
+        game.width(24)
         game.boardGround("fondo.jpg")
 
         // Configurar las colisiones con los pinchos
@@ -43,11 +43,11 @@ object gestorNiveles {
 
 //         Jugador principal
 object jugador {
-    var property posicion = game.at(0, 6)
+    var property position = game.at(0, 6)
     var property vidas = 1
     var property puntaje = 0
     
-    method imagen() = "zombie-derecha.png"
+    method image() = "zombie-derecha.png"
 
     method mover(movimiento) {
         gestorNiveles.nivelActual().mover(self, movimiento)
@@ -63,9 +63,9 @@ object jugador {
 }
 
 class Pincho {
-    var property posicion = game.at(0, 0)
+    var property position = game.at(0, 0)
     
-    method imagen() = "pincho_triple.png"
+    method image() = "pincho_triple.png"
 
     method esPisable() = true
     
@@ -75,9 +75,9 @@ class Pincho {
 }
 
 class Pared {
-    const property posicion
+    const property position
     
-    method imagen() = "muro.png"
+    method image() = "muro.png"
 
     //Colision
     method esPisable() = false
@@ -86,11 +86,11 @@ class Pared {
 }
 
 object pinchoInvisible {
-    var property posicion = game.at(9, 4) // posición final donde aparecerá
+    var property position = game.at(9, 4) // posición final donde aparecerá
     var property visible = false // inicial invisible
     method esPisable() = true
 
-    method imagen() {
+    method image() {
         if (visible) {
             return "pincho_triple.png"
         } else {
@@ -104,10 +104,10 @@ object pinchoInvisible {
 }
 
 object pinchoMovil {
-    var property posicion = game.at(4, 3)
+    var property position = game.at(4, 3)
     method esPisable() = true
 
-    method imagen() = "pincho_triple.png"
+    method image() = "pincho_triple.png"
 
     method moverseAleatoriamente() {
         const direcciones = [arriba, abajo, izquierda, derecha]
@@ -122,9 +122,9 @@ object pinchoMovil {
 }
 
 object caja {
-    var property posicion = game.at(3, 0)
+    var property position = game.at(3, 0)
 
-    method imagen() = "caja.png"
+    method image() = "caja.png"
 
     method esPisable() = false
 
@@ -135,14 +135,14 @@ object caja {
         // otra forma de generar números aleatorios
         // const x = (0.. game.width()-1).anyOne()
         // const y = (0.. game.height()-1).anyOne()
-        posicion = game.at(x, y)
+        position = game.at(x, y)
     }
 }
 
 class Meta {
-    var property posicion = game.at(0, 0)
+    var property position = game.at(0, 0)
 
-    method imagen() = "meta.jpg"
+    method image() = "meta.jpg"
 
     method esPisable() = true
 

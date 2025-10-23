@@ -38,25 +38,25 @@ object configTeclado {
 
 
 object arriba {
-    method calcularNuevaPosicion(posicionActual) {
-        return posicionActual.up(1)
+    method calcularNuevaposition(positionActual) {
+        return positionActual.up(1)
     }
 }
 
 object abajo {
-    method calcularNuevaPosicion(posicionActual) {
-        return posicionActual.down(1)
+    method calcularNuevaposition(positionActual) {
+        return positionActual.down(1)
     }
 }
 
 object izquierda {
-    method calcularNuevaPosicion(posicionActual) {
-        return posicionActual.left(1)
+    method calcularNuevaposition(positionActual) {
+        return positionActual.left(1)
     }
 }
 
 object derecha {
-    method calcularNuevaPosicion(posicionActual) {
-        return posicionActual.right(1)
+    method calcularNuevaposition(positionActual) {
+        return positionActual.right(1)
     }
 }

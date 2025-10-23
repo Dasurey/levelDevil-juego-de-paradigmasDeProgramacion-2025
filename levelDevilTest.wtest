@@ -4,7 +4,7 @@ import teclado.*
 describe "Level Devil Game Tests - Version Simple" {
 
   method initialize() {
-    jugador.posicion(game.at(0, 0))
+    jugador.position(game.at(0, 0))
     jugador.vidas(3)
     jugador.puntaje(0)
   }
@@ -15,21 +15,21 @@ describe "Level Devil Game Tests - Version Simple" {
   }
 
   test "jugador puede moverse a posición válida" {
-    const posicionInicial = jugador.posicion()
+    const positionInicial = jugador.position()
     jugador.mover(derecha)
-    assert.notEquals(posicionInicial, jugador.posicion())
+    assert.notEquals(positionInicial, jugador.position())
   }
 
   test "pincho puede ser creado" {
-    const pincho = new Pincho(posicion = game.at(1, 1))
-    assert.equals(game.at(1, 1), pincho.posicion())
-    assert.equals("pincho_triple.png", pincho.imagen())
+    const pincho = new Pincho(position = game.at(1, 1))
+    assert.equals(game.at(1, 1), pincho.position())
+    assert.equals("pincho_triple.png", pincho.image())
   }
 
   test "meta puede ser creada" {
-    const meta = new Meta(posicion = game.at(8, 8))
-    assert.equals(game.at(8, 8), meta.posicion())
-    assert.equals("meta.jpg", meta.imagen())
+    const meta = new Meta(position = game.at(8, 8))
+    assert.equals(game.at(8, 8), meta.position())
+    assert.equals("meta.jpg", meta.image())
   }
 
 }
