@@ -48,6 +48,8 @@ object jugador {
     var property puntaje = 0
     
     method image() = "zombie-derecha.png"
+    
+    method esPisable() = true
 
     method mover(movimiento) {
         gestorNiveles.nivelActual().mover(self, movimiento)
@@ -77,7 +79,7 @@ class Pincho {
 class Pared {
     const property position
     
-    method image() = "muro.png"
+    method image() = "Muro1.png"
 
     //Colision
     method esPisable() = false
