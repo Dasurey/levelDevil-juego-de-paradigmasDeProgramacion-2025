@@ -10,3 +10,4 @@
 - Más polimorfismo en base pasen los niveles, cambiar colores, invertir controles del personaje (nueva configuración de teclado como teclado troll o doble movimientocon uno solo), predeterminar un personaje a cada nivel. Que el personaje pueda interactuar con un objeto 
 - Mover el puedeAvanzar puede puedeMoverse a un objetos movimiento
 - Puede quedar una clase movimiento
+- esta bueno que pinchoMovil pueda pisar la meta?
