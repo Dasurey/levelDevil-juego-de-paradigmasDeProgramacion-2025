@@ -17,30 +17,6 @@ object juegoLevelDevil {
     }
 }
 
-//          Administra los niveles
-object gestorNiveles {
-    var property nivelActual = nivel1
-
-    method iniciarNivel() {
-        nivelActual.iniciar()
-    }
-
-    method siguienteNivel() {
-        nivelActual = nivelActual.siguienteNivel()
-        nivelActual.iniciar()
-    }
-
-    method limpiar() {
-        game.allVisuals().forEach({ visual => game.removeVisual(visual) })
-    }
-    
-    method reiniciarNivel() {
-        self.limpiar()
-        nivelActual.iniciar()
-        configTeclado.juegoEnMarcha() // Rehabilitar controles 
-    }
-}
-
 //         Jugador principal
 object jugador {
     var property position = game.at(0, 6)
@@ -60,15 +36,65 @@ object jugador {
     }
 }
 
-class Pincho {
-    var property position = game.at(0, 0)
+class ObjetoMorible {
+    var property position
     
-    method image() = "pincho_triple.png"
+    method image()
 
     method esPisable() = true
-    
-    method interactuarConPersonaje(jugador) {
-        jugador.morir()
+
+    method interactuarConPersonaje(pj) {
+        pj.morir()
+    }
+}
+
+class Pincho inherits ObjetoMorible {    
+    override method image() = "pincho_triple.png"
+}
+
+class PinchoInvisible inherits ObjetoMorible {
+    var property visible = false // comienza invisible
+
+    // La imagen depende de la propiedad 'visible'
+    override method image() {
+        if (visible) {
+            return "pincho_triple.png"
+        } else {
+            return null
+        }
+    }
+
+    method hacerVisible() {
+        // Genero un id por instancia para no pisar otros onTick
+        const tickId = "mostrarPincho_" + self.position().x() + "_" + self.position().y()
+        game.onTick(100, tickId, {
+            const dx = (jugador.position().x() - self.position().x()).abs()
+            const dy = (jugador.position().y() - self.position().y()).abs()
+
+            // Si el jugador está cerca, marcamos visible el pincho
+            if (dx <= 1 and dy <= 1) {
+                visible = true
+            }
+        })
+    }
+}
+
+class PinchoMovil inherits ObjetoMorible {
+    override method image() = "pincho_triple.png"
+
+    method moverseAleatoriamente() {
+        const direcciones = [arriba, abajo, izquierda, derecha]
+        const direccionAleatoria = direcciones.anyOne()
+        position = direccionAleatoria.calcularNuevaPosition(position)
+    }
+
+    method moverPinchoMovil() {
+        // Genero un id único basado en la identidad del objeto
+        const tickId = "moverPinchoMovil_" + self.identity()
+        // el pincho cada se mueve cada 0,3 seg
+        game.onTick(300, tickId, {
+            self.moverseAleatoriamente()
+        })
     }
 }
 
@@ -80,43 +106,7 @@ class Pared {
     //Colision
     method esPisable() = false
 
-    method interactuarConPersonaje(jugador){}
-}
-
-object pinchoInvisible {
-    var property position = game.at(9, 4) // posición final donde aparecerá
-    var property visible = false // inicial invisible
-    method esPisable() = true
-
-    method image() {
-        if (visible) {
-            return "pincho_triple.png"
-        } else {
-          return null // para q no se muestre nada
-        }
-    }
-
-    method interactuarConPersonaje(jugador) {
-        jugador.morir()
-    }
-}
-
-object pinchoMovil {
-    var property position = game.at(4, 3)
-    method esPisable() = true
-
-    method image() = "pincho_triple.png"
-
-    method moverseAleatoriamente() {
-        const direcciones = [arriba, abajo, izquierda, derecha]
-        const direccionAleatoria = direcciones.anyOne()
-        position = direccionAleatoria.calcularNuevaPosition(position)
-    }
-
-    // Método para interactuar con el jugador (igual que Pincho)
-    method interactuarConPersonaje(jugador) {
-        jugador.morir()
-    }
+    method interactuarConPersonaje(pj){}
 }
 
 object caja {
@@ -144,11 +134,11 @@ class Meta {
 
     method esPisable() = true
 
-    method interactuarConPersonaje(jugador) {
-        jugador.ganarPuntos(500)
+    method interactuarConPersonaje(pj) {
+        pj.ganarPuntos(500)
         configTeclado.juegoBloqueado() // deshabilita los controles
         
-        game.say(jugador, "¡Nivel completado! Puntaje: " + jugador.puntaje())
+        game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
         
         // Cambiamos de nivel después de 2 segundos
         game.schedule(2000, {

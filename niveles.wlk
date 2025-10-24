@@ -1,18 +1,63 @@
 import levelDevil.*
 import teclado.*
 
+//          Administra los niveles
+object gestorNiveles {
+    var property nivelActual = nivel1
+
+    method iniciarNivel() {
+        nivelActual.iniciar()
+    }
+
+    method siguienteNivel() {
+        nivelActual = nivelActual.siguienteNivel()
+        nivelActual.iniciar()
+    }
+
+    method limpiar() {
+        game.allVisuals().forEach({ visual => game.removeVisual(visual) })
+    }
+    
+    method reiniciarNivel() {
+        self.limpiar()
+        nivelActual.iniciar()
+        configTeclado.juegoEnMarcha() // Rehabilitar controles 
+    }
+}
+
 //*==========================| Niveles |==========================
 
 class NivelBase {
-    method crearParedes(positiones) {
-        positiones.forEach({ pos =>
+    method mapaDeCuadricula() = []
+    
+    var property siguienteNivel = null
+
+    // Métodos de creación de objetos del nivel
+    method crearParedes(positions) {
+        positions.forEach({ pos =>
             game.addVisual(new Pared(position = pos))
         })
     }
 
-    method crearPinchos(positiones) {
-        positiones.forEach({ pos =>
+    method crearPinchos(positions) {
+        positions.forEach({ pos =>
             game.addVisual(new Pincho(position = pos))
+        })
+    }
+
+    method crearPinchosMoviles(positions) {
+        positions.forEach({ pos =>
+            const pinchoMov = new PinchoMovil(position = pos)
+            game.addVisual(pinchoMov)
+            pinchoMov.moverPinchoMovil()
+        })
+    }
+
+    method crearPinchosInvisibles(positions) {
+        positions.forEach({ pos =>
+            const pinchoInv = new PinchoInvisible(position = pos)
+            game.addVisual(pinchoInv)
+            pinchoInv.hacerVisible()
         })
     }
 
@@ -20,115 +65,96 @@ class NivelBase {
         const meta = new Meta(position = pos)
         game.addVisual(meta)
     }
-}
 
-
-object nivel1 inherits NivelBase {
-    const property siguienteNivel = nivel2
-    
     method iniciar() {
         // Limpiar pantalla
         gestorNiveles.limpiar()
-
-        /*
-        // Agregar algunos pinchos
-        const pincho1 = new Pincho(position = game.at(3, 3))
-        const pincho2 = new Pincho(position = game.at(5, 2))
-        const pincho3 = new Pincho(position = game.at(7, 4))
         
-        game.addVisual(pincho1)
-        game.addVisual(pincho2)
-        game.addVisual(pincho3)
-        */
-        // Agregar paredes usando helper
-        self.crearParedes([
-            game.at(1,7), game.at(2,7), game.at(3,7), game.at(4,7),
-            game.at(5,7), game.at(6,7), game.at(7,7), game.at(8,7),
-            game.at(9,7), game.at(4,6), game.at(9,6), game.at(1,5), 
-            game.at(6,5), game.at(7,5), game.at(9,5),
-            game.at(1,4), game.at(2,4), game.at(4,4), game.at(5,3), game.at(7,4),
-            game.at(4,3), game.at(6,3), game.at(7,3), game.at(8,3),
-            game.at(1,2), game.at(2,2), game.at(4,2), game.at(1,1), 
-            game.at(6,1), game.at(7,1), game.at(8,1), game.at(1,0),
-            game.at(2,0), game.at(3,0), game.at(5,0), game.at(6,0), 
-            game.at(8,0), game.at(9,0), game.at(9,1)
-        ])
+        // Dibujar el nivel usando el mapaDeCuadricula
+        self.dibujarNivel()
         
-        game.addVisual(pinchoInvisible)
-
-        game.onTick(100, "mostrarPincho", {
-        const dx = (jugador.position().x() - pinchoInvisible.position().x()).abs()
-        const dy = (jugador.position().y() - pinchoInvisible.position().y()).abs()
-
-        if (dx == 1 and dy == 1) {
-            game.removeVisual(pinchoInvisible)
-            game.addVisual(new Pincho(position = pinchoInvisible.position()))
-        }
-        })
-
-        pinchoMovil.position(game.at(1, 3))
-        game.addVisual(pinchoMovil)
-
-        // el pincho cada se mueve cada 0,3 seg
-        game.onTick(300, "moverPinchoMovil", {
-            pinchoMovil.moverseAleatoriamente()
-        })
-
-        // Agregar meta
-        self.agregarMeta(game.at(10,4))
-
         // Agregar jugador
         game.addVisual(jugador)
-        jugador.position(game.at(0, 6))
+    }
+
+    // Método para dibujar el nivel basado en el mapaDeCuadricula
+    method dibujarNivel() {
+        var y = 10  // Ajusta estos valores según necesites
+        var x = 2
+
+        self.mapaDeCuadricula().forEach({ fila =>
+            x = 2
+            fila.forEach({ celda =>
+                self.procesarCelda(celda, x, y)
+                x += 1
+            })
+            y -= 1
+        })
+    }
+    
+    method procesarCelda(celda, x, y) {
+        const pos = game.at(x, y)
+        
+        if (celda == "p") {
+            self.crearParedes([pos])
+        } else if (celda == "s") {
+            self.crearPinchos([pos])
+        } else if(celda == "i") {
+            self.crearPinchosInvisibles([pos])
+        } else if(celda == "d") {
+            self.crearPinchosMoviles([pos])
+        } else if (celda == "m") {
+            self.agregarMeta(pos)
+        } else if (celda == "j") {
+            jugador.position(pos)
+        }
+        // Si es V (vacío) o cualquier otro caracter, no hacemos nada
     }
 }
 
-object nivel2 inherits NivelBase {
-    const property siguienteNivel = endOfTheGame
+//*==========================| Niveles Instanciados |==========================
+
+object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
+    override method mapaDeCuadricula() = [
+        ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
+        ["v","v","v","v","p","p","p","p","p","p","p","p","p","p","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","v","v","v","v","v","v","v","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","v","v","v","p","v","v","v","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","j","v","v","p","v","v","v","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","v","v","v","v","v","i","m","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","v","v","v","v","v","d","v","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","v","v","v","v","v","v","v","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","p","p","p","p","p","p","p","p","p","p","v","v","v","v","v"],
+        ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"]
+    ]
+}
+
+object nivel2 inherits NivelBase(siguienteNivel = endOfTheGame) {
+    override method mapaDeCuadricula() = [
+        ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
+        ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
+        ["v","v","v","v","p","p","p","p","p","p","p","p","p","p","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","v","v","v","p","v","v","v","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","j","v","v","p","v","v","v","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","v","v","v","v","v","v","m","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","v","v","v","v","v","v","v","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","v","v","v","v","v","v","v","v","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","p","p","p","p","p","p","p","p","p","p","v","v","v","v","v"],
+        ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"]
+    ]
     
-    method iniciar() {
-        // Limpiar pantalla
-        gestorNiveles.limpiar()
-
-        // Agregar paredes usando helper
-        self.crearParedes([
-            game.at(1,7), game.at(2,7), game.at(0,7), game.at(8,7),
-            game.at(9,7), game.at(1,6), game.at(4,6), game.at(5,6),
-            game.at(6,6), game.at(0,5), game.at(3,5), game.at(7,5), 
-            game.at(0,4), game.at(2,4), game.at(5,4),
-            game.at(7,4), game.at(8,4), game.at(4,3), game.at(1,2), game.at(3,2),
-            game.at(4,3), game.at(8,3),
-            game.at(4,2), game.at(6,2), game.at(4,1), game.at(8,1), 
-            game.at(9,1)
-        ])
+    override method iniciar() {
+        super()
         
-        game.addVisual(pinchoInvisible)
-
-        game.onTick(100, "mostrarPincho", {
-        const dx = (jugador.position().x() - pinchoInvisible.position().x()).abs()
-        const dy = (jugador.position().y() - pinchoInvisible.position().y()).abs()
-
-        if (dx <= 1 and dy <= 1) {
-            game.removeVisual(pinchoInvisible)
-            game.addVisual(new Pincho(position = pinchoInvisible.position()))
-        }
-        })
-
-        // cada dos segundos muevo la caja
+        // Configuraciones específicas del nivel 2
         game.onTick(2000, "movimiento", { caja.movete() })
-        //
-
-        // Agregar meta
-        self.agregarMeta(game.at(5,7))
-
-        // Agregar jugador
-        game.addVisual(jugador)
-        jugador.position(game.at(5, 0))
     }
 }
 
-object endOfTheGame inherits NivelBase {
-    method iniciar() {
+object endOfTheGame inherits NivelBase(siguienteNivel = null) {
+    override method mapaDeCuadricula() = []  // Nivel final no necesita mapa
+    
+    override method iniciar() {
         gestorNiveles.limpiar()
         game.say(jugador, "¡Juego completado!")
         game.schedule(3000, {
@@ -136,3 +162,4 @@ object endOfTheGame inherits NivelBase {
         })
     }
 }
+
