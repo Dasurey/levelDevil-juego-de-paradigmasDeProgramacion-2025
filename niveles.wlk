@@ -162,7 +162,7 @@ object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
     ]
 }
 
-object nivel2 inherits NivelBase(siguienteNivel = endOfTheGame) {
+object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
     override method mapaDeCuadricula() = [
         // 24 columnas x 12 filas
                 // 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
@@ -184,6 +184,35 @@ object nivel2 inherits NivelBase(siguienteNivel = endOfTheGame) {
         super()
         
         // Configuraciones específicas del nivel 2
+        game.onTick(2000, "movimiento", { caja.movete() })
+    }
+}
+
+object nivel3 inherits NivelBase(siguienteNivel = endOfTheGame) {
+    override method mapaDeCuadricula() = [
+        // 24 columnas x 12 filas
+                // 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+        /*11*/ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
+        /*10*/ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
+        /* 9*/ ["v","v","v","v","v","v","p","p","p","_","_","m","_","_","p","p","_","_","v","v","v","v","v","v"],
+        /* 8*/ ["v","v","v","v","v","v","_","p","_","_","p","p","p","_","_","_","_","_","v","v","v","v","v","v"],
+        /* 7*/ ["v","v","v","v","v","v","p","_","_","p","_","_","_","p","_","_","_","_","v","v","v","v","v","v"],
+        /* 6*/ ["v","v","v","v","v","v","p","_","p","_","_","p","_","p","p","i","_","_","v","v","v","v","v","v"],
+        /* 5*/ ["v","v","v","v","v","v","_","_","_","_","p","_","_","_","p","_","_","_","v","v","v","v","v","v"],
+        /* 4*/ ["v","v","v","v","v","v","_","p","_","p","p","_","p","_","_","_","_","_","v","v","v","v","v","v"],
+        /* 3*/ ["v","v","v","v","v","v","_","_","_","_","p","_","_","_","p","p","_","_","v","v","v","v","v","v"],
+        /* 2*/ ["v","v","v","v","v","v","_","_","_","_","_","j","_","_","_","_","_","_","v","v","v","v","v","v"],
+        /* 1*/ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
+        /* 0*/ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"]
+    ]
+    
+    override method iniciar() {
+        super()
+        
+        // Configurar el teclado invertido para este nivel
+        configTecladoInvertido.iniciar()
+        
+        // Configuraciones específicas del nivel
         game.onTick(2000, "movimiento", { caja.movete() })
     }
 }

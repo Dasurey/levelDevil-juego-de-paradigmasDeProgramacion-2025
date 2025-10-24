@@ -3,16 +3,21 @@ import niveles.*
 
 //          Configuración del Teclado 
 
-object configTeclado {
+class ConfigTecladoBase {
     var controlesHabilitados = true
 
     method iniciar() {
-        keyboard.up().onPressDo({ self.mover(arriba) })
-        keyboard.down().onPressDo({ self.mover(abajo) })
-        keyboard.left().onPressDo({ self.mover(izquierda) })
-        keyboard.right().onPressDo({ self.mover(derecha) })
+        keyboard.up().onPressDo({ self.mover(self.teclaArriba()) })
+        keyboard.down().onPressDo({ self.mover(self.teclaAbajo()) })
+        keyboard.left().onPressDo({ self.mover(self.teclaIzquierda()) })
+        keyboard.right().onPressDo({ self.mover(self.teclaDerecha()) })
         keyboard.r().onPressDo({ gestorNiveles.nivelActual.reiniciarNivel() })
     }
+    
+    method teclaArriba() = arriba
+    method teclaAbajo() = abajo
+    method teclaIzquierda() = izquierda
+    method teclaDerecha() = derecha
 
     method mover(direccion) {
         if (controlesHabilitados) {
@@ -28,6 +33,15 @@ object configTeclado {
     method juegoBloqueado() {
         controlesHabilitados = false
     }
+}
+
+object configTeclado inherits ConfigTecladoBase {}
+
+object configTecladoInvertido inherits ConfigTecladoBase {
+    override method teclaArriba() = abajo
+    override method teclaAbajo() = arriba
+    override method teclaIzquierda() = derecha
+    override method teclaDerecha() = izquierda
 }
 
 
