@@ -11,7 +11,7 @@ object gestorNiveles {
 
     method siguienteNivel() {
         nivelActual = nivelActual.siguienteNivel()
-        nivelActual.iniciar()
+        self.iniciarNivel()
     }
 
     method limpiar() {
@@ -21,7 +21,7 @@ object gestorNiveles {
     method reiniciarNivel() {
         self.limpiar()
         jugador.reiniciarVidas()
-        nivelActual.iniciar()
+        self.iniciarNivel()
         configTeclado.juegoEnMarcha() // Rehabilitar controles 
     }
 }
