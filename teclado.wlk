@@ -21,10 +21,6 @@ object configTeclado {
         }
     }
 
-    method reiniciarNivel() {
-        gestorNiveles.nivelActual().iniciar()
-    }
-
     method juegoEnMarcha() {
         controlesHabilitados = true
     }
@@ -39,7 +35,14 @@ object configTeclado {
 
 class Movimiento {
     method puedeMoverse(nuevaPosition) {
-        return nuevaPosition.x().between(0, game.width() - 1) and nuevaPosition.y().between(0, game.height() - 1)
+        // return nuevaPosition.x().between(0, game.width() - 1) and nuevaPosition.y().between(0, game.height() - 1)
+        // Verificar que esté dentro de los límites del juego
+        if (!nuevaPosition.x().between(0, game.width() - 1) or !nuevaPosition.y().between(0, game.height() - 1)) {
+            return false
+        }
+        
+        // Verificar que la posición tenga algún elemento válido para moverse
+        return game.getObjectsIn(nuevaPosition).size() > 0
     }
 
     method validarPosition(position) = game.getObjectsIn(position).all({elem => elem.esPisable()}) && self.puedeMoverse(position)

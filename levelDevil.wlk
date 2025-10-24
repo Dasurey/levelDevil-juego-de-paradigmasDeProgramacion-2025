@@ -20,8 +20,12 @@ object juegoLevelDevil {
 //         Jugador principal
 object jugador {
     var property position = game.at(0, 6)
-    var property vidas = 1
-    var property puntaje = 0
+    var vidas = 2
+    var puntaje = 0
+
+    method reiniciarVidas() {
+        vidas = 2
+    }
     
     method image() = "zombie-derecha.png"
     
@@ -30,8 +34,15 @@ object jugador {
     method morir() {
         vidas -= 1
         if (vidas <= 0) {
+            configTeclado.juegoBloqueado()
             game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
-            gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
+            game.allVisuals()
+            .filter({ visual => visual.toString().contains("PinchoMovil") })
+            .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
+            game.schedule(2000, {
+                gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
+                configTeclado.juegoEnMarcha() // Rehabilitar controles
+            })
         } else {
             game.say(self, "¡Has perdido una vida! Vidas restantes: " + vidas)
         }
@@ -74,14 +85,32 @@ class PinchoInvisible inherits ObjetoMorible {
         // Genero un id por instancia para no pisar otros onTick
         const tickId = "mostrarPincho_" + self.position().x() + "_" + self.position().y()
         game.onTick(100, tickId, {
-            const dx = (jugador.position().x() - self.position().x()).abs()
-            const dy = (jugador.position().y() - self.position().y()).abs()
+            const positionX = (jugador.position().x() - self.position().x()).abs()
+            const positionY = (jugador.position().y() - self.position().y()).abs()
 
             // Si el jugador está cerca, marcamos visible el pincho
-            if (dx <= 1 and dy <= 1) {
+            if (positionX <= 1 and positionY <= 1) {
                 visible = true
             }
         })
+    }
+}
+
+class PinchoInvisibleInstantaneo inherits ObjetoMorible {
+    var property visible = false // comienza invisible
+
+    // La imagen depende de la propiedad 'visible'
+    override method image() {
+        if (visible) {
+            return "pincho_triple.png"
+        } else {
+            return null
+        }
+    }
+
+    override method interactuarConPersonaje(pj) {
+        visible = true
+        super(pj)
     }
 }
 
@@ -148,7 +177,7 @@ object caja {
 }
 
 class Meta {
-    var property position = game.at(0, 0)
+    var property position
 
     method image() = "meta.jpg"
 

@@ -20,6 +20,7 @@ object gestorNiveles {
     
     method reiniciarNivel() {
         self.limpiar()
+        jugador.reiniciarVidas()
         nivelActual.iniciar()
         configTeclado.juegoEnMarcha() // Rehabilitar controles 
     }
@@ -70,6 +71,14 @@ class NivelBase {
         })
     }
 
+    method crearPinchosInvisiblesInstantaneos(positions) {
+        positions.forEach({ pos =>
+            const pinchoInvInst = new PinchoInvisibleInstantaneo(position = pos)
+            game.addVisual(new Piso(position = pos))
+            game.addVisual(pinchoInvInst)
+        })
+    }
+
     method agregarMeta(pos) {
         const meta = new Meta(position = pos)
         game.addVisual(new Piso(position = pos))
@@ -89,7 +98,7 @@ class NivelBase {
 
     // Método para dibujar el nivel basado en el mapaDeCuadricula
     method dibujarNivel() {
-        const elementos = ["_", "p", "m", "i", "d", "j"]
+        const elementos = ["_", "j", "p", "m", "f", "i", "d"]
         
         elementos.forEach({ tipo =>
             var y = 10
@@ -120,11 +129,13 @@ class NivelBase {
             self.crearPinchosInvisibles([pos])
         } else if(celda == "d") {
             self.crearPinchosMoviles([pos])
+        } else if(celda == "f") {
+            self.crearPinchosInvisiblesInstantaneos([pos])
         } else if (celda == "m") {
             self.agregarMeta(pos)
         } else if (celda == "j") {
-            jugador.position(pos)
             game.addVisual(new Piso(position = pos))
+            jugador.position(pos)
         }
         // Si es V (vacío) o cualquier otro caracter, no hacemos nada
     }
@@ -134,31 +145,35 @@ class NivelBase {
 
 object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
     override method mapaDeCuadricula() = [
-        ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
-        ["v","v","v","v","p","p","p","p","p","p","p","p","p","p","p","v","v","v","v","v"],
-        ["v","v","v","v","p","_","_","_","_","_","_","_","_","_","p","v","v","v","v","v"],
-        ["v","v","v","v","p","_","_","_","_","p","_","_","_","_","p","v","v","v","v","v"],
-        ["v","v","v","v","p","_","j","_","_","p","_","_","_","_","p","v","v","v","v","v"],
-        ["v","v","v","v","p","_","_","_","_","_","_","i","m","_","p","v","v","v","v","v"],
-        ["v","v","v","v","p","_","_","_","_","_","_","d","_","_","p","v","v","v","v","v"],
-        ["v","v","v","v","p","_","_","_","_","_","_","_","_","_","p","v","v","v","v","v"],
-        ["v","v","v","v","p","p","p","p","p","p","p","p","p","p","p","v","v","v","v","v"],
-        ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"]
+        // 20 columnas x 10 filas
+                // 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+        /* 9 */ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
+        /* 8 */ ["v","v","v","v","_","p","p","p","p","p","p","p","p","p","_","_","v","v","v","v"],
+        /* 7 */ ["v","v","v","v","_","_","_","_","p","_","_","_","_","p","_","_","v","v","v","v"],
+        /* 6 */ ["v","v","v","v","j","p","_","_","_","_","p","p","_","p","_","_","v","v","v","v"],
+        /* 5 */ ["v","v","v","v","_","p","p","_","p","_","_","p","_","i","m","_","v","v","v","v"],
+        /* 4 */ ["v","v","v","v","_","d","_","_","p","p","p","p","p","_","f","_","v","v","v","v"],
+        /* 3 */ ["v","v","v","v","_","p","p","_","p","_","_","_","_","_","_","_","v","v","v","v"],
+        /* 2 */ ["v","v","v","v","_","p","_","_","_","_","p","p","p","p","_","_","v","v","v","v"],
+        /* 1 */ ["v","v","v","v","_","p","p","p","_","p","p","_","p","_","_","_","v","v","v","v"],
+        /* 0 */ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"]
     ]
 }
 
 object nivel2 inherits NivelBase(siguienteNivel = endOfTheGame) {
     override method mapaDeCuadricula() = [
-        ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
-        ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
-        ["v","v","v","v","p","p","p","p","p","p","p","p","p","p","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","v","v","v","p","v","v","v","v","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","j","v","v","p","v","v","v","v","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","v","v","v","v","v","v","m","v","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","v","v","v","v","v","v","v","v","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","v","v","v","v","v","v","v","v","p","v","v","v","v","v"],
-        ["v","v","v","v","p","p","p","p","p","p","p","p","p","p","p","v","v","v","v","v"],
-        ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"]
+        // 20 columnas x 10 filas
+                // 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+        /* 9 */ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
+        /* 8 */ ["v","v","v","v","p","p","p","_","_","m","_","_","p","p","_","_","v","v","v","v"],
+        /* 7 */ ["v","v","v","v","_","p","_","_","p","p","p","_","_","_","_","_","v","v","v","v"],
+        /* 6 */ ["v","v","v","v","p","_","_","p","_","_","_","p","_","_","_","_","v","v","v","v"],
+        /* 5 */ ["v","v","v","v","p","_","p","_","_","p","_","p","p","i","_","_","v","v","v","v"],
+        /* 4 */ ["v","v","v","v","_","_","_","_","p","_","_","_","p","_","_","_","v","v","v","v"],
+        /* 3 */ ["v","v","v","v","_","p","_","p","p","_","p","_","_","_","_","_","v","v","v","v"],
+        /* 2 */ ["v","v","v","v","_","_","_","_","p","_","_","_","p","p","_","_","v","v","v","v"],
+        /* 1 */ ["v","v","v","v","_","_","_","_","_","j","_","_","_","_","_","_","v","v","v","v"],
+        /* 0 */ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"]
     ]
     
     override method iniciar() {
