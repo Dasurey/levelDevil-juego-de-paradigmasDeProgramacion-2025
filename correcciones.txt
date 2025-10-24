@@ -11,3 +11,4 @@
 - Ver la forma de agregar dos personajes más uno que se canse rápido o que pueda correr cada 1seg, otro con una vida más y el normal de ahora
 - Más polimorfismo en base pasen los niveles, cambiar colores, invertir controles del personaje (nueva configuración de teclado como teclado troll o doble movimientocon uno solo), predeterminar un personaje a cada nivel. Que el personaje pueda interactuar con un objeto 
 - esta bueno que pinchoMovil pueda pisar la meta?
+- falta hacer de laguna forma que puedeMoverse solo este dentro del limite de ["_", "p", "m", "i", "d", "j"]

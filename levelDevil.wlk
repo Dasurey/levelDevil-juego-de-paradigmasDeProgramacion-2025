@@ -119,6 +119,16 @@ class Pared {
     method interactuarConPersonaje(pj){}
 }
 
+class Piso {
+    var property position
+
+    method image() = "Piso2.png"
+
+    method esPisable() = true
+
+    method interactuarConPersonaje(pj){}
+}
+
 object caja {
     var property position = game.at(3, 0)
 

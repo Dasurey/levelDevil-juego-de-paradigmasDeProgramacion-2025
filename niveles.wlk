@@ -39,15 +39,23 @@ class NivelBase {
         })
     }
 
+    method crearPisos(positions) {
+        positions.forEach({ pos =>
+            game.addVisual(new Piso(position = pos))
+        })
+    }
+
     method crearPinchos(positions) {
         positions.forEach({ pos =>
             game.addVisual(new Pincho(position = pos))
+            game.addVisual(new Piso(position = pos))
         })
     }
 
     method crearPinchosMoviles(positions) {
         positions.forEach({ pos =>
             const pinchoMov = new PinchoMovil(position = pos)
+            game.addVisual(new Piso(position = pos))
             game.addVisual(pinchoMov)
             pinchoMov.moverPinchoMovil()
         })
@@ -56,6 +64,7 @@ class NivelBase {
     method crearPinchosInvisibles(positions) {
         positions.forEach({ pos =>
             const pinchoInv = new PinchoInvisible(position = pos)
+            game.addVisual(new Piso(position = pos))
             game.addVisual(pinchoInv)
             pinchoInv.hacerVisible()
         })
@@ -63,6 +72,7 @@ class NivelBase {
 
     method agregarMeta(pos) {
         const meta = new Meta(position = pos)
+        game.addVisual(new Piso(position = pos))
         game.addVisual(meta)
     }
 
@@ -79,16 +89,21 @@ class NivelBase {
 
     // Método para dibujar el nivel basado en el mapaDeCuadricula
     method dibujarNivel() {
-        var y = 10  // Ajusta estos valores según necesites
-        var x = 2
-
-        self.mapaDeCuadricula().forEach({ fila =>
-            x = 2
-            fila.forEach({ celda =>
-                self.procesarCelda(celda, x, y)
-                x += 1
+        const elementos = ["_", "p", "m", "i", "d", "j"]
+        
+        elementos.forEach({ tipo =>
+            var y = 10
+            var x = 2
+            self.mapaDeCuadricula().forEach({ fila =>
+                x = 2
+                fila.forEach({ celda =>
+                    if(celda == tipo) {
+                        self.procesarCelda(celda, x, y)
+                    }
+                    x += 1
+                })
+                y -= 1
             })
-            y -= 1
         })
     }
     
@@ -97,6 +112,8 @@ class NivelBase {
         
         if (celda == "p") {
             self.crearParedes([pos])
+        } else if (celda == "_") {
+            self.crearPisos([pos])
         } else if (celda == "s") {
             self.crearPinchos([pos])
         } else if(celda == "i") {
@@ -107,6 +124,7 @@ class NivelBase {
             self.agregarMeta(pos)
         } else if (celda == "j") {
             jugador.position(pos)
+            game.addVisual(new Piso(position = pos))
         }
         // Si es V (vacío) o cualquier otro caracter, no hacemos nada
     }
@@ -118,12 +136,12 @@ object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
     override method mapaDeCuadricula() = [
         ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
         ["v","v","v","v","p","p","p","p","p","p","p","p","p","p","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","v","v","v","v","v","v","v","v","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","v","v","v","p","v","v","v","v","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","j","v","v","p","v","v","v","v","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","v","v","v","v","v","i","m","v","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","v","v","v","v","v","d","v","v","p","v","v","v","v","v"],
-        ["v","v","v","v","p","v","v","v","v","v","v","v","v","v","p","v","v","v","v","v"],
+        ["v","v","v","v","p","_","_","_","_","_","_","_","_","_","p","v","v","v","v","v"],
+        ["v","v","v","v","p","_","_","_","_","p","_","_","_","_","p","v","v","v","v","v"],
+        ["v","v","v","v","p","_","j","_","_","p","_","_","_","_","p","v","v","v","v","v"],
+        ["v","v","v","v","p","_","_","_","_","_","_","i","m","_","p","v","v","v","v","v"],
+        ["v","v","v","v","p","_","_","_","_","_","_","d","_","_","p","v","v","v","v","v"],
+        ["v","v","v","v","p","_","_","_","_","_","_","_","_","_","p","v","v","v","v","v"],
         ["v","v","v","v","p","p","p","p","p","p","p","p","p","p","p","v","v","v","v","v"],
         ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"]
     ]
