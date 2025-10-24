@@ -11,7 +11,7 @@ object configTeclado {
         keyboard.down().onPressDo({ self.mover(abajo) })
         keyboard.left().onPressDo({ self.mover(izquierda) })
         keyboard.right().onPressDo({ self.mover(derecha) })
-        keyboard.r().onPressDo({ self.reiniciarNivel() })
+        keyboard.r().onPressDo({ gestorNiveles.nivelActual.reiniciarNivel() })
     }
 
     method mover(direccion) {

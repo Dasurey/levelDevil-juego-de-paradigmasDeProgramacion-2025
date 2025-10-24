@@ -37,8 +37,8 @@ object jugador {
             configTeclado.juegoBloqueado()
             game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
             game.allVisuals()
-            .filter({ visual => visual.toString().contains("PinchoMovil") })
-            .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
+                .filter({ visual => visual.toString().contains("PinchoMovil") })
+                .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
             game.schedule(2000, {
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
                 configTeclado.juegoEnMarcha() // Rehabilitar controles
