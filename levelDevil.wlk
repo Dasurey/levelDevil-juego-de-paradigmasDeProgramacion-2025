@@ -28,7 +28,13 @@ object jugador {
     method esPisable() = true
 
     method morir() {
-        gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
+        vidas -= 1
+        if (vidas <= 0) {
+            game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
+            gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
+        } else {
+            game.say(self, "¡Has perdido una vida! Vidas restantes: " + vidas)
+        }
     }
     
     method ganarPuntos(puntos) {
@@ -80,6 +86,8 @@ class PinchoInvisible inherits ObjetoMorible {
 }
 
 class PinchoMovil inherits ObjetoMorible {
+    const tickId = "moverPinchoMovil_" + self.identity()
+    
     override method image() = "pincho_triple.png"
 
     method moverseAleatoriamente() {
@@ -89,12 +97,14 @@ class PinchoMovil inherits ObjetoMorible {
     }
 
     method moverPinchoMovil() {
-        // Genero un id único basado en la identidad del objeto
-        const tickId = "moverPinchoMovil_" + self.identity()
         // el pincho cada se mueve cada 0,3 seg
         game.onTick(300, tickId, {
             self.moverseAleatoriamente()
         })
+    }
+    
+    method detenerMovimiento() {
+        game.removeTickEvent(tickId)
     }
 }
 
@@ -135,6 +145,11 @@ class Meta {
     method esPisable() = true
 
     method interactuarConPersonaje(pj) {
+        // Detener todos los PinchosMovil
+        game.allVisuals()
+            .filter({ visual => visual.toString().contains("PinchoMovil") })
+            .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
+
         pj.ganarPuntos(500)
         configTeclado.juegoBloqueado() // deshabilita los controles
         
