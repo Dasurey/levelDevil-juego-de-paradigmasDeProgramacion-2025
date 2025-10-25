@@ -27,7 +27,7 @@ object jugador {
         vidas = 2
     }
     
-    method image() = "zombie-derecha.png"
+    method image() = "zombieDerecha.png"
     
     method esPisable() = true
 
@@ -68,7 +68,7 @@ class ObjetoMorible {
 }
 
 class Pincho inherits ObjetoMorible {    
-    override method image() = "pincho_triple.png"
+    override method image() = "pinchoTriple.png"
 }
 
 class PinchoInvisible inherits ObjetoMorible {
@@ -77,7 +77,7 @@ class PinchoInvisible inherits ObjetoMorible {
     // La imagen depende de la propiedad 'visible'
     override method image() {
         if (visible) {
-            return "pincho_triple.png"
+            return "pinchoTriple.png"
         } else {
             return null
         }
@@ -104,7 +104,7 @@ class PinchoInvisibleInstantaneo inherits ObjetoMorible {
     // La imagen depende de la propiedad 'visible'
     override method image() {
         if (visible) {
-            return "pincho_triple.png"
+            return "pinchoTriple.png"
         } else {
             return null
         }
@@ -119,7 +119,7 @@ class PinchoInvisibleInstantaneo inherits ObjetoMorible {
 class PinchoMovil inherits ObjetoMorible {
     const tickId = "moverPinchoMovil_" + self.identity()
     
-    override method image() = "pincho_triple.png"
+    override method image() = "pinchoTriple.png"
 
     method moverseAleatoriamente() {
         const direcciones = [arriba, abajo, izquierda, derecha]
