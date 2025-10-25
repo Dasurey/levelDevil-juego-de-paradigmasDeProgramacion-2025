@@ -22,7 +22,7 @@ object gestorNiveles {
         self.limpiar()
         jugador.reiniciarVidas()
         self.iniciarNivel()
-        configTeclado.juegoEnMarcha() // Rehabilitar controles 
+        gestorTeclado.juegoEnMarcha() // Rehabilitar controles 
     }
 }
 
@@ -210,7 +210,7 @@ object nivel3 inherits NivelBase(siguienteNivel = endOfTheGame) {
         super()
         
         // Configurar el teclado invertido para este nivel
-        configTecladoInvertido.iniciar()
+        gestorTeclado.cambiarConfiguracion(configTecladoInvertido)
         
         // Configuraciones específicas del nivel
         game.onTick(2000, "movimiento", { caja.movete() })

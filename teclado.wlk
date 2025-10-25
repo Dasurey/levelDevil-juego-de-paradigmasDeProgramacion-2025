@@ -1,8 +1,29 @@
 import levelDevil.*
 import niveles.*
 
-//          Configuración del Teclado 
+//          Gestor de Teclado
+object gestorTeclado {
+    var property configActual = configTecladoNormal
+    
+    method iniciarConfiguracionDeTeclas() {
+        configActual.iniciar()
+    }
+    
+    method cambiarConfiguracion(nuevaConfig) {
+        configActual = nuevaConfig
+        self.iniciarConfiguracionDeTeclas()
+    }
+    
+    method juegoEnMarcha() {
+        configActual.juegoEnMarcha()
+    }
+    
+    method juegoBloqueado() {
+        configActual.juegoBloqueado()
+    }
+}
 
+//          Configuraciones de Teclado
 class ConfigTecladoBase {
     var controlesHabilitados = true
 
@@ -11,7 +32,7 @@ class ConfigTecladoBase {
         keyboard.down().onPressDo({ self.mover(self.teclaAbajo()) })
         keyboard.left().onPressDo({ self.mover(self.teclaIzquierda()) })
         keyboard.right().onPressDo({ self.mover(self.teclaDerecha()) })
-        keyboard.r().onPressDo({ gestorNiveles.nivelActual.reiniciarNivel() })
+        keyboard.r().onPressDo({ gestorNiveles.reiniciarNivel() })
     }
     
     method teclaArriba() = arriba
@@ -35,7 +56,7 @@ class ConfigTecladoBase {
     }
 }
 
-object configTeclado inherits ConfigTecladoBase {}
+object configTecladoNormal inherits ConfigTecladoBase {}
 
 object configTecladoInvertido inherits ConfigTecladoBase {
     override method teclaArriba() = abajo

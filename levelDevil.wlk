@@ -12,7 +12,7 @@ object juegoLevelDevil {
         // Configurar las colisiones con los pinchos
         game.onCollideDo(jugador, { elemento => elemento.interactuarConPersonaje(jugador) })
 
-        configTeclado.iniciar()
+        gestorTeclado.iniciarConfiguracionDeTeclas()
         gestorNiveles.iniciarNivel()
     }
 }
@@ -34,14 +34,14 @@ object jugador {
     method morir() {
         vidas -= 1
         if (vidas <= 0) {
-            configTeclado.juegoBloqueado()
+            gestorTeclado.juegoBloqueado()
             game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
             game.allVisuals()
                 .filter({ visual => visual.toString().contains("PinchoMovil") })
                 .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
             game.schedule(2000, {
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
-                configTeclado.juegoEnMarcha() // Rehabilitar controles
+                gestorTeclado.juegoEnMarcha() // Rehabilitar controles
             })
         } else {
             game.say(self, "¡Has perdido una vida! Vidas restantes: " + vidas)
@@ -190,7 +190,7 @@ class Meta {
             .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
 
         pj.ganarPuntos(500)
-        configTeclado.juegoBloqueado() // deshabilita los controles
+        gestorTeclado.juegoBloqueado() // deshabilita los controles
         
         game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
         
@@ -198,7 +198,7 @@ class Meta {
         game.schedule(2000, {
             gestorNiveles.siguienteNivel()
             // Rehabilitamos los controles después del cambio de nivel
-            configTeclado.juegoEnMarcha()
+            gestorTeclado.juegoEnMarcha()
         })
     }
 }
