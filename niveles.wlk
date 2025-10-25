@@ -207,13 +207,9 @@ object nivel3 inherits NivelBase(siguienteNivel = endOfTheGame) {
     ]
     
     override method iniciar() {
-        super()
-        
         // Configurar el teclado invertido para este nivel
         gestorTeclado.cambiarConfiguracion(configTecladoInvertido)
-        
-        // Configuraciones específicas del nivel
-        game.onTick(2000, "movimiento", { caja.movete() })
+        super()
     }
 }
 

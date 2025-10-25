@@ -51,6 +51,8 @@ object jugador {
     method ganarPuntos(puntos) {
         puntaje += puntos
     }
+
+    method puntaje() = puntaje
 }
 
 class ObjetoMorible {
