@@ -1,5 +1,6 @@
 import levelDevil.*
 import teclado.*
+
 /*
 describe "Level Devil Game Tests - Version Simple" {
 
@@ -33,3 +34,39 @@ describe "Level Devil Game Tests - Version Simple" {
   }
 
 }*/
+
+// Extensión de PinchoMovil para testing que permite mover en una dirección específica
+class PinchoMovilTesteable inherits PinchoMovil {
+    method moverEn(direccion) {
+        const destino = direccion.moverEnDireccion(position)
+        const objetosEnDestino = game.getObjectsIn(destino)
+
+        if (!objetosEnDestino.any({obj => obj.esMeta()}) and direccion.validarPosition(destino)) {
+            position = destino
+        }
+    }
+}
+
+describe "PinchoMovil vs Meta" {
+  test "PinchoMovil no debería poder pisar la Meta (reproducción del bug)" {
+    const posPincho = game.at(1, 1)
+    const posMeta = game.at(2, 1)
+
+    // Crear pisos para las posiciones para que getObjectsIn devuelva objetos
+    game.addVisual(new Piso(position = posPincho))
+    game.addVisual(new Piso(position = posMeta))
+
+    // Crear y agregar PinchoMovilTesteable y Meta
+    const pincho = new PinchoMovilTesteable(position = posPincho)
+    const meta = new Meta(position = posMeta)
+    game.addVisual(pincho)
+    game.addVisual(meta)
+
+  // Intentamos mover el pincho explícitamente hacia la derecha usando su método
+  pincho.moverEn(derecha)
+
+  // Esperamos que el PinchoMovil NO haya cambiado su posición hacia la Meta.
+  assert.notEquals(meta.position(), pincho.position())
+  }
+
+}

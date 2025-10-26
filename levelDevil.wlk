@@ -17,6 +17,18 @@ object juegoLevelDevil {
     }
 }
 
+// Fijase si esta bien esto
+object gestorDeFinalizacion {
+    method iniciar() {
+        gestorTeclado.juegoBloqueado()
+        // Detener todos los PinchosMovil
+        game.allVisuals()
+            .filter({ visual => visual.toString().contains("PinchoMovil") })
+            .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
+        jugador.resetearPuntajeTemporal()
+    }
+}
+
 //         Jugador principal
 object jugador {
     var property position = game.at(0, 6)
@@ -32,15 +44,13 @@ object jugador {
     
     method esPisable() = true
 
+    method esMeta() = false
+
     method morir() {
         vidas -= 1
         if (vidas <= 0) {
-            gestorTeclado.juegoBloqueado()
+            gestorDeFinalizacion.iniciar()
             game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
-            game.allVisuals()
-                .filter({ visual => visual.toString().contains("PinchoMovil") })
-                .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
-            self.resetearPuntajeTemporal() // resetear puntaje temporal al morir
             game.schedule(2000, {
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
                 gestorTeclado.juegoEnMarcha() // Rehabilitar controles
@@ -74,6 +84,8 @@ class Piso {
 
     method esPisable() = true
 
+    method esMeta() = false
+
     method interactuarConPersonaje(pj){}
 }
 
@@ -85,6 +97,8 @@ class Pared {
     //Colision
     method esPisable() = false
 
+    method esMeta() = false
+
     method interactuarConPersonaje(pj){}
 }
 
@@ -95,15 +109,11 @@ class Meta {
 
     method esPisable() = true
 
+    method esMeta() = true
+
     method interactuarConPersonaje(pj) {
-        // Detener todos los PinchosMovil
-        game.allVisuals()
-            .filter({ visual => visual.toString().contains("PinchoMovil") })
-            .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
-        pj.modificarPuntajePorSumaResta(pj.puntajeTemporal())
-        pj.resetearPuntajeTemporal()
-        gestorTeclado.juegoBloqueado() // deshabilita los controles
-        
+        gestorDeFinalizacion.iniciar()
+        pj.modificarPuntajePorSumaResta(pj.puntajeTemporal())        
         game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
         
         // Cambiamos de nivel después de 2 segundos
@@ -122,6 +132,8 @@ class Moneda {
 
     method esPisable() = true
 
+    method esMeta() = false
+
     method interactuarConPersonaje(pj) {
         pj.sumaDePuntajeTemporal(100)
         game.say(pj, "¡Moneda recogida! Puntaje: " + pj.puntaje())
@@ -135,6 +147,8 @@ class ObjetoMorible {
     method image()
 
     method esPisable() = true
+
+    method esMeta() = false
 
     method interactuarConPersonaje(pj) {
         pj.modificarPuntajePorSumaResta((-50))
@@ -209,7 +223,13 @@ class PinchoMovil inherits ObjetoMorible {
     method moverseAleatoriamente() {
         const direcciones = [arriba, abajo, izquierda, derecha]
         const direccionAleatoria = direcciones.anyOne()
-        position = direccionAleatoria.calcularNuevaPosition(position)
+        const destino = direccionAleatoria.moverEnDireccion(position)
+        const objetosEnDestino = game.getObjectsIn(destino)
+        
+        // Mover sólo si está dentro de límites, hay objetos, todos son pisables y NO hay una Meta
+        if (!objetosEnDestino.any({obj => obj.esMeta()}) and direccionAleatoria.validarPosition(destino)) {
+            position = destino
+        }
     }
 
     method moverPinchoMovil() {

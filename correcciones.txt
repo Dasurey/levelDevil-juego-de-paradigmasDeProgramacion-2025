@@ -8,10 +8,10 @@
 - falta hacer de alguna forma que puedeMoverse solo este dentro del limite de ["_", "p", "m", "i", "d", "j"] (hecho)
 - onTick falta delegación (hecho entre comillas)
 - dx dy mas expresivo (hecho)
+- esta bueno que pinchoMovil pueda pisar la meta? (hecho hace verificaciones demas para que no pase eso)
 - Tratar de hacer mas expresivo esto despues ["_", "j", "p", "m", "f", "i", "d"]
 - Interactuar con las paredes, podríamos usar excepciones o poner un comentario
 - Ver la forma de agregar dos personajes más uno que se canse rápido o que pueda correr cada 1seg, otro con una vida más y el normal de ahora
 - Más polimorfismo en base pasen los niveles, cambiar colores, invertir controles del personaje (nueva configuración de teclado como teclado troll o doble movimientocon uno solo), predeterminar un personaje a cada nivel. Que el personaje pueda interactuar con un objeto 
-- esta bueno que pinchoMovil pueda pisar la meta?
 - Fijase la nomenclatura que se usa para el mapaDeCuadricula() de cambiarle las letras para que sea mas declarativo
-- Fijarse si morir() debe parar los pinchos Moviles
+- Fijase si estaria bbien como esta el objeto gestorDeFinalizacion
