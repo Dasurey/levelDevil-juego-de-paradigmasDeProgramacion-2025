@@ -61,6 +61,8 @@ object jugador {
     }
 
     method puntaje() = puntaje
+
+    method puntajeCompleto() = self.puntaje() + self.puntajeTemporal()
     
     method modificarPuntajePorSumaResta(puntos) {
         puntaje += puntos
@@ -137,7 +139,7 @@ class Moneda {
 
     method interactuarConPersonaje(pj) {
         pj.sumaDePuntajeTemporal(100)
-        game.say(pj, "¡Moneda recogida! Puntaje: " + pj.puntaje())
+        game.say(pj, "¡Moneda recogida! Puntaje: " + pj.puntajeCompleto())
         game.removeVisual(self)
     }
 }
