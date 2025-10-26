@@ -34,15 +34,33 @@ class NivelBase {
     var property siguienteNivel = null
 
     // Métodos de creación de objetos del nivel
+    method crearPisos(positions) {
+        positions.forEach({ pos =>
+            game.addVisual(new Piso(position = pos))
+        })
+    }
+
     method crearParedes(positions) {
         positions.forEach({ pos =>
             game.addVisual(new Pared(position = pos))
         })
     }
 
-    method crearPisos(positions) {
+    method agregarMeta(pos) {
+        const meta = new Meta(position = pos)
+        game.addVisual(new Piso(position = pos))
+        game.addVisual(meta)
+    }
+
+    method crearMonedas(positions) {
         positions.forEach({ pos =>
-            game.addVisual(new Piso(position = pos))
+            game.addVisual(new Moneda(position = pos))
+        })
+    }
+    
+    method crearMonedaFalsa(positions) {
+        positions.forEach({ pos =>
+            game.addVisual(new MonedaFalsa(position = pos))
         })
     }
 
@@ -79,12 +97,6 @@ class NivelBase {
         })
     }
 
-    method agregarMeta(pos) {
-        const meta = new Meta(position = pos)
-        game.addVisual(new Piso(position = pos))
-        game.addVisual(meta)
-    }
-
     method iniciar() {
         // Limpiar pantalla
         gestorNiveles.limpiar()
@@ -98,7 +110,7 @@ class NivelBase {
 
     // Método para dibujar el nivel basado en el mapaDeCuadricula
     method dibujarNivel() {
-        const elementos = ["_", "j", "p", "m", "f", "i", "d"]
+        const elementos = ["_", "j", "p", "m", "c", "n", "s", "f", "i", "d"]
         
         elementos.forEach({ tipo =>
             var y = game.height() - 1  // Empezamos desde la altura máxima
@@ -119,23 +131,29 @@ class NivelBase {
     method procesarCelda(celda, x, y) {
         const pos = game.at(x, y)
         
-        if (celda == "p") {
-            self.crearParedes([pos])
-        } else if (celda == "_") {
+        if (celda == "_") {
             self.crearPisos([pos])
+        } else if (celda == "j") {
+            game.addVisual(new Piso(position = pos))
+            jugador.position(pos)
+        } else if (celda == "p") {
+            self.crearParedes([pos])
+        } else if (celda == "m") {
+            self.agregarMeta(pos)
+        } else if (celda == "c") {
+            game.addVisual(new Piso(position = pos))
+            self.crearMonedas([pos])
+        } else if(celda == "n") {
+            game.addVisual(new Piso(position = pos))
+            self.crearMonedaFalsa([pos])
         } else if (celda == "s") {
             self.crearPinchos([pos])
+        } else if(celda == "f") {
+            self.crearPinchosInvisiblesInstantaneos([pos])
         } else if(celda == "i") {
             self.crearPinchosInvisibles([pos])
         } else if(celda == "d") {
             self.crearPinchosMoviles([pos])
-        } else if(celda == "f") {
-            self.crearPinchosInvisiblesInstantaneos([pos])
-        } else if (celda == "m") {
-            self.agregarMeta(pos)
-        } else if (celda == "j") {
-            game.addVisual(new Piso(position = pos))
-            jugador.position(pos)
         }
         // Si es V (vacío) o cualquier otro caracter, no hacemos nada
     }
@@ -150,8 +168,8 @@ object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
         /*11*/ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
         /*10*/ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
         /* 9*/ ["v","v","v","v","v","v","_","p","p","p","p","p","p","p","p","p","_","_","v","v","v","v","v","v"],
-        /* 8*/ ["v","v","v","v","v","v","_","_","_","_","p","_","_","_","_","p","_","_","v","v","v","v","v","v"],
-        /* 7*/ ["v","v","v","v","v","v","j","p","_","_","_","_","p","p","_","p","_","_","v","v","v","v","v","v"],
+        /* 8*/ ["v","v","v","v","v","v","_","_","_","_","p","c","c","c","c","p","_","_","v","v","v","v","v","v"],
+        /* 7*/ ["v","v","v","v","v","v","j","p","_","_","_","_","p","p","c","p","_","_","v","v","v","v","v","v"],
         /* 6*/ ["v","v","v","v","v","v","_","p","p","_","p","_","_","p","_","i","m","_","v","v","v","v","v","v"],
         /* 5*/ ["v","v","v","v","v","v","_","d","_","_","p","p","p","p","p","_","f","_","v","v","v","v","v","v"],
         /* 4*/ ["v","v","v","v","v","v","_","p","p","_","p","_","_","_","_","_","_","_","v","v","v","v","v","v"],
@@ -172,8 +190,8 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
         /* 8*/ ["v","v","v","v","v","v","_","p","_","_","p","p","p","_","_","_","_","_","v","v","v","v","v","v"],
         /* 7*/ ["v","v","v","v","v","v","p","_","_","p","_","_","_","p","_","_","_","_","v","v","v","v","v","v"],
         /* 6*/ ["v","v","v","v","v","v","p","_","p","_","_","p","_","p","p","i","_","_","v","v","v","v","v","v"],
-        /* 5*/ ["v","v","v","v","v","v","_","_","_","_","p","_","_","_","p","_","_","_","v","v","v","v","v","v"],
-        /* 4*/ ["v","v","v","v","v","v","_","p","_","p","p","_","p","_","_","_","_","_","v","v","v","v","v","v"],
+        /* 5*/ ["v","v","v","v","v","v","_","_","_","_","p","_","_","_","p","_","n","_","v","v","v","v","v","v"],
+        /* 4*/ ["v","v","v","v","v","v","_","p","_","p","p","_","p","_","_","_","c","_","v","v","v","v","v","v"],
         /* 3*/ ["v","v","v","v","v","v","_","_","_","_","p","_","_","_","p","p","_","_","v","v","v","v","v","v"],
         /* 2*/ ["v","v","v","v","v","v","_","_","_","_","_","j","_","_","_","_","_","_","v","v","v","v","v","v"],
         /* 1*/ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],

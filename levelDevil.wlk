@@ -22,6 +22,7 @@ object jugador {
     var property position = game.at(0, 6)
     var vidas = 2
     var puntaje = 0
+    var puntajeTemporal = 0
 
     method reiniciarVidas() {
         vidas = 2
@@ -39,6 +40,7 @@ object jugador {
             game.allVisuals()
                 .filter({ visual => visual.toString().contains("PinchoMovil") })
                 .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
+            self.resetearPuntajeTemporal() // resetear puntaje temporal al morir
             game.schedule(2000, {
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
                 gestorTeclado.juegoEnMarcha() // Rehabilitar controles
@@ -47,12 +49,84 @@ object jugador {
             game.say(self, "¡Has perdido una vida! Vidas restantes: " + vidas)
         }
     }
+
+    method puntaje() = puntaje
     
-    method ganarPuntos(puntos) {
+    method modificarPuntajePorSumaResta(puntos) {
         puntaje += puntos
     }
 
-    method puntaje() = puntaje
+    method puntajeTemporal() = puntajeTemporal
+
+    method sumaDePuntajeTemporal(puntos) {
+        puntajeTemporal += puntos
+    }
+    
+    method resetearPuntajeTemporal(){
+        puntajeTemporal = 0
+    }
+}
+
+class Piso {
+    var property position
+
+    method image() = "Piso2.png"
+
+    method esPisable() = true
+
+    method interactuarConPersonaje(pj){}
+}
+
+class Pared {
+    const property position
+    
+    method image() = "Muro1.png"
+
+    //Colision
+    method esPisable() = false
+
+    method interactuarConPersonaje(pj){}
+}
+
+class Meta {
+    var property position
+
+    method image() = "meta.jpg"
+
+    method esPisable() = true
+
+    method interactuarConPersonaje(pj) {
+        // Detener todos los PinchosMovil
+        game.allVisuals()
+            .filter({ visual => visual.toString().contains("PinchoMovil") })
+            .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
+        pj.modificarPuntajePorSumaResta(pj.puntajeTemporal())
+        pj.resetearPuntajeTemporal()
+        gestorTeclado.juegoBloqueado() // deshabilita los controles
+        
+        game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
+        
+        // Cambiamos de nivel después de 2 segundos
+        game.schedule(2000, {
+            gestorNiveles.siguienteNivel()
+            // Rehabilitamos los controles después del cambio de nivel
+            gestorTeclado.juegoEnMarcha()
+        })
+    }
+}
+
+class Moneda {
+    var property position
+
+    method image() = "Moneda.png"
+
+    method esPisable() = true
+
+    method interactuarConPersonaje(pj) {
+        pj.sumaDePuntajeTemporal(100)
+        game.say(pj, "¡Moneda recogida! Puntaje: " + pj.puntaje())
+        game.removeVisual(self)
+    }
 }
 
 class ObjetoMorible {
@@ -63,12 +137,41 @@ class ObjetoMorible {
     method esPisable() = true
 
     method interactuarConPersonaje(pj) {
+        pj.modificarPuntajePorSumaResta((-50))
         pj.morir()
+    }
+}
+
+class MonedaFalsa inherits ObjetoMorible {
+    override method image() = "Moneda.png"
+
+    override method interactuarConPersonaje(pj) {
+        pj.modificarPuntajePorSumaResta((-50))
+        game.removeVisual(self)
+        super(pj)
     }
 }
 
 class Pincho inherits ObjetoMorible {    
     override method image() = "pinchoTriple.png"
+}
+
+class PinchoInvisibleInstantaneo inherits ObjetoMorible {
+    var property visible = false // comienza invisible
+
+    // La imagen depende de la propiedad 'visible'
+    override method image() {
+        if (visible) {
+            return "pinchoTriple.png"
+        } else {
+            return null
+        }
+    }
+
+    override method interactuarConPersonaje(pj) {
+        visible = true
+        super(pj)
+    }
 }
 
 class PinchoInvisible inherits ObjetoMorible {
@@ -98,24 +201,6 @@ class PinchoInvisible inherits ObjetoMorible {
     }
 }
 
-class PinchoInvisibleInstantaneo inherits ObjetoMorible {
-    var property visible = false // comienza invisible
-
-    // La imagen depende de la propiedad 'visible'
-    override method image() {
-        if (visible) {
-            return "pinchoTriple.png"
-        } else {
-            return null
-        }
-    }
-
-    override method interactuarConPersonaje(pj) {
-        visible = true
-        super(pj)
-    }
-}
-
 class PinchoMovil inherits ObjetoMorible {
     const tickId = "moverPinchoMovil_" + self.identity()
     
@@ -139,27 +224,6 @@ class PinchoMovil inherits ObjetoMorible {
     }
 }
 
-class Pared {
-    const property position
-    
-    method image() = "Muro1.png"
-
-    //Colision
-    method esPisable() = false
-
-    method interactuarConPersonaje(pj){}
-}
-
-class Piso {
-    var property position
-
-    method image() = "Piso2.png"
-
-    method esPisable() = true
-
-    method interactuarConPersonaje(pj){}
-}
-
 object caja {
     var property position = game.at(3, 0)
 
@@ -175,32 +239,5 @@ object caja {
         // const x = (0.. game.width()-1).anyOne()
         // const y = (0.. game.height()-1).anyOne()
         position = game.at(x, y)
-    }
-}
-
-class Meta {
-    var property position
-
-    method image() = "meta.jpg"
-
-    method esPisable() = true
-
-    method interactuarConPersonaje(pj) {
-        // Detener todos los PinchosMovil
-        game.allVisuals()
-            .filter({ visual => visual.toString().contains("PinchoMovil") })
-            .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
-
-        pj.ganarPuntos(500)
-        gestorTeclado.juegoBloqueado() // deshabilita los controles
-        
-        game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
-        
-        // Cambiamos de nivel después de 2 segundos
-        game.schedule(2000, {
-            gestorNiveles.siguienteNivel()
-            // Rehabilitamos los controles después del cambio de nivel
-            gestorTeclado.juegoEnMarcha()
-        })
     }
 }
