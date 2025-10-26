@@ -29,7 +29,7 @@ object gestorNiveles {
 //*==========================| Niveles |==========================
 
 class NivelBase {
-    method mapaDeCuadricula() = []
+    method mapaDeCuadricula() = [] /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
     
     var property siguienteNivel = null
 
@@ -168,6 +168,7 @@ class NivelBase {
 
 object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
     override method mapaDeCuadricula() = [
+        /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
         // 24 columnas x 12 filas
                 // 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
         /*11*/ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
@@ -187,6 +188,7 @@ object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
 
 object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
     override method mapaDeCuadricula() = [
+        /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
         // 24 columnas x 12 filas
                     // x = 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
         /* y = 11*/ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
@@ -213,6 +215,7 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
 
 object nivel3 inherits NivelBase(siguienteNivel = endOfTheGame) {
     override method mapaDeCuadricula() = [
+        /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
         // 24 columnas x 12 filas
                     // x = 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
         /* y = 11*/ ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"],
