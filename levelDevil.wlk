@@ -25,7 +25,6 @@ object gestorDeFinalizacion {
         game.allVisuals()
             .filter({ visual => visual.toString().contains("PinchoMovil") })
             .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
-        jugador.resetearPuntajeTemporal()
     }
 }
 
@@ -50,6 +49,7 @@ object jugador {
         vidas -= 1
         if (vidas <= 0) {
             gestorDeFinalizacion.iniciar()
+            self.resetearPuntajeTemporal()
             game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
             game.schedule(2000, {
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
@@ -113,7 +113,8 @@ class Meta {
 
     method interactuarConPersonaje(pj) {
         gestorDeFinalizacion.iniciar()
-        pj.modificarPuntajePorSumaResta(pj.puntajeTemporal())        
+        pj.modificarPuntajePorSumaResta(pj.puntajeTemporal())
+        pj.resetearPuntajeTemporal()
         game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
         
         // Cambiamos de nivel después de 2 segundos
@@ -225,7 +226,7 @@ class PinchoMovil inherits ObjetoMorible {
         const direccionAleatoria = direcciones.anyOne()
         const destino = direccionAleatoria.moverEnDireccion(position)
         const objetosEnDestino = game.getObjectsIn(destino)
-        
+
         // Mover sólo si está dentro de límites, hay objetos, todos son pisables y NO hay una Meta
         if (!objetosEnDestino.any({obj => obj.esMeta()}) and direccionAleatoria.validarPosition(destino)) {
             position = destino
