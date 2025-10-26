@@ -7,7 +7,7 @@ object juegoLevelDevil {
         game.title("Level Devil")
         game.height(12)
         game.width(24)
-        game.boardGround("fondo.jpg")
+        game.boardGround("Fondo.png")
 
         // Configurar las colisiones con los pinchos
         game.onCollideDo(jugador, { elemento => elemento.interactuarConPersonaje(jugador) })
