@@ -33,7 +33,8 @@ object jugador {
     var property position = game.at(0, 6)
     var vidas = 2
     var puntaje = 0
-    var puntajeTemporal = 0
+    var puntajeTemporalGanado = 0
+    var puntajeTemporalPerdido = 0
 
     method reiniciarVidas() {
         vidas = 2
@@ -49,8 +50,8 @@ object jugador {
         vidas -= 1
         if (vidas <= 0) {
             gestorDeFinalizacion.iniciar()
-            self.resetearPuntajeTemporal()
             game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
+            self.sumaDePuntaje(self.puntajeTemporalPerdido())
             game.schedule(2000, {
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
                 gestorTeclado.juegoEnMarcha() // Rehabilitar controles
@@ -62,21 +63,28 @@ object jugador {
 
     method puntaje() = puntaje
 
-    method puntajeCompleto() = self.puntaje() + self.puntajeTemporal()
-    
-    method modificarPuntajePorSumaResta(puntos) {
+    method sumaDePuntaje(puntos) {
         puntaje += puntos
     }
 
-    method puntajeTemporal() = puntajeTemporal
+    method puntajeTemporalGanado() = puntajeTemporalGanado
 
-    method sumaDePuntajeTemporal(puntos) {
-        puntajeTemporal += puntos
+    method sumaDePuntajeTemporalGanado(puntos) {
+        puntajeTemporalGanado += puntos
     }
-    
-    method resetearPuntajeTemporal(){
-        puntajeTemporal = 0
+
+    method puntajeTemporalPerdido() = puntajeTemporalPerdido
+
+    method restaDePuntajeTemporalPerdido(puntos) {
+        puntajeTemporalPerdido -= puntos
     }
+
+    method resetearPuntajeTemporal() {
+        puntajeTemporalGanado = 0
+        puntajeTemporalPerdido = 0
+    }
+
+    method puntajeCompleto() = self.puntaje() + self.puntajeTemporalGanado() + self.puntajeTemporalPerdido()
 }
 
 class Piso {
@@ -115,7 +123,7 @@ class Meta {
 
     method interactuarConPersonaje(pj) {
         gestorDeFinalizacion.iniciar()
-        pj.modificarPuntajePorSumaResta(pj.puntajeTemporal())
+        pj.sumaDePuntaje(pj.puntajeTemporalPerdido() + pj.puntajeTemporalGanado())
         pj.resetearPuntajeTemporal()
         game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
         
@@ -154,7 +162,7 @@ class ObjetoMorible {
     method esMeta() = false
 
     method interactuarConPersonaje(pj) {
-        pj.modificarPuntajePorSumaResta((-50))
+        pj.restaDePuntajeTemporalPerdido(50)
         pj.morir()
     }
 }
@@ -163,7 +171,7 @@ class MonedaFalsa inherits ObjetoMorible {
     override method image() = "Moneda_V2.png"
 
     override method interactuarConPersonaje(pj) {
-        pj.modificarPuntajePorSumaResta((-50))
+        pj.restaDePuntajeTemporalPerdido(50)
         game.removeVisual(self)
         super(pj)
     }
