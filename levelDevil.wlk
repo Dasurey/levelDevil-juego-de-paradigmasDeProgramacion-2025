@@ -90,11 +90,22 @@ object jugador {
 class Piso {
     var property position
 
-    method image() = "Piso2.png"
+    //Imagen
+    const imagenes = ["Piso1.png", "Piso2.png"]
+    var property image = ""
+
+    method imagenAleatoria(){
+        image = imagenes.anyOne()
+    }
 
     method esPisable() = true
 
     method esMeta() = false
+
+    method iniciar(){
+        self.imagenAleatoria()
+        game.addVisual(self)
+    }
 
     method interactuarConPersonaje(pj){}
 }

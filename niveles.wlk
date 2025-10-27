@@ -37,7 +37,8 @@ class NivelBase {
     // Métodos de creación de objetos del nivel
     method crearPisos(positions) {
         positions.forEach({ pos =>
-            game.addVisual(new Piso(position = pos))
+            const piso = new Piso(position = pos)
+            piso.iniciar()
         })
     }
 
@@ -49,14 +50,14 @@ class NivelBase {
 
     method agregarMeta(pos) {
         const meta = new Meta(position = pos)
-        game.addVisual(new Piso(position = pos))
+        self.crearPisos([pos])
         game.addVisual(meta)
     }
 
     method crearMonedas(positions) {
         positions.forEach({ pos =>
             const moneda = new Moneda(position = pos)
-            game.addVisual(new Piso(position = pos))
+            self.crearPisos([pos])
             game.addVisual(moneda)
         })
     }
@@ -64,7 +65,7 @@ class NivelBase {
     method crearMonedaFalsa(positions) {
         positions.forEach({ pos =>
             const monedaFalsa = new MonedaFalsa(position = pos)
-            game.addVisual(new Piso(position = pos))
+            self.crearPisos([pos])
             game.addVisual(monedaFalsa)
         })
     }
@@ -72,7 +73,7 @@ class NivelBase {
     method crearPinchos(positions) {
         positions.forEach({ pos =>
             const pincho = new Pincho(position = pos)
-            game.addVisual(new Piso(position = pos))
+            self.crearPisos([pos])
             game.addVisual(pincho)
         })
     }
@@ -80,7 +81,7 @@ class NivelBase {
     method crearPinchosMoviles(positions) {
         positions.forEach({ pos =>
             const pinchoMov = new PinchoMovil(position = pos)
-            game.addVisual(new Piso(position = pos))
+            self.crearPisos([pos])
             game.addVisual(pinchoMov)
             pinchoMov.moverPinchoMovil()
         })
@@ -89,7 +90,7 @@ class NivelBase {
     method crearPinchosInvisibles(positions) {
         positions.forEach({ pos =>
             const pinchoInv = new PinchoInvisible(position = pos)
-            game.addVisual(new Piso(position = pos))
+            self.crearPisos([pos])
             game.addVisual(pinchoInv)
             pinchoInv.hacerVisible()
         })
@@ -98,7 +99,7 @@ class NivelBase {
     method crearPinchosInvisiblesInstantaneos(positions) {
         positions.forEach({ pos =>
             const pinchoInvInst = new PinchoInvisibleInstantaneo(position = pos)
-            game.addVisual(new Piso(position = pos))
+            self.crearPisos([pos])
             game.addVisual(pinchoInvInst)
         })
     }
@@ -140,17 +141,15 @@ class NivelBase {
         if (celda == "_") {
             self.crearPisos([pos])
         } else if (celda == "j") {
-            game.addVisual(new Piso(position = pos))
+            self.crearPisos([pos])
             jugador.position(pos)
         } else if (celda == "p") {
             self.crearParedes([pos])
         } else if (celda == "m") {
             self.agregarMeta(pos)
         } else if (celda == "c") {
-            game.addVisual(new Piso(position = pos))
             self.crearMonedas([pos])
         } else if(celda == "n") {
-            game.addVisual(new Piso(position = pos))
             self.crearMonedaFalsa([pos])
         } else if (celda == "s") {
             self.crearPinchos([pos])
