@@ -206,12 +206,14 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
         /* y = 0*/  ["v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v","v"]
     ]
     
+    /*
     override method iniciar() {
         super()
         
         // Configuraciones específicas del nivel 2
         game.onTick(2000, "movimiento", { caja.movete() })
     }
+    */
 }
 
 object nivel3 inherits NivelBase(siguienteNivel = endOfTheGame) {

@@ -258,17 +258,10 @@ class PinchoMovil inherits ObjetoMorible {
 object caja {
     var property position = game.at(3, 0)
 
-    method image() = "caja.png"
+    method image() = "Caja.png"
 
     method esPisable() = false
 
-    method movete() {
-        const x = 0.randomUpTo(game.width()).truncate(0)
-        const y = 0.randomUpTo(game.height()).truncate(0)
-        
-        // otra forma de generar números aleatorios
-        // const x = (0.. game.width()-1).anyOne()
-        // const y = (0.. game.height()-1).anyOne()
-        position = game.at(x, y)
-    }
+    /* Si se quiere poner a mover la caja fijarse el codigo de PinchoMovil
+    de moverseAleatoriamente() y tratar de adaptar para que se ponga una clase para no duplicar codigo */
 }
