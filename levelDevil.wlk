@@ -255,7 +255,7 @@ class PinchoMovil inherits ObjetoMorible {
     }
 }
 
-object caja {
+class Caja {
     var property position = game.at(3, 0)
 
     method image() = "Caja.png"
