@@ -39,7 +39,7 @@ object jugador {
         vidas = 2
     }
     
-    method image() = "zombieDerecha.png"
+    method image() = "JugadorLevelDevil_V1.png"
     
     method esPisable() = true
 
@@ -107,7 +107,7 @@ class Pared {
 class Meta {
     var property position
 
-    method image() = "meta.jpg"
+    method image() = "Meta_V2.png"
 
     method esPisable() = true
 
@@ -131,7 +131,7 @@ class Meta {
 class Moneda {
     var property position
 
-    method image() = "Moneda.png"
+    method image() = "Moneda_V2.png"
 
     method esPisable() = true
 
@@ -160,7 +160,7 @@ class ObjetoMorible {
 }
 
 class MonedaFalsa inherits ObjetoMorible {
-    override method image() = "Moneda.png"
+    override method image() = "Moneda_V2.png"
 
     override method interactuarConPersonaje(pj) {
         pj.modificarPuntajePorSumaResta((-50))

@@ -30,7 +30,7 @@ describe "Level Devil Game Tests - Version Simple" {
   test "meta puede ser creada" {
     const meta = new Meta(position = game.at(8, 8))
     assert.equals(game.at(8, 8), meta.position())
-    assert.equals("meta.jpg", meta.image())
+    assert.equals("Meta_V2.png", meta.image())
   }
 
 }*/
