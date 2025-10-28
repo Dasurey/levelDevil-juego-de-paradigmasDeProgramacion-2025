@@ -1,5 +1,5 @@
 import niveles.*
-import teclado.*
+import tecladoYMenu.*
 
 //        Configura el juego, arranca todo, inicializa teclado, etc.
 object juegoLevelDevil {
@@ -40,7 +40,7 @@ object jugador {
         vidas = 2
     }
     
-    method image() = "JugadorLevelDevil_V1.png"
+    var property image = "JugadorLevelDevil_V1.png"
     
     method esPisable() = true
 
@@ -52,9 +52,10 @@ object jugador {
             gestorDeFinalizacion.iniciar()
             game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
             self.sumaDePuntaje(self.puntajeTemporalPerdido())
+            image = "ExplosionAlMorir.gif"
             game.schedule(2000, {
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
-                gestorTeclado.juegoEnMarcha() // Rehabilitar controles
+                image = "JugadorLevelDevil_V1.png"
             })
         } else {
             game.say(self, "¡Has perdido una vida! Vidas restantes: " + vidas)
@@ -90,22 +91,21 @@ object jugador {
 class Piso {
     var property position
 
-    //Imagen
-    const imagenes = ["Piso1.png", "Piso2.png"]
+    const imagenes = ["Piso1.png", "Piso2.png", "Piso3.png"]
     var property image = ""
 
     method imagenAleatoria(){
         image = imagenes.anyOne()
     }
 
-    method esPisable() = true
-
-    method esMeta() = false
-
-    method iniciar(){
+    method ponerImagen(){
         self.imagenAleatoria()
         game.addVisual(self)
     }
+
+    method esPisable() = true
+
+    method esMeta() = false
 
     method interactuarConPersonaje(pj){}
 }
@@ -113,9 +113,18 @@ class Piso {
 class Pared {
     const property position
     
-    method image() = "Muro1.png"
+    const imagenes = ["Muro1.png", "Muro2.png", "Muro3.png", "Muro4.png"]
+    var property image = ""
 
-    //Colision
+    method imagenAleatoria(){
+        image = imagenes.anyOne()
+    }
+
+    method ponerImagen(){
+        self.imagenAleatoria()
+        game.addVisual(self)
+    }
+
     method esPisable() = false
 
     method esMeta() = false
@@ -126,7 +135,7 @@ class Pared {
 class Meta {
     var property position
 
-    method image() = "Meta_V2.png"
+    var property image = "Meta_V2.png"
 
     method esPisable() = true
 
@@ -137,12 +146,20 @@ class Meta {
         pj.sumaDePuntaje(pj.puntajeTemporalPerdido() + pj.puntajeTemporalGanado())
         pj.resetearPuntajeTemporal()
         game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
-        
-        // Cambiamos de nivel después de 2 segundos
-        game.schedule(2000, {
-            gestorNiveles.siguienteNivel()
-            // Rehabilitamos los controles después del cambio de nivel
-            gestorTeclado.juegoEnMarcha()
+        game.schedule(1000, {
+            game.removeVisual(pj)
+            image = "MetaConJugadorParte1.png"
+            game.schedule(1000, {
+                image = "MetaConJugadorParte2.png"
+                game.schedule(1000, {
+                    image = "MetaConJugadorParte3.png"
+                    game.schedule(1000, {
+                        gestorNiveles.siguienteNivel()
+                        // Rehabilitamos los controles después del cambio de nivel
+                        gestorTeclado.juegoEnMarcha()
+                    })
+                })
+            })
         })
     }
 }
@@ -157,7 +174,7 @@ class Moneda {
     method esMeta() = false
 
     method interactuarConPersonaje(pj) {
-        pj.sumaDePuntajeTemporal(100)
+        pj.sumaDePuntajeTemporalGanado(100)
         game.say(pj, "¡Moneda recogida! Puntaje: " + pj.puntajeCompleto())
         game.removeVisual(self)
     }
@@ -189,7 +206,7 @@ class MonedaFalsa inherits ObjetoMorible {
 }
 
 class Pincho inherits ObjetoMorible {    
-    override method image() = "pinchoTriple.png"
+    override method image() = "PinchoSimple_V2.png"
 }
 
 class PinchoInvisibleInstantaneo inherits ObjetoMorible {
@@ -198,7 +215,7 @@ class PinchoInvisibleInstantaneo inherits ObjetoMorible {
     // La imagen depende de la propiedad 'visible'
     override method image() {
         if (visible) {
-            return "pinchoTriple.png"
+            return "PinchoSimple_V2.png"
         } else {
             return null
         }
@@ -211,20 +228,21 @@ class PinchoInvisibleInstantaneo inherits ObjetoMorible {
 }
 
 class PinchoInvisible inherits ObjetoMorible {
+    // Genero un id por instancia para no pisar otros onTick
+    const tickId = "mostrarPincho_" + self.identity()
+
     var property visible = false // comienza invisible
 
     // La imagen depende de la propiedad 'visible'
     override method image() {
         if (visible) {
-            return "pinchoTriple.png"
+            return "PinchoTriple_V2.png"
         } else {
             return null
         }
     }
 
     method hacerVisible() {
-        // Genero un id por instancia para no pisar otros onTick
-        const tickId = "mostrarPincho_" + self.position().x() + "_" + self.position().y()
         game.onTick(100, tickId, {
             const positionX = (jugador.position().x() - self.position().x()).abs()
             const positionY = (jugador.position().y() - self.position().y()).abs()
@@ -239,8 +257,8 @@ class PinchoInvisible inherits ObjetoMorible {
 
 class PinchoMovil inherits ObjetoMorible {
     const tickId = "moverPinchoMovil_" + self.identity()
-    
-    override method image() = "pinchoTriple.png"
+
+    override method image() = "PinchoTriple_V2.png"
 
     method moverseAleatoriamente() {
         const direcciones = [arriba, abajo, izquierda, derecha]

@@ -1,5 +1,5 @@
 import levelDevil.*
-import teclado.*
+import tecladoYMenu.*
 
 /*
 describe "Level Devil Game Tests - Version Simple" {

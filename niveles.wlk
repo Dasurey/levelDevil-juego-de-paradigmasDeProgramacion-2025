@@ -1,5 +1,5 @@
 import levelDevil.*
-import teclado.*
+import tecladoYMenu.*
 
 //          Administra los niveles
 object gestorNiveles {
@@ -38,13 +38,14 @@ class NivelBase {
     method crearPisos(positions) {
         positions.forEach({ pos =>
             const piso = new Piso(position = pos)
-            piso.iniciar()
+            piso.ponerImagen()
         })
     }
 
     method crearParedes(positions) {
         positions.forEach({ pos =>
-            game.addVisual(new Pared(position = pos))
+            const pared = new Pared(position = pos)
+            pared.ponerImagen()
         })
     }
 
@@ -107,6 +108,9 @@ class NivelBase {
     method iniciar() {
         // Limpiar pantalla
         gestorNiveles.limpiar()
+
+        //Dibujo UI
+        new VisualSoloLectura(image="Menu.png",position = game.at(22,11)).ponerImagen()
         
         // Dibujar el nivel usando el mapaDeCuadricula
         self.dibujarNivel()

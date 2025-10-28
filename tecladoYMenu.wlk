@@ -23,6 +23,16 @@ object gestorTeclado {
     }
 }
 
+class VisualSoloLectura {
+    const property position
+
+    var property image
+
+    method ponerImagen(){
+        game.addVisual(self)
+    }
+}
+
 //          Configuraciones de Teclado
 class ConfigTecladoBase {
     var controlesHabilitados = true
