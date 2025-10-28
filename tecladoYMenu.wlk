@@ -45,10 +45,10 @@ class ConfigTecladoBase {
         keyboard.r().onPressDo({ gestorNiveles.reiniciarNivel() })
     }
     
-    method teclaArriba() = arriba.aplicarCantidad(1)
-    method teclaAbajo() = abajo.aplicarCantidad(1)
-    method teclaIzquierda() = izquierda.aplicarCantidad(1)
-    method teclaDerecha() = derecha.aplicarCantidad(1)
+    method teclaArriba() = arriba
+    method teclaAbajo() = abajo
+    method teclaIzquierda() = izquierda
+    method teclaDerecha() = derecha
 
     method mover(direccion) {
         if (controlesHabilitados) {
@@ -69,10 +69,10 @@ class ConfigTecladoBase {
 object configTecladoNormal inherits ConfigTecladoBase {}
 
 object configTecladoInvertido inherits ConfigTecladoBase {
-    override method teclaArriba() = abajo.aplicarCantidad(1)
-    override method teclaAbajo() = arriba.aplicarCantidad(1)
-    override method teclaIzquierda() = derecha.aplicarCantidad(1)
-    override method teclaDerecha() = izquierda.aplicarCantidad(1)
+    override method teclaArriba() = abajo
+    override method teclaAbajo() = arriba
+    override method teclaIzquierda() = derecha
+    override method teclaDerecha() = izquierda
 }
 
 object configTecladoDoble inherits ConfigTecladoBase {

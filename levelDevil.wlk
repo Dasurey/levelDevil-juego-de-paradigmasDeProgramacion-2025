@@ -31,17 +31,17 @@ object gestorDeFinalizacion {
 //         Jugador principal
 object jugador {
     var property position = game.at(0, 6)
-    var vidas = 2
+    var vidas = 1
     var puntaje = 0
     var puntajeTemporalGanado = 0
     var puntajeTemporalPerdido = 0
 
     method reiniciarVidas() {
-        vidas = 2
+        vidas = 1
     }
     
-    var property image = "JugadorLevelDevil_V1.png"
-    
+    const imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"]
+    var property image = imagenes.first()
     method esPisable() = true
 
     method esMeta() = false
@@ -52,10 +52,11 @@ object jugador {
             gestorDeFinalizacion.iniciar()
             game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
             self.sumaDePuntaje(self.puntajeTemporalPerdido())
-            image = "ExplosionAlMorir.gif"
+            image = imagenes.last()
             game.schedule(2000, {
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
-                image = "JugadorLevelDevil_V1.png"
+                self.reiniciarVidas()
+                image = imagenes.first()
             })
         } else {
             game.say(self, "¡Has perdido una vida! Vidas restantes: " + vidas)

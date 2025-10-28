@@ -20,7 +20,6 @@ object gestorNiveles {
     
     method reiniciarNivel() {
         self.limpiar()
-        jugador.reiniciarVidas()
         jugador.resetearPuntajeTemporal()
         self.iniciarNivel()
         gestorTeclado.juegoEnMarcha() // Rehabilitar controles 
@@ -256,4 +255,3 @@ object endOfTheGame inherits NivelBase(siguienteNivel = null) {
         })
     }
 }
-
