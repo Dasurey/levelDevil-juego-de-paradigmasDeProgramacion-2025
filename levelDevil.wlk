@@ -129,7 +129,9 @@ class Pared {
 
     method esMeta() = false
 
-    method interactuarConPersonaje(pj){}
+    method interactuarConPersonaje(pj){
+        throw new Exception(message = "El personaje no puede pasar a través de paredes.")
+    }
 }
 
 class Meta {

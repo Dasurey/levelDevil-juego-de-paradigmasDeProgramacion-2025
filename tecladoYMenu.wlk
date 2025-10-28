@@ -45,10 +45,10 @@ class ConfigTecladoBase {
         keyboard.r().onPressDo({ gestorNiveles.reiniciarNivel() })
     }
     
-    method teclaArriba() = arriba
-    method teclaAbajo() = abajo
-    method teclaIzquierda() = izquierda
-    method teclaDerecha() = derecha
+    method teclaArriba() = arriba.aplicarCantidad(1)
+    method teclaAbajo() = abajo.aplicarCantidad(1)
+    method teclaIzquierda() = izquierda.aplicarCantidad(1)
+    method teclaDerecha() = derecha.aplicarCantidad(1)
 
     method mover(direccion) {
         if (controlesHabilitados) {
@@ -69,16 +69,24 @@ class ConfigTecladoBase {
 object configTecladoNormal inherits ConfigTecladoBase {}
 
 object configTecladoInvertido inherits ConfigTecladoBase {
-    override method teclaArriba() = abajo
-    override method teclaAbajo() = arriba
-    override method teclaIzquierda() = derecha
-    override method teclaDerecha() = izquierda
+    override method teclaArriba() = abajo.aplicarCantidad(1)
+    override method teclaAbajo() = arriba.aplicarCantidad(1)
+    override method teclaIzquierda() = derecha.aplicarCantidad(1)
+    override method teclaDerecha() = izquierda.aplicarCantidad(1)
 }
 
+object configTecladoDoble inherits ConfigTecladoBase {
+    override method teclaArriba() = arriba.aplicarCantidad(2)
+    override method teclaAbajo() = abajo.aplicarCantidad(2)
+    override method teclaIzquierda() = izquierda.aplicarCantidad(2)
+    override method teclaDerecha() = derecha.aplicarCantidad(2)
+}
 
 //              Direcciones
 
 class Movimiento {
+    var property cantidadPositions = 1
+
     method puedeMoverse(position) {
         // Verificar que esté dentro de los límites del juego
         if (!position.x().between(0, game.width() - 1) or !position.y().between(0, game.height() - 1)) {
@@ -99,20 +107,25 @@ class Movimiento {
     }
     
     method moverEnDireccion(position)
+
+    method aplicarCantidad(cantidad) {
+        cantidadPositions = cantidad
+        return self
+    }
 }
 
 object arriba inherits Movimiento {
-    override method moverEnDireccion(position) = position.up(1)
+    override method moverEnDireccion(position) = position.up(cantidadPositions)
 }
 
 object abajo inherits Movimiento {
-    override method moverEnDireccion(position) = position.down(1)
+    override method moverEnDireccion(position) = position.down(cantidadPositions)
 }
 
 object izquierda inherits Movimiento {
-    override method moverEnDireccion(position) = position.left(1)
+    override method moverEnDireccion(position) = position.left(cantidadPositions)
 }
 
 object derecha inherits Movimiento {
-    override method moverEnDireccion(position) = position.right(1)
+    override method moverEnDireccion(position) = position.right(cantidadPositions)
 }

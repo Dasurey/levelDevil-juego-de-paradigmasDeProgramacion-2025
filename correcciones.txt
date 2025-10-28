@@ -9,9 +9,10 @@
 - onTick falta delegación (hecho entre comillas)
 - dx dy mas expresivo (hecho)
 - esta bueno que pinchoMovil pueda pisar la meta? (hecho hace verificaciones demas para que no pase eso)
+- Interactuar con las paredes, podríamos usar excepciones o poner un comentario (hecho)
 - Tratar de hacer mas expresivo esto despues ["_", "j", "p", "m", "f", "i", "d"]
-- Interactuar con las paredes, podríamos usar excepciones o poner un comentario
-- Ver la forma de agregar dos personajes más uno que se canse rápido o que pueda correr cada 1seg, otro con una vida más y el normal de ahora
-- Más polimorfismo en base pasen los niveles, cambiar colores, invertir controles del personaje (nueva configuración de teclado como teclado troll o doble movimientocon uno solo), predeterminar un personaje a cada nivel. Que el personaje pueda interactuar con un objeto 
 - Fijase la nomenclatura que se usa para el mapaDeCuadricula() de cambiarle las letras para que sea mas declarativo
 - Fijase si estaria bbien como esta el objeto gestorDeFinalizacion
+- Más polimorfismo en base pasen los niveles, cambiar colores, invertir controles del personaje (nueva configuración de teclado como teclado troll o doble movimientocon uno solo), 
+predeterminar un personaje a cada nivel. Que el personaje pueda interactuar con un objeto (hecho pero no se aplicaria polimorfismo!!!!!)
+- Ver la forma de agregar dos personajes más uno que se canse rápido o que pueda correr cada 1seg, otro con una vida más y el normal de ahora
