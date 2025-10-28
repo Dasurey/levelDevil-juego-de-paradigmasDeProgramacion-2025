@@ -21,4 +21,3 @@ predeterminar un personaje a cada nivel. Que el personaje pueda interactuar con 
 - Arreglar el choclaso de morir() o cambiarle el nombre o implementarlo de otra manera.
 - Agregar el menu
 - Implementar polimofismo al agregar diferentes tipos de jugadores pero no se que cambiarle que no sean los atributos
-- fijarse si el tema del puntaje temporal ganado y perdido estaria bien o simplificarlo y listo.
