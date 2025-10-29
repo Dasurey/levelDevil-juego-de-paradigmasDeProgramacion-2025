@@ -22,3 +22,5 @@ predeterminar un personaje a cada nivel. Que el personaje pueda interactuar con 
 - Agregar el menu
 - Implementar polimofismo al agregar diferentes tipos de jugadores pero no se que cambiarle que no sean los atributos
 - fijarse si el tema del puntaje temporal ganado y perdido estaria bien o simplificarlo y listo.
+- Esta como estaria implementado de como podemos usar polimorfismo en jugador y los otros jugadores de como modificar los tipos de movimientos y cambiarle un toque
+de logica a calcularNuevaPosition para poder saltar paredes y etc.
