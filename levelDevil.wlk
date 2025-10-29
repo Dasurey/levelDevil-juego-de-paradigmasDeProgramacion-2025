@@ -149,20 +149,13 @@ class Meta {
         pj.sumaDePuntaje(pj.puntajeTemporalPerdido() + pj.puntajeTemporalGanado())
         pj.resetearPuntajeTemporal()
         game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
-        game.schedule(1000, {
-            game.removeVisual(pj)
-            image = "MetaConJugadorParte1.png"
-            game.schedule(1000, {
-                image = "MetaConJugadorParte2.png"
-                game.schedule(1000, {
-                    image = "MetaConJugadorParte3.png"
-                    game.schedule(1000, {
-                        gestorNiveles.siguienteNivel()
-                        // Rehabilitamos los controles después del cambio de nivel
-                        gestorTeclado.juegoEnMarcha()
-                    })
-                })
-            })
+            game.removeVisual(jugador)
+            image = "JugadorMeta.gif"
+        game.schedule(3000, {
+            gestorNiveles.siguienteNivel()
+            // Rehabilitamos los controles después del cambio de nivel
+            gestorTeclado.juegoEnMarcha()
+            
         })
     }
 }
