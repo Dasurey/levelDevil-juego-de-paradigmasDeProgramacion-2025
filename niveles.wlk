@@ -20,7 +20,7 @@ object gestorNiveles {
     
     method reiniciarNivel() {
         self.limpiar()
-        jugador.resetearPuntajeTemporal()
+        gestorDeJugadores.jugadorActual().resetearPuntajeTemporal()
         self.iniciarNivel()
         gestorTeclado.juegoEnMarcha() // Rehabilitar controles 
     }
@@ -115,7 +115,7 @@ class NivelBase {
         self.dibujarNivel()
         
         // Agregar jugador
-        game.addVisual(jugador)
+        game.addVisual(gestorDeJugadores.jugadorActual())
     }
 
     // Método para dibujar el nivel basado en el mapaDeCuadricula
@@ -145,7 +145,7 @@ class NivelBase {
             self.crearPisos([pos])
         } else if (celda == "j") {
             self.crearPisos([pos])
-            jugador.position(pos)
+            gestorDeJugadores.jugadorActual().position(pos)
         } else if (celda == "p") {
             self.crearParedes([pos])
         } else if (celda == "m") {
@@ -249,7 +249,7 @@ object endOfTheGame inherits NivelBase(siguienteNivel = null) {
     
     override method iniciar() {
         gestorNiveles.limpiar()
-        game.say(jugador, "¡Juego completado!")
+        game.say(gestorDeJugadores.jugadorActual(), "¡Juego completado!")
         game.schedule(3000, {
             game.stop()
         })

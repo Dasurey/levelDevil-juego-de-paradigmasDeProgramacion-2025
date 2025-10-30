@@ -38,10 +38,10 @@ class ConfigTecladoBase {
     var controlesHabilitados = true
 
     method iniciar() {
-        keyboard.up().onPressDo({ self.mover(self.teclaArriba()) })
-        keyboard.down().onPressDo({ self.mover(self.teclaAbajo()) })
-        keyboard.left().onPressDo({ self.mover(self.teclaIzquierda()) })
-        keyboard.right().onPressDo({ self.mover(self.teclaDerecha()) })
+        keyboard.up().onPressDo({ gestorDeJugadores.jugadorActual().estado().moverA(self.teclaArriba()) })
+        keyboard.down().onPressDo({ gestorDeJugadores.jugadorActual().estado().moverA(self.teclaAbajo()) })
+        keyboard.left().onPressDo({ gestorDeJugadores.jugadorActual().estado().moverA(self.teclaIzquierda()) })
+        keyboard.right().onPressDo({ gestorDeJugadores.jugadorActual().estado().moverA(self.teclaDerecha()) })
         keyboard.r().onPressDo({ gestorNiveles.reiniciarNivel() })
     }
     
@@ -49,13 +49,6 @@ class ConfigTecladoBase {
     method teclaAbajo() = abajo
     method teclaIzquierda() = izquierda
     method teclaDerecha() = derecha
-
-    method mover(direccion) {
-        if (controlesHabilitados) {
-            const nuevaPosition = direccion.calcularNuevaPosition(jugador.position())
-            jugador.position(nuevaPosition)
-        }
-    }
 
     method juegoEnMarcha() {
         controlesHabilitados = true
