@@ -62,11 +62,10 @@ describe "PinchoMovil vs Meta" {
     game.addVisual(pincho)
     game.addVisual(meta)
 
-  // Intentamos mover el pincho explícitamente hacia la derecha usando su método
-  pincho.moverEn(derecha)
+    // Intentamos mover el pincho explícitamente hacia la derecha usando su método
+    pincho.moverEn(derecha)
 
-  // Esperamos que el PinchoMovil NO haya cambiado su posición hacia la Meta.
-  assert.notEquals(meta.position(), pincho.position())
+    // Esperamos que el PinchoMovil NO haya cambiado su posición hacia la Meta.
+    assert.notEquals(meta.position(), pincho.position())
   }
-
 }

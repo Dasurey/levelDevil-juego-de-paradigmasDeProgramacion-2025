@@ -157,7 +157,7 @@ object escurridizo {
     method potencialDefensivoExtra() = 30
 }
 
-object jugadorLevelDevil inherits Personaje(position = game.at(0,0), estado = escurridizo, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, vidasDefault = 1) {}
+class jugadorLevelDevil inherits Personaje(position = game.at(0,0), estado = escurridizo, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, vidasDefault = 1) {}
 
 class Piso {
     var property position

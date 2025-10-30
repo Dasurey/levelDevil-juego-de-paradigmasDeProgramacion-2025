@@ -80,7 +80,6 @@ object configTecladoDoble inherits ConfigTecladoBase {
 }
 
 //              Direcciones
-
 class Movimiento {
     var property cantidadPositions = 1
 
