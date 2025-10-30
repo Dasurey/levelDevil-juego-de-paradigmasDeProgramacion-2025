@@ -329,8 +329,8 @@ class PinchoInvisible inherits ObjetoMorible {
 
     method hacerVisible() {
         game.onTick(100, tickId, {
-            const positionX = (gestorDeJugadores.jugadorActual().position().x() - self.position().x()).abs()
-            const positionY = (gestorDeJugadores.jugadorActual().position().y() - self.position().y()).abs()
+            const positionX = (gestorDeJugadores.jugadorActual.position().x() - self.position().x()).abs()
+            const positionY = (gestorDeJugadores.jugadorActual.position().y() - self.position().y()).abs()
 
             // Si el jugador está cerca, marcamos visible el pincho
             if (positionX <= 1 and positionY <= 1) {
