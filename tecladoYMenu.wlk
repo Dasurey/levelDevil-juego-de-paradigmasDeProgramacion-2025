@@ -38,10 +38,10 @@ class ConfigTecladoBase {
     var controlesHabilitados = true
 
     method iniciar() {
-        keyboard.up().onPressDo({ gestorDeJugadores.jugadorActual().estado().moverA(self.teclaArriba()) })
-        keyboard.down().onPressDo({ gestorDeJugadores.jugadorActual().estado().moverA(self.teclaAbajo()) })
-        keyboard.left().onPressDo({ gestorDeJugadores.jugadorActual().estado().moverA(self.teclaIzquierda()) })
-        keyboard.right().onPressDo({ gestorDeJugadores.jugadorActual().estado().moverA(self.teclaDerecha()) })
+        keyboard.up().onPressDo({ gestorDeJugadores.jugadorActual.moverA(self.teclaArriba()) })
+        keyboard.down().onPressDo({ gestorDeJugadores.jugadorActual.moverA(self.teclaAbajo()) })
+        keyboard.left().onPressDo({ gestorDeJugadores.jugadorActual.moverA(self.teclaIzquierda()) })
+        keyboard.right().onPressDo({ gestorDeJugadores.jugadorActual.moverA(self.teclaDerecha()) })
         keyboard.r().onPressDo({ gestorNiveles.reiniciarNivel() })
     }
     
