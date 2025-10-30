@@ -36,7 +36,7 @@ object gestorDeJugadores {
 class Personaje {
     var property position
     var vidasActuales = estado.vidasActuales()
-    var vidasDefault = estado.vidasDefault()
+    const vidasDefault = estado.vidasDefault()
     var puntaje = 0
     var puntajeTemporalGanado = 0
     var puntajeTemporalPerdido = 0
