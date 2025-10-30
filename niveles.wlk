@@ -20,7 +20,7 @@ object gestorNiveles {
     
     method reiniciarNivel() {
         self.limpiar()
-        gestorDeJugadores.jugadorActual.resetearPuntajeTemporal()
+        gestorDeJugadores.resetearPuntajeTemporal()
         self.iniciarNivel()
         gestorTeclado.juegoEnMarcha() // Rehabilitar controles 
     }
@@ -145,7 +145,7 @@ class NivelBase {
             self.crearPisos([pos])
         } else if (celda == "j") {
             self.crearPisos([pos])
-            gestorDeJugadores.jugadorActual.position(pos)
+            gestorDeJugadores.position(pos)
         } else if (celda == "p") {
             self.crearParedes([pos])
         } else if (celda == "m") {

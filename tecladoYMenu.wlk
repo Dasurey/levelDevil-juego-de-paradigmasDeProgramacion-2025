@@ -13,6 +13,8 @@ object gestorTeclado {
         configActual = nuevaConfig
         self.iniciarConfiguracionDeTeclas()
     }
+
+    method controlesHabilitados() = self.configActual().controlesHabilitados()
     
     method juegoEnMarcha() {
         configActual.juegoEnMarcha()
@@ -37,11 +39,13 @@ class VisualSoloLectura {
 class ConfigTecladoBase {
     var controlesHabilitados = true
 
+    method controlesHabilitados() = controlesHabilitados
+
     method iniciar() {
-        keyboard.up().onPressDo({ gestorDeJugadores.jugadorActual.moverA(self.teclaArriba()) })
-        keyboard.down().onPressDo({ gestorDeJugadores.jugadorActual.moverA(self.teclaAbajo()) })
-        keyboard.left().onPressDo({ gestorDeJugadores.jugadorActual.moverA(self.teclaIzquierda()) })
-        keyboard.right().onPressDo({ gestorDeJugadores.jugadorActual.moverA(self.teclaDerecha()) })
+        keyboard.up().onPressDo({ gestorDeJugadores.moverA(self.teclaArriba()) })
+        keyboard.down().onPressDo({ gestorDeJugadores.moverA(self.teclaAbajo()) })
+        keyboard.left().onPressDo({ gestorDeJugadores.moverA(self.teclaIzquierda()) })
+        keyboard.right().onPressDo({ gestorDeJugadores.moverA(self.teclaDerecha()) })
         keyboard.r().onPressDo({ gestorNiveles.reiniciarNivel() })
     }
     

@@ -30,13 +30,27 @@ object gestorDeFinalizacion {
 
 object gestorDeJugadores {
     var property jugadorActual = jugadorLevelDevil
+
+    method moverA(direccion) {
+        self.jugadorActual().moverA(direccion)
+    }
+
+    method position() = self.jugadorActual().position()
+
+    method position(pos) {
+        jugadorActual.position(pos)
+    }
+
+    method resetearPuntajeTemporal() {
+        jugadorActual.resetearPuntajeTemporal()
+    }
 }
 
 
 class Personaje {
     var property position
-    var vidasActuales = estado.vidasActuales()
-    method vidasDefault() = estado.vidasDefault()
+    var vidasActuales
+    var vidasDefault
     var puntaje = 0
     var puntajeTemporalGanado = 0
     var puntajeTemporalPerdido = 0
@@ -48,18 +62,19 @@ class Personaje {
     method potencialDefensivo() = 10 * vidasActuales + estado.potencialDefensivoExtra()
 
     method reiniciarVidas() {
-        vidasActuales = self.vidasDefault()
+        vidasActuales = vidasDefault
     }
     
     const imagenes
     var property image = imagenes.first()
+
     method esPisable() = true
 
     method esMeta() = false
 
     method mover(direccion) {
         const nuevaPosition = direccion.calcularNuevaPosition(self.position())
-        if (gestorTeclado.configActual.controlesHabilitados()) {
+        if (gestorTeclado.controlesHabilitados()) {
             self.position(nuevaPosition)
         }
     }
@@ -121,21 +136,11 @@ class Personaje {
 object muertoVivo {
     method cansancio() = 1000
 
-    var property vidasActuales = 5
-    const vidasDefault = 5
-
-    method vidasDefault() = vidasDefault
-
     method potencialDefensivoExtra() = 5
 }
 
 object sinEnergias {
     method cansancio() = 800
-
-    var property vidasActuales = 2
-    const vidasDefault = 2
-
-    method vidasDefault() = vidasDefault
 
     method potencialDefensivoExtra() = 20
 }
@@ -143,26 +148,16 @@ object sinEnergias {
 object explorador {
     method cansancio() = 0
 
-    var property vidasActuales = 3
-    const vidasDefault = 3
-
-    method vidasDefault() = vidasDefault
-
     method potencialDefensivoExtra() = 10
 }
 
 object escurridizo {
     method cansancio() = 0
 
-    var property vidasActuales = 1
-    const vidasDefault = 1
-
-    method vidasDefault() = vidasDefault
-
     method potencialDefensivoExtra() = 30
 }
 
-object jugadorLevelDevil inherits Personaje(position = game.at(0,0), estado = escurridizo, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"]) {}
+object jugadorLevelDevil inherits Personaje(position = game.at(0,0), estado = escurridizo, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, vidasDefault = 1) {}
 
 class Piso {
     var property position
@@ -224,13 +219,12 @@ class Meta {
         pj.sumaDePuntaje(pj.puntajeTemporalPerdido() + pj.puntajeTemporalGanado())
         pj.resetearPuntajeTemporal()
         game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
-            game.removeVisual(gestorDeJugadores.jugadorActual())
-            image = "JugadorMeta.gif"
+        game.removeVisual(gestorDeJugadores.jugadorActual())
+        image = "JugadorMeta.gif"
         game.schedule(3000, {
             gestorNiveles.siguienteNivel()
             // Rehabilitamos los controles después del cambio de nivel
             gestorTeclado.juegoEnMarcha()
-            
         })
     }
 }
@@ -316,7 +310,7 @@ class PinchoInvisible inherits ObjetoMorible {
     // Genero un id por instancia para no pisar otros onTick
     const tickId = "mostrarPincho_" + self.identity()
 
-    var property visible = false // comienza invisible
+    var visible = false // comienza invisible
 
     // La imagen depende de la propiedad 'visible'
     override method image() {
@@ -329,8 +323,8 @@ class PinchoInvisible inherits ObjetoMorible {
 
     method hacerVisible() {
         game.onTick(100, tickId, {
-            const positionX = (gestorDeJugadores.jugadorActual.position().x() - self.position().x()).abs()
-            const positionY = (gestorDeJugadores.jugadorActual.position().y() - self.position().y()).abs()
+            const positionX = (gestorDeJugadores.position().x() - self.position().x()).abs()
+            const positionY = (gestorDeJugadores.position().y() - self.position().y()).abs()
 
             // Si el jugador está cerca, marcamos visible el pincho
             if (positionX <= 1 and positionY <= 1) {
