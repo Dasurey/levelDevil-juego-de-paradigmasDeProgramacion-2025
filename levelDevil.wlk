@@ -36,7 +36,7 @@ object gestorDeJugadores {
 class Personaje {
     var property position
     var vidasActuales = estado.vidasActuales()
-    const vidasDefault = estado.vidasDefault()
+    method vidasDefault() = estado.vidasDefault()
     var puntaje = 0
     var puntajeTemporalGanado = 0
     var puntajeTemporalPerdido = 0
@@ -48,7 +48,7 @@ class Personaje {
     method potencialDefensivo() = 10 * vidasActuales + estado.potencialDefensivoExtra()
 
     method reiniciarVidas() {
-        vidasActuales = vidasDefault
+        vidasActuales = self.vidasDefault()
     }
     
     const imagenes
