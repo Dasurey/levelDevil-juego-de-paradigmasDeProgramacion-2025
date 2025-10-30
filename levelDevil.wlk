@@ -58,9 +58,9 @@ class Personaje {
     method esMeta() = false
 
     method mover(direccion) {
-        const nuevaPosition = direccion.calcularNuevaPosition(gestorDeJugadores.jugadorActual().position())
+        const nuevaPosition = direccion.calcularNuevaPosition(self.position())
         if (gestorTeclado.configActual.controlesHabilitados()) {
-            gestorDeJugadores.jugadorActual().position(nuevaPosition)
+            self.position(nuevaPosition)
         }
     }
 
