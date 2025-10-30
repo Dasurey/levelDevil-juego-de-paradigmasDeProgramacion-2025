@@ -41,6 +41,9 @@ class Personaje {
     var puntajeTemporalGanado = 0
     var puntajeTemporalPerdido = 0
     var property estado
+    var cantidadDeMovimientos = 0
+
+    method cantidadDeCansancio() = cantidadDeMovimientos * estado.cansancio()
 
     method potencialDefensivo() = 10 * vidasActuales + estado.potencialDefensivoExtra()
 
@@ -62,9 +65,9 @@ class Personaje {
     }
 
     method moverA(direccion) {
-        const cantidadDeCansancio = estado.cansancio()
-        if(cantidadDeCansancio > 0) {
-            game.schedule(cantidadDeCansancio, { 
+        if(self.cantidadDeCansancio() > 0) {
+            cantidadDeMovimientos += 1
+            game.schedule(self.cantidadDeCansancio(), { 
                 self.mover(direccion)
             })
         } else {
