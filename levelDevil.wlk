@@ -56,7 +56,7 @@ class Personaje {
     var property estado
     var cantidadDeMovimientos = 0
 
-    method cantidadDeCansancio() = cantidadDeMovimientos * estado.cansancio()
+    method cantidadDeCansancio() = (cantidadDeMovimientos / 2) * estado.cansancio()
 
     method potencialDefensivo() = 10 * vidasActuales + estado.potencialDefensivoExtra()
 
@@ -133,13 +133,13 @@ class Personaje {
 }
 
 object muertoVivo {
-    method cansancio() = 1000
+    method cansancio() = 10
 
-    method potencialDefensivoExtra() = 5
+    method potencialDefensivoExtra() = 200
 }
 
 object sinEnergias {
-    method cansancio() = 800
+    method cansancio() = 8
 
     method potencialDefensivoExtra() = 20
 }
@@ -157,6 +157,8 @@ object escurridizo {
 }
 
 object jugadorLevelDevil inherits Personaje(position = game.at(0,0), estado = escurridizo, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, vidasDefault = 1) {}
+
+object zombie inherits Personaje(position = game.at(0,0), estado = muertoVivo, imagenes = ["Zombie_Derecha.png", "ExplosionAlMorir.gif"], vidasActuales = 5, vidasDefault = 5) {}
 
 class Piso {
     var property position
