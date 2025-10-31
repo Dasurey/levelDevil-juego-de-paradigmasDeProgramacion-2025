@@ -60,7 +60,7 @@ class NivelBase {
                 x = 0
                 fila.forEach({ celda =>
                     if(celda == tipo) {
-                        celda.agregarAlNivel(x, y, self)
+                        celda.agregarAlNivel(x, y)
                     }
                     x += 1
                 })
@@ -76,12 +76,12 @@ class NivelBase {
 
 // Vacio
 object v {
-    method agregarAlNivel(_x, _y, _level) {}
+    method agregarAlNivel(_x, _y) {}
 }
 
 // Piso
 object _ {
-    method agregarAlNivel(x, y, _level) {
+    method agregarAlNivel(x, y) {
         const piso = new Piso(position = game.at(x, y))
         piso.ponerImagen()
     }
@@ -89,7 +89,7 @@ object _ {
 
 // Pared
 object p {
-    method agregarAlNivel(x, y, _level) {
+    method agregarAlNivel(x, y) {
         const pared = new Pared(position = game.at(x, y))
         pared.ponerImagen()
     }
@@ -97,45 +97,45 @@ object p {
 
 // Meta
 object m {
-    method agregarAlNivel(x, y, level) {
+    method agregarAlNivel(x, y) {
         const meta = new Meta(position = game.at(x, y))
-        _.agregarAlNivel(x, y, level)
+        _.agregarAlNivel(x, y)
         game.addVisual(meta)
     }
 }
 
 // Moneda
 object d {
-    method agregarAlNivel(x, y, level) {
+    method agregarAlNivel(x, y) {
         const moneda = new Moneda(position = game.at(x, y))
-        _.agregarAlNivel(x, y, level)
+        _.agregarAlNivel(x, y)
         game.addVisual(moneda)
     }
 }
 
 // Moneda Falsa
 object f {
-    method agregarAlNivel(x, y, _level) {
+    method agregarAlNivel(x, y) {
         const monedaFalsa = new MonedaFalsa(position = game.at(x, y))
-        _.agregarAlNivel(x, y, _level)
+        _.agregarAlNivel(x, y)
         game.addVisual(monedaFalsa)
     }
 }
 
 // Pincho
 object s {
-    method agregarAlNivel(x, y, _level) {
+    method agregarAlNivel(x, y) {
         const pincho = new Pincho(position = game.at(x, y))
-        _.agregarAlNivel(x, y, _level)
+        _.agregarAlNivel(x, y)
         game.addVisual(pincho)
     }
 }
 
 // Pincho Invisible
 object i {
-    method agregarAlNivel(x, y, _level) {
+    method agregarAlNivel(x, y) {
         const pinchoInv = new PinchoInvisible(position = game.at(x, y))
-        _.agregarAlNivel(x, y, _level)
+        _.agregarAlNivel(x, y)
         game.addVisual(pinchoInv)
         pinchoInv.hacerVisible()
     }
@@ -143,18 +143,18 @@ object i {
 
 // Pincho Invisible Instantaneo
 object n {
-    method agregarAlNivel(x, y, _level) {
+    method agregarAlNivel(x, y) {
         const pinchoInvInst = new PinchoInvisibleInstantaneo(position = game.at(x, y))
-        _.agregarAlNivel(x, y, _level)
+        _.agregarAlNivel(x, y)
         game.addVisual(pinchoInvInst)
     }
 }
 
 // Pincho Movil
 object j {
-    method agregarAlNivel(x, y, _level) {
+    method agregarAlNivel(x, y) {
         const pinchoMov = new PinchoMovil(position = game.at(x, y))
-        _.agregarAlNivel(x, y, _level)
+        _.agregarAlNivel(x, y)
         game.addVisual(pinchoMov)
         pinchoMov.moverPinchoMovil()
     }
@@ -162,10 +162,10 @@ object j {
 
 
 object y {
-    method agregarAlNivel(x, y, _level) {
+    method agregarAlNivel(x, y) {
         const jugador = gestorDeJugadores.jugadorActual()
         jugador.position(game.at(x, y))
-        _.agregarAlNivel(x, y, _level)
+        _.agregarAlNivel(x, y)
     }
 }
 
