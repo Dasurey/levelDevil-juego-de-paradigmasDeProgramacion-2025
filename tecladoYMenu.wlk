@@ -1,30 +1,6 @@
 import levelDevil.*
 import niveles.*
 
-//          Gestor de Teclado
-object gestorTeclado {
-    var property configActual = configTecladoNormal
-    
-    method iniciarConfiguracionDeTeclas() {
-        configActual.iniciar()
-    }
-    
-    method cambiarConfiguracion(nuevaConfig) {
-        configActual = nuevaConfig
-        self.iniciarConfiguracionDeTeclas()
-    }
-
-    method controlesHabilitados() = self.configActual().controlesHabilitados()
-    
-    method juegoEnMarcha() {
-        configActual.juegoEnMarcha()
-    }
-    
-    method juegoBloqueado() {
-        configActual.juegoBloqueado()
-    }
-}
-
 class VisualSoloLectura {
     const property position
 
@@ -35,24 +11,25 @@ class VisualSoloLectura {
     }
 }
 
-//          Configuraciones de Teclado
-class ConfigTecladoBase {
+// Configuraciones de Teclado
+object configTeclado {
+    var teclado = tecladoNormal
+
+    method teclado(nuevoTeclado) { 
+        teclado = nuevoTeclado
+    }
+
     var controlesHabilitados = true
 
     method controlesHabilitados() = controlesHabilitados
 
     method iniciar() {
-        keyboard.up().onPressDo({ gestorDeJugadores.moverA(self.teclaArriba()) })
-        keyboard.down().onPressDo({ gestorDeJugadores.moverA(self.teclaAbajo()) })
-        keyboard.left().onPressDo({ gestorDeJugadores.moverA(self.teclaIzquierda()) })
-        keyboard.right().onPressDo({ gestorDeJugadores.moverA(self.teclaDerecha()) })
-        keyboard.r().onPressDo({ gestorNiveles.reiniciarNivel() })
+        keyboard.up().onPressDo({ teclado.up() })
+        keyboard.down().onPressDo({ teclado.down() })
+        keyboard.left().onPressDo({ teclado.left() })
+        keyboard.right().onPressDo({ teclado.right() })
+        keyboard.r().onPressDo({ teclado.r() })
     }
-    
-    method teclaArriba() = arriba
-    method teclaAbajo() = abajo
-    method teclaIzquierda() = izquierda
-    method teclaDerecha() = derecha
 
     method juegoEnMarcha() {
         controlesHabilitados = true
@@ -63,23 +40,44 @@ class ConfigTecladoBase {
     }
 }
 
-object configTecladoNormal inherits ConfigTecladoBase {}
+class TecladoBase{
+    method up(){}
+    method down(){}
+    method left(){}
+    method right(){}
 
-object configTecladoInvertido inherits ConfigTecladoBase {
-    override method teclaArriba() = abajo
-    override method teclaAbajo() = arriba
-    override method teclaIzquierda() = derecha
-    override method teclaDerecha() = izquierda
+    method r(){}
+    method m(){}
 }
 
-object configTecladoDoble inherits ConfigTecladoBase {
-    override method teclaArriba() = arriba.aplicarCantidad(2)
-    override method teclaAbajo() = abajo.aplicarCantidad(2)
-    override method teclaIzquierda() = izquierda.aplicarCantidad(2)
-    override method teclaDerecha() = derecha.aplicarCantidad(2)
+object tecladoNormal inherits TecladoBase {
+    override method up(){gestorDeJugadores.moverA(arriba)}
+    override method down(){gestorDeJugadores.moverA(abajo)}
+    override method left(){gestorDeJugadores.moverA(izquierda)}
+    override method right(){gestorDeJugadores.moverA(derecha)}
+
+    override method r(){gestorNiveles.reiniciarNivel()}
 }
 
-//              Direcciones
+object tecladoInvertido inherits TecladoBase {
+    override method up(){gestorDeJugadores.moverA(abajo)}
+    override method down(){gestorDeJugadores.moverA(arriba)}
+    override method left(){gestorDeJugadores.moverA(derecha)}
+    override method right(){gestorDeJugadores.moverA(izquierda)}
+
+    override method r(){gestorNiveles.reiniciarNivel()}
+}
+
+object tecladoDoble inherits TecladoBase {
+    override method up(){gestorDeJugadores.moverA(arriba.aplicarCantidad(2))}
+    override method down(){gestorDeJugadores.moverA(abajo.aplicarCantidad(2))}
+    override method left(){gestorDeJugadores.moverA(izquierda.aplicarCantidad(2))}
+    override method right(){gestorDeJugadores.moverA(derecha.aplicarCantidad(2))}
+
+    override method r(){gestorNiveles.reiniciarNivel()}
+}
+
+// Direcciones
 class Movimiento {
     var property cantidadPositions = 1
 

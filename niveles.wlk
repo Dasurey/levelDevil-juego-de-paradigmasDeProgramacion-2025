@@ -22,7 +22,7 @@ object gestorNiveles {
         self.limpiar()
         gestorDeJugadores.resetearPuntajeTemporal()
         self.iniciarNivel()
-        gestorTeclado.juegoEnMarcha() // Rehabilitar controles 
+        configTeclado.juegoEnMarcha() // Rehabilitar controles
     }
 }
 
@@ -169,7 +169,7 @@ class NivelBase {
 
 //*==========================| Niveles Instanciados |==========================
 
-object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
+object nivel1 inherits NivelBase(siguienteNivel = nivel3) {
     override method mapaDeCuadricula() = [
         /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
         // 24 columnas x 12 filas
@@ -239,7 +239,7 @@ object nivel3 inherits NivelBase(siguienteNivel = endOfTheGame) {
     
     override method iniciar() {
         // Configurar el teclado invertido para este nivel
-        gestorTeclado.cambiarConfiguracion(configTecladoInvertido)
+        configTeclado.teclado(tecladoInvertido)
         super()
     }
 }

@@ -12,7 +12,7 @@ object juegoLevelDevil {
         // Configurar las colisiones con los pinchos
         game.onCollideDo(gestorDeJugadores.jugadorActual(), { elemento => elemento.interactuarConPersonaje(gestorDeJugadores.jugadorActual()) })
 
-        gestorTeclado.iniciarConfiguracionDeTeclas()
+        configTeclado.iniciar()
         gestorNiveles.iniciarNivel()
     }
 }
@@ -20,7 +20,7 @@ object juegoLevelDevil {
 // Fijase si esta bien esto
 object gestorDeFinalizacion {
     method iniciar() {
-        gestorTeclado.juegoBloqueado()
+        configTeclado.juegoBloqueado()
         // Detener todos los PinchosMovil
         game.allVisuals()
             .filter({ visual => visual.toString().contains("PinchoMovil") })
@@ -45,7 +45,6 @@ object gestorDeJugadores {
         jugadorActual.resetearPuntajeTemporal()
     }
 }
-
 
 class Personaje {
     var property position
@@ -74,7 +73,7 @@ class Personaje {
 
     method mover(direccion) {
         const nuevaPosition = direccion.calcularNuevaPosition(self.position())
-        if (gestorTeclado.controlesHabilitados()) {
+        if (configTeclado.controlesHabilitados()) {
             self.position(nuevaPosition)
         }
     }
@@ -157,7 +156,7 @@ object escurridizo {
     method potencialDefensivoExtra() = 30
 }
 
-class jugadorLevelDevil inherits Personaje(position = game.at(0,0), estado = escurridizo, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, vidasDefault = 1) {}
+object jugadorLevelDevil inherits Personaje(position = game.at(0,0), estado = escurridizo, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, vidasDefault = 1) {}
 
 class Piso {
     var property position
@@ -224,7 +223,7 @@ class Meta {
         game.schedule(3000, {
             gestorNiveles.siguienteNivel()
             // Rehabilitamos los controles después del cambio de nivel
-            gestorTeclado.juegoEnMarcha()
+            configTeclado.juegoEnMarcha()
         })
     }
 }
