@@ -130,7 +130,7 @@ class TecladoMenu inherits TecladoBase {
 
 object tecladoMenuElegirPersonajes inherits TecladoBase {
     override method num1() {
-        gestorDeJugadores.seleccionarPersonaje(juegoLevelDevil)
+        gestorDeJugadores.seleccionarPersonaje(jugadorLevelDevil)
         gestorNiveles.iniciarNivel()
     }
     override method num2() {
