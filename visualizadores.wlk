@@ -48,7 +48,7 @@ object gestorVisualizadores {
     const visualizadorPuntaje = new VisualizadorPuntaje(position = game.at(0, 11))
     var visualizadorPuntajeActivo = false
     
-    method inicializar() {
+    method iniciar() {
         self.limpiar() // Limpiamos todo primero
         visualizadorPuntaje.ponerTexto()
         game.onTick(100, "actualizarPuntaje", { visualizadorPuntaje.ponerTexto() })

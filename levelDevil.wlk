@@ -13,17 +13,22 @@ object juegoLevelDevil {
         game.onCollideDo(gestorDeJugadores.jugadorActual(), { elemento => elemento.interactuarConPersonaje(gestorDeJugadores.jugadorActual()) })
 
         configTeclado.iniciar()
-        gestorNiveles.iniciarNivel()
-        
-        // Inicializar visualización de vidas y niveles
-        gestorVisualizadores.inicializar()
+
+        //Inicio el menu
+        menu.iniciar()
+    }
+
+    method limpiar() {
+        gestorNiveles.limpiar()
+        gestorVisualizadores.limpiar()
+        game.allVisuals().forEach({ visual => game.removeVisual(visual) })
     }
 }
 
 // Fijase si esta bien esto
 object gestorDeFinalizacion {
     method iniciar() {
-        configTeclado.juegoBloqueado()
+        configTeclado.controlesBloqueados()
         // Detener todos los PinchosMovil
         game.allVisuals()
             .filter({ visual => visual.toString().contains("PinchoMovil") })
@@ -44,6 +49,8 @@ object gestorDeJugadores {
 
     method vidasActuales() = self.jugadorActual().vidasActuales()
 
+    method imagenesDeMeta() = self.jugadorActual().imagenesDeMeta()
+
     method position(pos) {
         jugadorActual.position(pos)
     }
@@ -51,19 +58,25 @@ object gestorDeJugadores {
     method resetearPuntajeTemporal() {
         jugadorActual.resetearPuntajeTemporal()
     }
+
+    method seleccionarPersonaje(jugador) {
+        jugadorActual = jugador // Por ahora solo hay un personaje
+    }
 }
 
 class Personaje {
     var property position
     var property vidasActuales
-    const vidasDefault
+    const vidasDefault = vidasActuales
     var puntaje = 0
     var puntajeTemporalGanado = 0
     var puntajeTemporalPerdido = 0
     var property estado
     var cantidadDeMovimientos = 0
 
-    method cantidadDeCansancio() = (cantidadDeMovimientos / 2) * estado.cansancio()
+    method cantidadDeMovimientos() = cantidadDeMovimientos
+
+    method cantidadDeCansancio() = (cantidadDeMovimientos / 2).truncate(0) * estado.cansancio()
 
     method potencialDefensivo() = 10 * vidasActuales + estado.potencialDefensivoExtra()
 
@@ -73,7 +86,11 @@ class Personaje {
     }
     
     const imagenes
-    var property image = imagenes.first()
+    var imagen = imagenes.first()
+    method image() = imagen
+
+    const imagenesDeMeta
+    method imagenesDeMeta() = imagenesDeMeta
 
     method esPisable() = true
 
@@ -87,7 +104,7 @@ class Personaje {
     }
 
     method moverA(direccion) {
-        if(self.cantidadDeCansancio() > 0) {
+        if(estado.cansancio() > 0) {
             cantidadDeMovimientos += 1
             game.schedule(self.cantidadDeCansancio(), { 
                 self.mover(direccion)
@@ -102,16 +119,13 @@ class Personaje {
         gestorVisualizadores.actualizarVidas(vidasActuales)
         if (vidasActuales <= 0) {
             gestorDeFinalizacion.iniciar()
-            game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
-            self.sumaDePuntaje(self.puntajeTemporalPerdido())
-            image = imagenes.last()
+            imagen = imagenes.last()
             game.schedule(2000, {
+                self.sumaDePuntaje(self.puntajeTemporalPerdido())
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
                 self.reiniciarVidas()
-                image = imagenes.first()
+                imagen = imagenes.first()
             })
-        } else {
-            game.say(self, "¡Has perdido una vida! Vidas restantes: " + vidasActuales)
         }
     }
 
@@ -142,7 +156,7 @@ class Personaje {
 }
 
 object muertoVivo {
-    method cansancio() = 10
+    method cansancio() = 100
 
     method potencialDefensivoExtra() = 200
 }
@@ -165,18 +179,19 @@ object escurridizo {
     method potencialDefensivoExtra() = 30
 }
 
-object jugadorLevelDevil inherits Personaje(position = game.at(0,0), estado = escurridizo, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, vidasDefault = 1) {}
+object jugadorLevelDevil inherits Personaje(position = game.at(0,0), estado = escurridizo, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, imagenesDeMeta = ["MetaConJugadorParte1.png", "MetaConJugadorParte2.png", "MetaConJugadorParte3.png"]) {}
 
-object zombie inherits Personaje(position = game.at(0,0), estado = muertoVivo, imagenes = ["Zombie_Derecha.png", "ExplosionAlMorir.gif"], vidasActuales = 5, vidasDefault = 5) {}
+object zombie inherits Personaje(position = game.at(0,0), estado = muertoVivo, imagenes = ["Zombie_Derecha.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = []) {}
 
 class Piso {
     var property position
 
     const imagenes = ["Piso1.png", "Piso2.png", "Piso3.png"]
-    var property image = ""
+    var imagen = ""
+    method image() = imagen
 
     method imagenAleatoria(){
-        image = imagenes.anyOne()
+        imagen = imagenes.anyOne()
     }
 
     method ponerImagen(){
@@ -195,10 +210,11 @@ class Pared {
     const property position
     
     const imagenes = ["Muro1.png", "Muro2.png", "Muro3.png", "Muro4.png"]
-    var property image = ""
+    var imagen = ""
+    method image() = imagen
 
     method imagenAleatoria(){
-        image = imagenes.anyOne()
+        imagen = imagenes.anyOne()
     }
 
     method ponerImagen(){
@@ -218,7 +234,11 @@ class Pared {
 class Meta {
     var property position
 
-    var property image = "Meta_V2.png"
+    const imagenes = ["Meta_V2.png"] + gestorDeJugadores.imagenesDeMeta()
+
+    var imagen = imagenes.first()
+
+    method image() = imagen
 
     method esPisable() = true
 
@@ -228,13 +248,18 @@ class Meta {
         gestorDeFinalizacion.iniciar()
         pj.sumaDePuntaje(pj.puntajeTemporalPerdido() + pj.puntajeTemporalGanado())
         pj.resetearPuntajeTemporal()
-        game.say(pj, "¡Nivel completado! Puntaje: " + pj.puntaje())
         game.removeVisual(gestorDeJugadores.jugadorActual())
-        image = "JugadorMeta.gif"
-        game.schedule(3000, {
-            gestorNiveles.siguienteNivel()
-            // Rehabilitamos los controles después del cambio de nivel
-            configTeclado.juegoEnMarcha()
+        imagen = imagenes.get(1)
+        game.schedule(1000, {
+            imagen = imagenes.get(2)
+            game.schedule(1000, {
+                imagen = imagenes.get(3)
+                game.schedule(1000, {
+                    gestorNiveles.siguienteNivel()
+                    // Rehabilitamos los controles después del cambio de nivel
+                    configTeclado.controlesEnMarcha()
+                })
+            })
         })
     }
 }
@@ -250,7 +275,6 @@ class Moneda {
 
     method interactuarConPersonaje(pj) {
         pj.sumaDePuntajeTemporalGanado(100)
-        game.say(pj, "¡Moneda recogida! Puntaje: " + pj.puntajeCompleto())
         game.removeVisual(self)
     }
 }

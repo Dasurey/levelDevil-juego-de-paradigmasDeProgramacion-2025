@@ -32,7 +32,7 @@ object gestorNiveles {
         self.limpiar()
         gestorDeJugadores.resetearPuntajeTemporal()
         self.iniciarNivel()
-        configTeclado.juegoEnMarcha() // Rehabilitar controles
+        configTeclado.controlesEnMarcha() // Rehabilitar controles
     }
 }
 
@@ -47,7 +47,7 @@ class NivelBase {
 
     method iniciar() {
         // Limpiar pantalla
-        gestorNiveles.limpiar()
+        juegoLevelDevil.limpiar()
 
         //Dibujo UI
         new VisualSoloLectura(image="Menu.png",position = game.at(22,11)).ponerImagen()
@@ -57,9 +57,11 @@ class NivelBase {
         
         // Agregar jugador
         self.dibujarJugador()
+
+        configTeclado.juegoEnMarcha() // Habilitar controles
         
         // Actualizar visualizador de niveles y vidas
-        gestorVisualizadores.inicializar()
+        gestorVisualizadores.iniciar()
         
         gestorNiveles.nivelActual(self)
     }
@@ -272,8 +274,8 @@ object endOfTheGame {
 
     method iniciar() {
         // Limpiar todo, incluyendo visualizadores
-        gestorNiveles.limpiar()
-        gestorVisualizadores.limpiar()
+        juegoLevelDevil.limpiar()
+        configTeclado.juegoEnMarcha()
         game.stop()
     }
 }
