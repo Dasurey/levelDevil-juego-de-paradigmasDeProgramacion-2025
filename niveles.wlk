@@ -1,10 +1,20 @@
 import levelDevil.*
 import tecladoYMenu.*
+import visualizadores.*
 
 //          Administra los niveles
 object gestorNiveles {
     var property nivelActual = nivel1
-
+    
+    method cantidadNivelesDesde(nivel) {
+        if (nivel.siguienteNivel() == null) {
+            return 0
+        }
+        return 1 + self.cantidadNivelesDesde(nivel.siguienteNivel())
+    }
+    
+    method cantidadNiveles() = self.cantidadNivelesDesde(nivel1)
+    
     method iniciarNivel() {
         nivelActual.iniciar()
     }
@@ -32,6 +42,8 @@ class NivelBase {
     method mapaDeCuadricula() = [] /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
     
     var property siguienteNivel = null
+    
+    method numero() // Cada nivel debe implementar este método
 
     method iniciar() {
         // Limpiar pantalla
@@ -45,7 +57,10 @@ class NivelBase {
         
         // Agregar jugador
         self.dibujarJugador()
-
+        
+        // Actualizar visualizador de niveles y vidas
+        gestorVisualizadores.inicializar()
+        
         gestorNiveles.nivelActual(self)
     }
 
@@ -172,6 +187,8 @@ object y {
 //*==========================| Niveles Instanciados |==========================
 
 object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
+    override method numero() = 1
+    
     override method mapaDeCuadricula() = [
         /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
         // 24 columnas x 12 filas
@@ -192,6 +209,8 @@ object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
 }
 
 object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
+    override method numero() = 2
+    
     override method mapaDeCuadricula() = [
         /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
         // 24 columnas x 12 filas
@@ -221,6 +240,8 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
 }
 
 object nivel3 inherits NivelBase(siguienteNivel = endOfTheGame) {
+    override method numero() = 3
+    
     override method mapaDeCuadricula() = [
         /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
         // 24 columnas x 12 filas
@@ -246,14 +267,13 @@ object nivel3 inherits NivelBase(siguienteNivel = endOfTheGame) {
     }
 }
 
-object endOfTheGame inherits NivelBase(siguienteNivel = null) {
-    override method mapaDeCuadricula() = []  // Nivel final no necesita mapa
-    
-    override method iniciar() {
+object endOfTheGame {
+    method siguienteNivel() = null
+
+    method iniciar() {
+        // Limpiar todo, incluyendo visualizadores
         gestorNiveles.limpiar()
-        game.say(gestorDeJugadores.jugadorActual(), "¡Juego completado!")
-        game.schedule(3000, {
-            game.stop()
-        })
+        gestorVisualizadores.limpiar()
+        game.stop()
     }
 }

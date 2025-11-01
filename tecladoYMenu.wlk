@@ -1,16 +1,6 @@
 import levelDevil.*
 import niveles.*
 
-class VisualSoloLectura {
-    const property position
-
-    var property image
-
-    method ponerImagen(){
-        game.addVisual(self)
-    }
-}
-
 // Configuraciones de Teclado
 object configTeclado {
     var teclado = tecladoNormal

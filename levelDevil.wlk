@@ -1,7 +1,7 @@
 import niveles.*
 import tecladoYMenu.*
+import visualizadores.*
 
-//        Configura el juego, arranca todo, inicializa teclado, etc.
 object juegoLevelDevil {
     method iniciar() {
         game.title("Level Devil")
@@ -14,6 +14,9 @@ object juegoLevelDevil {
 
         configTeclado.iniciar()
         gestorNiveles.iniciarNivel()
+        
+        // Inicializar visualización de vidas y niveles
+        gestorVisualizadores.inicializar()
     }
 }
 
@@ -28,6 +31,8 @@ object gestorDeFinalizacion {
     }
 }
 
+
+
 object gestorDeJugadores {
     var property jugadorActual = jugadorLevelDevil
 
@@ -36,6 +41,8 @@ object gestorDeJugadores {
     }
 
     method position() = self.jugadorActual().position()
+
+    method vidasActuales() = self.jugadorActual().vidasActuales()
 
     method position(pos) {
         jugadorActual.position(pos)
@@ -48,8 +55,8 @@ object gestorDeJugadores {
 
 class Personaje {
     var property position
-    var vidasActuales
-    var vidasDefault
+    var property vidasActuales
+    const vidasDefault
     var puntaje = 0
     var puntajeTemporalGanado = 0
     var puntajeTemporalPerdido = 0
@@ -62,6 +69,7 @@ class Personaje {
 
     method reiniciarVidas() {
         vidasActuales = vidasDefault
+        gestorVisualizadores.actualizarVidas(vidasActuales)
     }
     
     const imagenes
@@ -91,6 +99,7 @@ class Personaje {
 
     method morir() {
         vidasActuales -= 1
+        gestorVisualizadores.actualizarVidas(vidasActuales)
         if (vidasActuales <= 0) {
             gestorDeFinalizacion.iniciar()
             game.say(self, "¡Has perdido todas tus vidas! Juego terminado.")
