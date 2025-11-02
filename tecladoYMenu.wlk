@@ -20,7 +20,7 @@ object menu{
 object menuPersonaje {
     var property position = game.at(7, 4)
     var menuElegirPersonajesEstaAbierto = false
-    const imagenes = ["MenuCerrado.png", "Personajes.png"]
+    const imagenes = ["MenuCerrado.png", "Personajes_V2.png"]
     var imagen = imagenes.first()
     
     method image() = imagen

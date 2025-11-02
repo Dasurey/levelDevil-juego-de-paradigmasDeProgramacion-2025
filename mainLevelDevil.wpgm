@@ -1,5 +1,5 @@
 import wollok.game.*
-import levelDevil.*
+import levelDevil.juegoLevelDevil
 
 program levelDevilGame {
     juegoLevelDevil.iniciar()

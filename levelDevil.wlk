@@ -58,6 +58,8 @@ object gestorDeJugadores {
         jugadorActual.position(pos)
     }
 
+    method puntaje() = jugadorActual.puntaje()
+
     method resetearPuntajeTemporal() {
         jugadorActual.resetearPuntajeTemporal()
     }
@@ -181,13 +183,13 @@ object explorador {
 object muertoVivo {
     method cansancio() = 1
 
-    method potencialDefensivoExtra() = 200
+    method potencialDefensivoExtra() = 250
 }
 
 object gambetiador {
     method cansancio() = 0
 
-    method potencialDefensivoExtra() = 250
+    method potencialDefensivoExtra() = 200
 }
 
 object nahYoGanare {
@@ -200,9 +202,9 @@ object jugadorLevelDevil inherits Personaje(position = game.at(0, 0), rol = expl
 
 object zombie inherits Personaje(position = game.at(0, 0), rol = muertoVivo, imagenes = ["Zombie.png", "ExplosionAlMorir.gif"], vidasActuales = 5, vidasPorDefecto = 5, imagenesDeMeta = ["MetaConZombieParte1.png", "MetaConZombieParte2.png", "MetaConZombieParte3.png"]) {}
 
-object miniMessi inherits Personaje(position = game.at(0, 0), rol = gambetiador, imagenes = ["MiniMessi.png", "ExplosionAlMorir.gif"], vidasActuales = 5, vidasPorDefecto = 5, imagenesDeMeta = ["MetaConMiniMessiParte1.png", "MetaConMiniMessiParte2.png", "MetaConMiniMessiParte3.png"]) {}
+object miniMessi inherits Personaje(position = game.at(0, 0), rol = gambetiador, imagenes = ["MiniMessi.png", "ExplosionAlMorir.gif"], vidasActuales = 4, vidasPorDefecto = 4, imagenesDeMeta = ["MetaConMiniMessiParte1.png", "MetaConMiniMessiParte2.png", "MetaConMiniMessiParte3.png"]) {}
 
-object satoruGojo inherits Personaje(position = game.at(0, 0), rol = nahYoGanare, imagenes = ["SatoruGojo.png", "SatoruGojoMuerto.png"], vidasActuales = 2, vidasPorDefecto = 2, imagenesDeMeta = ["MetaConSatoruGojoParte1.png", "MetaConSatoruGojoParte2.png", "MetaConSatoruGojoParte3.png"]) {}
+object satoruGojo inherits Personaje(position = game.at(0, 0), rol = nahYoGanare, imagenes = ["SatoruGojo_V2.png", "SatoruGojoMuerto_V2.png"], vidasActuales = 2, vidasPorDefecto = 2, imagenesDeMeta = ["MetaConSatoruGojoParte1_V2.png", "MetaConSatoruGojoParte2_V2.png", "MetaConSatoruGojoParte3_V2.png"]) {}
 
 class Piso {
     var property position
@@ -334,7 +336,7 @@ class MonedaFalsa inherits ObjetoMorible {
 }
 
 class Pincho inherits ObjetoMorible {
-    override method ataque() = 100
+    override method ataque() = 180
     
     override method image() = "PinchoSimple_V1.png"
 }
@@ -390,7 +392,7 @@ class PinchoInvisible inherits ObjetoMorible {
 }
 
 class PinchoMovil inherits ObjetoMorible {
-    override method ataque() = 350
+    override method ataque() = 250
 
     const tickId = "moverPinchoMovil_" + self.identity()
 
