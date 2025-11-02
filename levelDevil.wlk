@@ -71,14 +71,14 @@ class Personaje {
     var puntaje = 0
     var puntajeTemporalGanado = 0
     var puntajeTemporalPerdido = 0
-    var property estado
+    var property rol
     var cantidadDeMovimientos = 0
 
     method cantidadDeMovimientos() = cantidadDeMovimientos
 
-    method cantidadDeCansancio() = (cantidadDeMovimientos / 2).truncate(0) * estado.cansancio()
+    method cantidadDeCansancio() = ((cantidadDeMovimientos * rol.cansancio()) / 10).truncate(0)
 
-    method potencialDefensivo() = 10 * vidasActuales + estado.potencialDefensivoExtra()
+    method potencialDefensivo() = 10 * vidasActuales + rol.potencialDefensivoExtra()
 
     method reiniciarVidas() {
         vidasActuales = vidasDefault
@@ -104,7 +104,7 @@ class Personaje {
     }
 
     method moverA(direccion) {
-        if(estado.cansancio() > 0) {
+        if(rol.cansancio() > 0) {
             cantidadDeMovimientos += 1
             game.schedule(self.cantidadDeCansancio(), { 
                 self.mover(direccion)
@@ -155,33 +155,37 @@ class Personaje {
     method puntajeCompleto() = self.puntaje() + self.puntajeTemporalGanado() + self.puntajeTemporalPerdido()
 }
 
-object muertoVivo {
-    method cansancio() = 100
-
-    method potencialDefensivoExtra() = 200
-}
-
-object sinEnergias {
-    method cansancio() = 8
-
-    method potencialDefensivoExtra() = 20
-}
-
 object explorador {
     method cansancio() = 0
 
     method potencialDefensivoExtra() = 10
 }
 
-object escurridizo {
-    method cansancio() = 0
+object muertoVivo {
+    method cansancio() = 100
 
-    method potencialDefensivoExtra() = 30
+    method potencialDefensivoExtra() = 200
 }
 
-object jugadorLevelDevil inherits Personaje(position = game.at(0,0), estado = escurridizo, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, imagenesDeMeta = ["MetaConJugadorParte1.png", "MetaConJugadorParte2.png", "MetaConJugadorParte3.png"]) {}
+object gambetiador {
+    method cansancio() = 0
 
-object zombie inherits Personaje(position = game.at(0,0), estado = muertoVivo, imagenes = ["Zombie_Derecha.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = []) {}
+    method potencialDefensivoExtra() = 250
+}
+
+object nahYoGanare {
+    method cansancio() = 0
+
+    method potencialDefensivoExtra() = 150
+}
+
+object jugadorLevelDevil inherits Personaje(position = game.at(0,0), rol = explorador, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, imagenesDeMeta = ["MetaConJugadorParte1.png", "MetaConJugadorParte2.png", "MetaConJugadorParte3.png"]) {}
+
+object zombie inherits Personaje(position = game.at(0,0), rol = muertoVivo, imagenes = ["Zombie.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = ["MetaConZombieParte1.png", "MetaConZombieParte2.png", "MetaConZombieParte3.png"]) {}
+
+object miniMessi inherits Personaje(position = game.at(0,0), rol = gambetiador, imagenes = ["MiniMessi.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = ["MetaConMiniMessiParte1.png", "MetaConMiniMessiParte2.png", "MetaConMiniMessiParte3.png"]) {}
+
+object satoruGojo inherits Personaje(position = game.at(0,0), rol = nahYoGanare, imagenes = ["SatoruGojo.png", "ExplosionAlMorir.gif"], vidasActuales = 2, imagenesDeMeta = ["MetaConSatoruGojoParte1.png", "MetaConSatoruGojoParte2.png", "MetaConSatoruGojoParte3.png"]) {}
 
 class Piso {
     var property position

@@ -20,7 +20,7 @@ object menu{
 object menuPersonaje {
     var property position = game.at(7,4)
     var menuElegirPersonajesEstaAbierto = false
-    const imagenes = ["MenuCerrado.png", ""]
+    const imagenes = ["MenuCerrado.png", "Personajes.png"]
     var imagen = imagenes.first()
     
     method image() = imagen
@@ -51,7 +51,7 @@ object menuPersonaje {
 object configTeclado {
     var teclado = tecladoNormal
 
-    method teclado(nuevoTeclado) { 
+    method cambiarTecladoA(nuevoTeclado) { 
         teclado = nuevoTeclado
     }
 
@@ -79,15 +79,15 @@ object configTeclado {
         keyboard.num4().onPressDo({ teclado.num4() })
     }
 
-    method juegoEnMarcha(){
+    method juegoEnMarcha() {
         teclado = tecladoNormal
     }
 
-    method menuAbierto(){
+    method menuAbierto() {
         teclado = tecladoMenu
     }
 
-    method menuAbiertoElegirPersonajes(){
+    method menuAbiertoElegirPersonajes() {
         teclado = tecladoMenuElegirPersonajes
     }
 
@@ -101,29 +101,29 @@ object configTeclado {
 }
 
 class TecladoBase {
-    method up(){}
-    method down(){}
-    method left(){}
-    method right(){}
+    method up() {}
+    method down() {}
+    method left() {}
+    method right() {}
 
-    method r(){}
-    method m(){}
+    method r() {}
+    method m() {}
 
-    method j(){}
-    method p(){}
+    method j() {}
+    method p() {}
 
-    method num1(){}
-    method num2(){}
-    method num3(){}
-    method num4(){}
+    method num1() {}
+    method num2() {}
+    method num3() {}
+    method num4() {}
 }
 
 class TecladoMenu inherits TecladoBase {
-    override method j(){
+    override method j() {
         gestorNiveles.iniciarNivel()
     }
 
-    override method p(){
+    override method p() {
         menuPersonaje.desplegar()
     }
 }
@@ -131,52 +131,57 @@ class TecladoMenu inherits TecladoBase {
 object tecladoMenuElegirPersonajes inherits TecladoBase {
     override method num1() {
         gestorDeJugadores.seleccionarPersonaje(jugadorLevelDevil)
+        gestorNiveles.nivelActual(nivel1)
         gestorNiveles.iniciarNivel()
     }
+
     override method num2() {
         gestorDeJugadores.seleccionarPersonaje(zombie)
+        gestorNiveles.nivelActual(nivel1)
         gestorNiveles.iniciarNivel()
     }
-    /*
+
     override method num3() {
-        gestorDeJugadores.seleccionarPersonaje(3)
+        gestorDeJugadores.seleccionarPersonaje(miniMessi)
+        gestorNiveles.nivelActual(nivel1)
         gestorNiveles.iniciarNivel()
     }
+
     override method num4() {
-        gestorDeJugadores.seleccionarPersonaje(4)
+        gestorDeJugadores.seleccionarPersonaje(satoruGojo)
+        gestorNiveles.nivelActual(nivel1)
         gestorNiveles.iniciarNivel()
     }
-    */
 }
 
 object tecladoNormal inherits TecladoBase {
-    override method up(){ gestorDeJugadores.moverA(arriba.aplicarCantidad(1)) }
-    override method down(){ gestorDeJugadores.moverA(abajo.aplicarCantidad(1)) }
-    override method left(){ gestorDeJugadores.moverA(izquierda.aplicarCantidad(1)) }
-    override method right(){ gestorDeJugadores.moverA(derecha.aplicarCantidad(1)) }
+    override method up() { gestorDeJugadores.moverA(arriba.aplicarCantidad(1)) }
+    override method down() { gestorDeJugadores.moverA(abajo.aplicarCantidad(1)) }
+    override method left() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(1)) }
+    override method right() { gestorDeJugadores.moverA(derecha.aplicarCantidad(1)) }
 
-    override method r(){ gestorNiveles.reiniciarNivel() }
-    override method m(){ menu.iniciar() }
+    override method r() { gestorNiveles.reiniciarNivel() }
+    override method m() { menu.iniciar() }
 }
 
 object tecladoInvertido inherits TecladoBase {
-    override method up(){ gestorDeJugadores.moverA(abajo.aplicarCantidad(1)) }
-    override method down(){ gestorDeJugadores.moverA(arriba.aplicarCantidad(1)) }
-    override method left(){ gestorDeJugadores.moverA(derecha.aplicarCantidad(1)) }
-    override method right(){ gestorDeJugadores.moverA(izquierda.aplicarCantidad(1)) }
+    override method up() { gestorDeJugadores.moverA(abajo.aplicarCantidad(1)) }
+    override method down() { gestorDeJugadores.moverA(arriba.aplicarCantidad(1)) }
+    override method left() { gestorDeJugadores.moverA(derecha.aplicarCantidad(1)) }
+    override method right() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(1)) }
 
-    override method r(){ gestorNiveles.reiniciarNivel() }
-    override method m(){ menu.iniciar() }
+    override method r() { gestorNiveles.reiniciarNivel() }
+    override method m() { menu.iniciar() }
 }
 
 object tecladoDoble inherits TecladoBase {
-    override method up(){ gestorDeJugadores.moverA(arriba.aplicarCantidad(2)) }
-    override method down(){ gestorDeJugadores.moverA(abajo.aplicarCantidad(2)) }
-    override method left(){ gestorDeJugadores.moverA(izquierda.aplicarCantidad(2)) }
-    override method right(){ gestorDeJugadores.moverA(derecha.aplicarCantidad(2)) }
+    override method up() { gestorDeJugadores.moverA(arriba.aplicarCantidad(2)) }
+    override method down() { gestorDeJugadores.moverA(abajo.aplicarCantidad(2)) }
+    override method left() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(2)) }
+    override method right() { gestorDeJugadores.moverA(derecha.aplicarCantidad(2)) }
 
-    override method r(){ gestorNiveles.reiniciarNivel() }
-    override method m(){ menu.iniciar() }
+    override method r() { gestorNiveles.reiniciarNivel() }
+    override method m() { menu.iniciar() }
 }
 
 // Direcciones

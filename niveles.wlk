@@ -241,7 +241,7 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
     */
 }
 
-object nivel3 inherits NivelBase(siguienteNivel = endOfTheGame) {
+object nivel3 inherits NivelBase(siguienteNivel = creditosFinales) {
     override method numero() = 3
     
     override method mapaDeCuadricula() = [
@@ -264,18 +264,19 @@ object nivel3 inherits NivelBase(siguienteNivel = endOfTheGame) {
     
     override method iniciar() {
         // Configurar el teclado invertido para este nivel
-        configTeclado.teclado(tecladoInvertido)
+        configTeclado.cambiarTecladoA(tecladoInvertido)
         super()
     }
 }
 
-object endOfTheGame {
+object creditosFinales {
     method siguienteNivel() = null
 
     method iniciar() {
         // Limpiar todo, incluyendo visualizadores
         juegoLevelDevil.limpiar()
-        configTeclado.juegoEnMarcha()
+        configTeclado.cambiarTecladoA(new TecladoBase())
+        // new VisualSoloLectura(image="CreditosFinales.png",position = game.at(8,1)).ponerImagen()
         game.stop()
     }
 }
