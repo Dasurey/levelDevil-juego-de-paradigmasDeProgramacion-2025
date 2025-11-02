@@ -43,7 +43,7 @@ object menuPersonaje {
     }
 
     method abrir(){
-        game.allVisuals().forEach({ visual => game.removeVisual(visual) })
+        juegoLevelDevil.limpiar()
         position = game.at(0,0)
         imagen = imagenes.last()
         game.addVisual(self)
@@ -135,7 +135,6 @@ class TecladoMenu inherits TecladoBase {
 
 object tecladoMenuElegirPersonajes inherits TecladoBase {
     override method num1() {
-        gestorDeJugadores.resetearPuntajeTemporal()
         gestorDeJugadores.resetearPuntaje()
         gestorDeJugadores.reiniciarVidas()
         gestorDeJugadores.seleccionarPersonaje(jugadorLevelDevil)
@@ -144,7 +143,6 @@ object tecladoMenuElegirPersonajes inherits TecladoBase {
     }
 
     override method num2() {
-        gestorDeJugadores.resetearPuntajeTemporal()
         gestorDeJugadores.resetearPuntaje()
         gestorDeJugadores.reiniciarVidas()
         gestorDeJugadores.seleccionarPersonaje(zombie)
@@ -153,7 +151,6 @@ object tecladoMenuElegirPersonajes inherits TecladoBase {
     }
 
     override method num3() {
-        gestorDeJugadores.resetearPuntajeTemporal()
         gestorDeJugadores.resetearPuntaje()
         gestorDeJugadores.reiniciarVidas()
         gestorDeJugadores.seleccionarPersonaje(miniMessi)
@@ -162,7 +159,6 @@ object tecladoMenuElegirPersonajes inherits TecladoBase {
     }
 
     override method num4() {
-        gestorDeJugadores.resetearPuntajeTemporal()
         gestorDeJugadores.resetearPuntaje()
         gestorDeJugadores.reiniciarVidas()
         gestorDeJugadores.seleccionarPersonaje(satoruGojo)
