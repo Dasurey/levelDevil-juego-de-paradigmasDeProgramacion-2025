@@ -60,10 +60,6 @@ object configTeclado {
         teclado = nuevoTeclado
     }
 
-    var controlesHabilitados = true
-
-    method controlesHabilitados() = controlesHabilitados
-
     const tecladoMenu = new TecladoMenu()
 
     method iniciar() {
@@ -96,12 +92,8 @@ object configTeclado {
         teclado = tecladoMenuElegirPersonajes
     }
 
-    method controlesEnMarcha() {
-        controlesHabilitados = true
-    }
-
-    method controlesBloqueados() {
-        controlesHabilitados = false
+    method juegoBloqueado() {
+        teclado = tecladoBase
     }
 }
 
@@ -122,6 +114,8 @@ class TecladoBase {
     method num3() {}
     method num4() {}
 }
+
+object tecladoBase inherits TecladoBase {}
 
 class TecladoMenu inherits TecladoBase {
     override method j() {

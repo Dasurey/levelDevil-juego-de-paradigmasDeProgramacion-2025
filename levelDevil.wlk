@@ -9,8 +9,8 @@ object juegoLevelDevil {
         game.width(24)
         game.boardGround("Fondo.png")
 
-        // Configurar las colisiones con los pinchos
-        game.onCollideDo(gestorDeJugadores.jugadorActual(), { elemento => elemento.interactuarConPersonaje(gestorDeJugadores.jugadorActual()) })
+        // Activar Colisiones
+        self.activarColisiones()
 
         configTeclado.iniciar()
 
@@ -18,17 +18,21 @@ object juegoLevelDevil {
         menu.iniciar()
     }
 
+    method activarColisiones() {
+        game.onCollideDo(jugadorLevelDevil, { elemento => elemento.interactuarConPersonaje(jugadorLevelDevil) })
+        game.onCollideDo(zombie, { elemento => elemento.interactuarConPersonaje(zombie) })
+        game.onCollideDo(miniMessi, { elemento => elemento.interactuarConPersonaje(miniMessi) })
+        game.onCollideDo(satoruGojo, { elemento => elemento.interactuarConPersonaje(satoruGojo) })
+    }
+
     method limpiar() {
         gestorNiveles.limpiar()
         gestorVisualizadores.limpiar()
         game.allVisuals().forEach({ visual => game.removeVisual(visual) })
     }
-}
 
-// Fijase si esta bien esto
-object gestorDeFinalizacion {
-    method iniciar() {
-        configTeclado.controlesBloqueados()
+    method detenerMovimientos() {
+        configTeclado.juegoBloqueado()
         // Detener todos los PinchosMovil
         game.allVisuals()
             .filter({ visual => visual.toString().contains("PinchoMovil") })
@@ -36,10 +40,9 @@ object gestorDeFinalizacion {
     }
 }
 
-
-
 object gestorDeJugadores {
-    var property jugadorActual = jugadorLevelDevil
+    var jugadorActual = jugadorLevelDevil
+    method jugadorActual() = jugadorActual
 
     method moverA(direccion) {
         self.jugadorActual().moverA(direccion)
@@ -74,14 +77,17 @@ object gestorDeJugadores {
 
 class Personaje {
     var property position
+
     var property vidasActuales
-    const vidasDefault = vidasActuales
+    const vidasPorDefecto
+
     var property puntaje = 0
     var puntajeTemporalGanado = 0
     var puntajeTemporalPerdido = 0
-    var property rol
-    var cantidadDeMovimientos = 0
 
+    var property rol
+    
+    var cantidadDeMovimientos = 0
     method cantidadDeMovimientos() = cantidadDeMovimientos
 
     method cantidadDeCansancio() = ((cantidadDeMovimientos * rol.cansancio()) / 10).truncate(0)
@@ -89,7 +95,7 @@ class Personaje {
     method potencialDefensivo() = 10 * vidasActuales + rol.potencialDefensivoExtra()
 
     method reiniciarVidas() {
-        vidasActuales = vidasDefault
+        vidasActuales = vidasPorDefecto
     }
     
     const imagenes
@@ -105,9 +111,7 @@ class Personaje {
 
     method mover(direccion) {
         const nuevaPosition = direccion.calcularNuevaPosition(self.position())
-        if (configTeclado.controlesHabilitados()) {
-            self.position(nuevaPosition)
-        }
+        self.position(nuevaPosition)
     }
 
     method moverA(direccion) {
@@ -125,7 +129,7 @@ class Personaje {
         vidasActuales -= 1
         gestorVisualizadores.actualizarVidas(vidasActuales)
         if (vidasActuales <= 0) {
-            gestorDeFinalizacion.iniciar()
+            juegoLevelDevil.detenerMovimientos()
             imagen = imagenes.last()
             game.schedule(2000, {
                 self.sumaDePuntaje(self.puntajeTemporalPerdido())
@@ -175,7 +179,7 @@ object explorador {
 }
 
 object muertoVivo {
-    method cansancio() = 100
+    method cansancio() = 1
 
     method potencialDefensivoExtra() = 200
 }
@@ -192,13 +196,13 @@ object nahYoGanare {
     method potencialDefensivoExtra() = 150
 }
 
-object jugadorLevelDevil inherits Personaje(position = game.at(0, 0), rol = explorador, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, imagenesDeMeta = ["MetaConJugadorLevelDevilParte1.png", "MetaConJugadorLevelDevilParte2.png", "MetaConJugadorLevelDevilParte3.png"]) {}
+object jugadorLevelDevil inherits Personaje(position = game.at(0, 0), rol = explorador, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, vidasPorDefecto = 1, imagenesDeMeta = ["MetaConJugadorLevelDevilParte1.png", "MetaConJugadorLevelDevilParte2.png", "MetaConJugadorLevelDevilParte3.png"]) {}
 
-object zombie inherits Personaje(position = game.at(0, 0), rol = muertoVivo, imagenes = ["Zombie.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = ["MetaConZombieParte1.png", "MetaConZombieParte2.png", "MetaConZombieParte3.png"]) {}
+object zombie inherits Personaje(position = game.at(0, 0), rol = muertoVivo, imagenes = ["Zombie.png", "ExplosionAlMorir.gif"], vidasActuales = 5, vidasPorDefecto = 5, imagenesDeMeta = ["MetaConZombieParte1.png", "MetaConZombieParte2.png", "MetaConZombieParte3.png"]) {}
 
-object miniMessi inherits Personaje(position = game.at(0, 0), rol = gambetiador, imagenes = ["MiniMessi.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = ["MetaConMiniMessiParte1.png", "MetaConMiniMessiParte2.png", "MetaConMiniMessiParte3.png"]) {}
+object miniMessi inherits Personaje(position = game.at(0, 0), rol = gambetiador, imagenes = ["MiniMessi.png", "ExplosionAlMorir.gif"], vidasActuales = 5, vidasPorDefecto = 5, imagenesDeMeta = ["MetaConMiniMessiParte1.png", "MetaConMiniMessiParte2.png", "MetaConMiniMessiParte3.png"]) {}
 
-object satoruGojo inherits Personaje(position = game.at(0, 0), rol = nahYoGanare, imagenes = ["SatoruGojo.png", "ExplosionAlMorir.gif"], vidasActuales = 2, imagenesDeMeta = ["MetaConSatoruGojoParte1.png", "MetaConSatoruGojoParte2.png", "MetaConSatoruGojoParte3.png"]) {}
+object satoruGojo inherits Personaje(position = game.at(0, 0), rol = nahYoGanare, imagenes = ["SatoruGojo.png", "SatoruGojoMuerto.png"], vidasActuales = 2, vidasPorDefecto = 2, imagenesDeMeta = ["MetaConSatoruGojoParte1.png", "MetaConSatoruGojoParte2.png", "MetaConSatoruGojoParte3.png"]) {}
 
 class Piso {
     var property position
@@ -262,7 +266,7 @@ class Meta {
     method esMeta() = true
 
     method interactuarConPersonaje(pj) {
-        gestorDeFinalizacion.iniciar()
+        juegoLevelDevil.detenerMovimientos()
         pj.sumaDePuntaje(pj.puntajeTemporalPerdido() + pj.puntajeTemporalGanado())
         pj.resetearPuntajeTemporal()
         game.removeVisual(gestorDeJugadores.jugadorActual())
@@ -272,9 +276,9 @@ class Meta {
             game.schedule(1000, {
                 imagen = imagenes.get(3)
                 game.schedule(1000, {
-                    gestorNiveles.siguienteNivel()
                     // Rehabilitamos los controles después del cambio de nivel
-                    configTeclado.controlesEnMarcha()
+                    configTeclado.juegoEnMarcha()
+                    gestorNiveles.siguienteNivel()
                 })
             })
         })
@@ -332,7 +336,7 @@ class MonedaFalsa inherits ObjetoMorible {
 class Pincho inherits ObjetoMorible {
     override method ataque() = 100
     
-    override method image() = "PinchoSimple_V2.png"
+    override method image() = "PinchoSimple_V1.png"
 }
 
 class PinchoInvisibleInstantaneo inherits ObjetoMorible {
@@ -343,7 +347,7 @@ class PinchoInvisibleInstantaneo inherits ObjetoMorible {
     // La imagen depende de la propiedad 'visible'
     override method image() {
         if (visible) {
-            return "PinchoSimple_V2.png"
+            return "PinchoSimple_V1.png"
         } else {
             return null
         }
@@ -366,7 +370,7 @@ class PinchoInvisible inherits ObjetoMorible {
     // La imagen depende de la propiedad 'visible'
     override method image() {
         if (visible) {
-            return "PinchoTriple_V2.png"
+            return "PinchoTriple_V1.png"
         } else {
             return null
         }
@@ -390,7 +394,7 @@ class PinchoMovil inherits ObjetoMorible {
 
     const tickId = "moverPinchoMovil_" + self.identity()
 
-    override method image() = "PinchoTriple_V2.png"
+    override method image() = "PinchoTriple_V1.png"
 
     method moverseAleatoriamente() {
         const direcciones = [arriba, abajo, izquierda, derecha]

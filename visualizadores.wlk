@@ -92,9 +92,7 @@ object gestorVisualizadorVidas {
     }
     
     method actualizarVidas(cantidadVidas) {
-        // Eliminar todos los visualizadores existentes
-        visualizadores.forEach({ visual => game.removeVisual(visual) })
-        visualizadores.clear()
+        self.limpiar()
         
         // Crear nuevos visualizadores según la cantidad de vidas
         cantidadVidas.times({ i => 

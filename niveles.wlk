@@ -30,9 +30,10 @@ object gestorNiveles {
     
     method reiniciarNivel() {
         self.limpiar()
+        juegoLevelDevil.detenerMovimientos()
         gestorDeJugadores.resetearPuntajeTemporal()
+        configTeclado.juegoEnMarcha() // Rehabilitar controles
         self.iniciarNivel()
-        configTeclado.controlesEnMarcha() // Rehabilitar controles
     }
 }
 
@@ -50,19 +51,21 @@ class NivelBase {
         juegoLevelDevil.limpiar()
 
         //Dibujo UI
-        new VisualSoloLectura(image="Menu.png",position = game.at(22,11)).ponerImagen()
-        
+        new VisualSoloLectura(image="BotonMenu.png",position = game.at(22,11)).ponerImagen()
+        new VisualSoloLectura(image="BotonReniciar.png",position = game.at(22,0)).ponerImagen()
+
         // Dibujar el nivel usando el mapaDeCuadricula
         self.dibujarNivel()
         
         // Agregar jugador
         self.dibujarJugador()
 
-        configTeclado.juegoEnMarcha() // Habilitar controles
+        // Habilitar controles
+        configTeclado.juegoEnMarcha()
         
         // Actualizar visualizador de niveles y vidas
         gestorVisualizadores.iniciar()
-        
+
         gestorNiveles.nivelActual(self)
     }
 
@@ -230,15 +233,6 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
         /* y = 1*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 0*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
     ]
-    
-    /*
-    override method iniciar() {
-        super()
-        
-        // Configuraciones específicas del nivel 2
-        game.onTick(2000, "movimiento", { caja.movete() })
-    }
-    */
 }
 
 object nivel3 inherits NivelBase(siguienteNivel = creditosFinales) {
@@ -250,22 +244,22 @@ object nivel3 inherits NivelBase(siguienteNivel = creditosFinales) {
                     // x = 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
         /* y = 11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        /* y = 9*/  [v,v,v,v,v,v,p,p,p,_,_,m,_,_,p,p,_,_,v,v,v,v,v,v],
-        /* y = 8*/  [v,v,v,v,v,v,_,p,_,_,p,p,p,_,_,_,_,_,v,v,v,v,v,v],
-        /* y = 7*/  [v,v,v,v,v,v,p,_,_,p,_,_,_,p,_,_,_,_,v,v,v,v,v,v],
-        /* y = 6*/  [v,v,v,v,v,v,p,_,p,_,_,p,_,p,p,i,_,_,v,v,v,v,v,v],
-        /* y = 5*/  [v,v,v,v,v,v,_,_,_,_,p,_,_,_,p,_,_,_,v,v,v,v,v,v],
-        /* y = 4*/  [v,v,v,v,v,v,_,p,_,p,p,_,p,_,_,_,_,_,v,v,v,v,v,v],
-        /* y = 3*/  [v,v,v,v,v,v,_,_,_,_,p,_,_,_,p,p,_,_,v,v,v,v,v,v],
-        /* y = 2*/  [v,v,v,v,v,v,_,_,_,_,_,y,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* y = 9*/  [v,v,v,v,v,v,_,_,_,_,_,m,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* y = 8*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* y = 7*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* y = 6*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* y = 5*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* y = 4*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* y = 3*/  [v,v,v,v,v,v,_,_,_,p,p,p,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* y = 2*/  [v,v,v,v,v,v,_,_,_,p,s,y,_,_,_,_,_,_,v,v,v,v,v,v],
         /* y = 1*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 0*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
     ]
     
     override method iniciar() {
+        super()
         // Configurar el teclado invertido para este nivel
         configTeclado.cambiarTecladoA(tecladoInvertido)
-        super()
     }
 }
 
@@ -275,7 +269,7 @@ object creditosFinales {
     method iniciar() {
         // Limpiar todo, incluyendo visualizadores
         juegoLevelDevil.limpiar()
-        configTeclado.cambiarTecladoA(new TecladoBase())
+        juegoLevelDevil.detenerMovimientos()
         // new VisualSoloLectura(image="CreditosFinales.png", position = game.at(8, 1)).ponerImagen()
         game.stop()
     }
