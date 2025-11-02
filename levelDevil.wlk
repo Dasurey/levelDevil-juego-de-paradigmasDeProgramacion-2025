@@ -162,6 +162,7 @@ class Personaje {
 
     method resetearPuntaje() {
         puntaje = 0
+        self.resetearPuntajeTemporal()
     }
 
     method puntajeCompleto() = self.puntaje() + self.puntajeTemporalGanado() + self.puntajeTemporalPerdido()
@@ -191,7 +192,7 @@ object nahYoGanare {
     method potencialDefensivoExtra() = 150
 }
 
-object jugadorLevelDevil inherits Personaje(position = game.at(0, 0), rol = explorador, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, imagenesDeMeta = ["MetaConJugadorParte1.png", "MetaConJugadorParte2.png", "MetaConJugadorParte3.png"]) {}
+object jugadorLevelDevil inherits Personaje(position = game.at(0, 0), rol = explorador, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, imagenesDeMeta = ["MetaConJugadorLevelDevilParte1.png", "MetaConJugadorLevelDevilParte2.png", "MetaConJugadorLevelDevilParte3.png"]) {}
 
 object zombie inherits Personaje(position = game.at(0, 0), rol = muertoVivo, imagenes = ["Zombie.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = ["MetaConZombieParte1.png", "MetaConZombieParte2.png", "MetaConZombieParte3.png"]) {}
 
