@@ -12,13 +12,13 @@ object menu{
     }
     
     method dibujarMenu(){
-        new VisualSoloLectura(image = "Logo_V1.png", position = game.at(8,7)).ponerImagen()
+        new VisualSoloLectura(image = "Logo_V1.png", position = game.at(8, 7)).ponerImagen()
         menuPersonaje.iniciar()
     }
 }
 
 object menuPersonaje {
-    var property position = game.at(7,4)
+    var property position = game.at(7, 4)
     var menuElegirPersonajesEstaAbierto = false
     const imagenes = ["MenuCerrado.png", "Personajes.png"]
     var imagen = imagenes.first()
@@ -26,6 +26,7 @@ object menuPersonaje {
     method image() = imagen
     
     method iniciar(){
+        position = game.at(7, 4)
         game.addVisual(self)
         configTeclado.menuAbierto()
         menuElegirPersonajesEstaAbierto = false
@@ -35,13 +36,17 @@ object menuPersonaje {
     method desplegar() = if(menuElegirPersonajesEstaAbierto) self.cerrar() else self.abrir()
 
     method cerrar(){
+        position = game.at(7, 4)
         imagen = imagenes.first()
         configTeclado.menuAbierto()
         menuElegirPersonajesEstaAbierto = false
     }
 
     method abrir(){
-        imagen = ""
+        game.allVisuals().forEach({ visual => game.removeVisual(visual) })
+        position = game.at(0,0)
+        imagen = imagenes.last()
+        game.addVisual(self)
         configTeclado.menuAbiertoElegirPersonajes()
         menuElegirPersonajesEstaAbierto = true
     }
@@ -130,24 +135,36 @@ class TecladoMenu inherits TecladoBase {
 
 object tecladoMenuElegirPersonajes inherits TecladoBase {
     override method num1() {
+        gestorDeJugadores.resetearPuntajeTemporal()
+        gestorDeJugadores.resetearPuntaje()
+        gestorDeJugadores.reiniciarVidas()
         gestorDeJugadores.seleccionarPersonaje(jugadorLevelDevil)
         gestorNiveles.nivelActual(nivel1)
         gestorNiveles.iniciarNivel()
     }
 
     override method num2() {
+        gestorDeJugadores.resetearPuntajeTemporal()
+        gestorDeJugadores.resetearPuntaje()
+        gestorDeJugadores.reiniciarVidas()
         gestorDeJugadores.seleccionarPersonaje(zombie)
         gestorNiveles.nivelActual(nivel1)
         gestorNiveles.iniciarNivel()
     }
 
     override method num3() {
+        gestorDeJugadores.resetearPuntajeTemporal()
+        gestorDeJugadores.resetearPuntaje()
+        gestorDeJugadores.reiniciarVidas()
         gestorDeJugadores.seleccionarPersonaje(miniMessi)
         gestorNiveles.nivelActual(nivel1)
         gestorNiveles.iniciarNivel()
     }
 
     override method num4() {
+        gestorDeJugadores.resetearPuntajeTemporal()
+        gestorDeJugadores.resetearPuntaje()
+        gestorDeJugadores.reiniciarVidas()
         gestorDeJugadores.seleccionarPersonaje(satoruGojo)
         gestorNiveles.nivelActual(nivel1)
         gestorNiveles.iniciarNivel()

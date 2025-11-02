@@ -59,6 +59,14 @@ object gestorDeJugadores {
         jugadorActual.resetearPuntajeTemporal()
     }
 
+    method resetearPuntaje() {
+        jugadorActual.resetearPuntaje()
+    }
+
+    method reiniciarVidas() {
+        jugadorActual.reiniciarVidas()
+    }
+
     method seleccionarPersonaje(jugador) {
         jugadorActual = jugador // Por ahora solo hay un personaje
     }
@@ -68,7 +76,7 @@ class Personaje {
     var property position
     var property vidasActuales
     const vidasDefault = vidasActuales
-    var puntaje = 0
+    var property puntaje = 0
     var puntajeTemporalGanado = 0
     var puntajeTemporalPerdido = 0
     var property rol
@@ -82,7 +90,6 @@ class Personaje {
 
     method reiniciarVidas() {
         vidasActuales = vidasDefault
-        gestorVisualizadores.actualizarVidas(vidasActuales)
     }
     
     const imagenes
@@ -124,6 +131,7 @@ class Personaje {
                 self.sumaDePuntaje(self.puntajeTemporalPerdido())
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
                 self.reiniciarVidas()
+                gestorVisualizadores.actualizarVidas(vidasActuales)
                 imagen = imagenes.first()
             })
         }
@@ -150,6 +158,10 @@ class Personaje {
     method resetearPuntajeTemporal() {
         puntajeTemporalGanado = 0
         puntajeTemporalPerdido = 0
+    }
+
+    method resetearPuntaje() {
+        puntaje = 0
     }
 
     method puntajeCompleto() = self.puntaje() + self.puntajeTemporalGanado() + self.puntajeTemporalPerdido()
@@ -179,13 +191,13 @@ object nahYoGanare {
     method potencialDefensivoExtra() = 150
 }
 
-object jugadorLevelDevil inherits Personaje(position = game.at(0,0), rol = explorador, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, imagenesDeMeta = ["MetaConJugadorParte1.png", "MetaConJugadorParte2.png", "MetaConJugadorParte3.png"]) {}
+object jugadorLevelDevil inherits Personaje(position = game.at(0, 0), rol = explorador, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, imagenesDeMeta = ["MetaConJugadorParte1.png", "MetaConJugadorParte2.png", "MetaConJugadorParte3.png"]) {}
 
-object zombie inherits Personaje(position = game.at(0,0), rol = muertoVivo, imagenes = ["Zombie.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = ["MetaConZombieParte1.png", "MetaConZombieParte2.png", "MetaConZombieParte3.png"]) {}
+object zombie inherits Personaje(position = game.at(0, 0), rol = muertoVivo, imagenes = ["Zombie.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = ["MetaConZombieParte1.png", "MetaConZombieParte2.png", "MetaConZombieParte3.png"]) {}
 
-object miniMessi inherits Personaje(position = game.at(0,0), rol = gambetiador, imagenes = ["MiniMessi.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = ["MetaConMiniMessiParte1.png", "MetaConMiniMessiParte2.png", "MetaConMiniMessiParte3.png"]) {}
+object miniMessi inherits Personaje(position = game.at(0, 0), rol = gambetiador, imagenes = ["MiniMessi.png", "ExplosionAlMorir.gif"], vidasActuales = 5, imagenesDeMeta = ["MetaConMiniMessiParte1.png", "MetaConMiniMessiParte2.png", "MetaConMiniMessiParte3.png"]) {}
 
-object satoruGojo inherits Personaje(position = game.at(0,0), rol = nahYoGanare, imagenes = ["SatoruGojo.png", "ExplosionAlMorir.gif"], vidasActuales = 2, imagenesDeMeta = ["MetaConSatoruGojoParte1.png", "MetaConSatoruGojoParte2.png", "MetaConSatoruGojoParte3.png"]) {}
+object satoruGojo inherits Personaje(position = game.at(0, 0), rol = nahYoGanare, imagenes = ["SatoruGojo.png", "ExplosionAlMorir.gif"], vidasActuales = 2, imagenesDeMeta = ["MetaConSatoruGojoParte1.png", "MetaConSatoruGojoParte2.png", "MetaConSatoruGojoParte3.png"]) {}
 
 class Piso {
     var property position

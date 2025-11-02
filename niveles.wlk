@@ -276,7 +276,7 @@ object creditosFinales {
         // Limpiar todo, incluyendo visualizadores
         juegoLevelDevil.limpiar()
         configTeclado.cambiarTecladoA(new TecladoBase())
-        // new VisualSoloLectura(image="CreditosFinales.png",position = game.at(8,1)).ponerImagen()
+        // new VisualSoloLectura(image="CreditosFinales.png", position = game.at(8, 1)).ponerImagen()
         game.stop()
     }
 }
