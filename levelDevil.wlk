@@ -139,9 +139,6 @@ class Personaje {
         if (vidasActuales <= 0) {
             juegoLevelDevil.detenerMovimientos()
             imagen = imagenes.last()
-            const sonidoMuerte = game.sound("Muerte.mp3")
-            sonidoMuerte.volume(1)
-            sonidoMuerte.play()
             game.schedule(2000, {
                 self.sumaDePuntaje(self.puntajeTemporalPerdido())
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
@@ -330,6 +327,9 @@ class ObjetoMorible {
 
     method interactuarConPersonaje(pj) {
         if(pj.potencialDefensivo() < self.ataque()) {
+            const sonidoMuerte = game.sound("Muerte.mp3")
+            sonidoMuerte.volume(1)
+            sonidoMuerte.play()
             pj.restaDePuntajeTemporalPerdido(50)
             pj.morir()
         }
@@ -344,6 +344,9 @@ class MonedaFalsa inherits ObjetoMorible {
     override method interactuarConPersonaje(pj) {
         game.removeVisual(self)
         if(pj.potencialDefensivo() < self.ataque()) {
+            const sonidoMuerte = game.sound("Muerte.mp3")
+            sonidoMuerte.volume(1)
+            sonidoMuerte.play()
             pj.restaDePuntajeTemporalPerdido(100)
             pj.morir()
         }
