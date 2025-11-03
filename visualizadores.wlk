@@ -38,7 +38,7 @@ class VisualizadorPuntaje inherits VisualizadorTexto {
 }
 
 // Visualizador de vidas
-class VisualizadorVida inherits VisualSoloLectura(image="Vida.png") {}
+class VisualizadorVida inherits VisualSoloLectura(image="Vida_V2.png") {}
 
 // Visualizador de niveles
 class VisualizadorNivel inherits VisualSoloLectura(image="NivelActual.png") {}
