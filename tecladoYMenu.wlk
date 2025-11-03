@@ -7,10 +7,6 @@ object menu{
         juegoLevelDevil.limpiar()
 
         self.dibujarMenu()
-        const sonidoMenu = game.sound("Jugando.mp3")
-        sonidoMenu.shouldLoop(true)
-        sonidoMenu.volume(0.1)
-        sonidoMenu.play()
 
         configTeclado.menuAbierto()
     }
@@ -63,8 +59,6 @@ object configTeclado {
     method cambiarTecladoA(nuevoTeclado) { 
         teclado = nuevoTeclado
     }
-
-    const tecladoMenu = new TecladoMenu()
 
     method iniciar() {
         keyboard.up().onPressDo({ teclado.up() })
@@ -130,6 +124,8 @@ class TecladoMenu inherits TecladoBase {
         menuPersonaje.desplegar()
     }
 }
+
+object tecladoMenu inherits TecladoMenu {}
 
 object tecladoMenuElegirPersonajes inherits TecladoBase {
     override method num1() {
