@@ -29,8 +29,8 @@ object gestorNiveles {
     }
     
     method reiniciarNivel() {
-        self.limpiar()
         juegoLevelDevil.detenerMovimientos()
+        self.limpiar()
         gestorDeJugadores.resetearPuntajeTemporal()
         configTeclado.juegoEnMarcha() // Rehabilitar controles
         self.iniciarNivel()
@@ -52,7 +52,7 @@ class NivelBase {
 
         //Dibujo UI
         new VisualSoloLectura(image="BotonMenu.png",position = game.at(22,11)).ponerImagen()
-        new VisualSoloLectura(image="BotonReniciar.png",position = game.at(0,0)).ponerImagen()
+        new VisualSoloLectura(image="BotonReiniciar.png",position = game.at(0,0)).ponerImagen()
 
         // Dibujar el nivel usando el mapaDeCuadricula
         self.dibujarNivel()
@@ -207,7 +207,7 @@ object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
         /* 8*/ [v,v,v,v,v,v,_,_,_,_,p,d,d,d,d,p,_,_,v,v,v,v,v,v],
         /* 7*/ [v,v,v,v,v,v,j,p,_,_,_,_,p,p,d,p,s,_,v,v,v,v,v,v],
         /* 6*/ [v,v,v,v,v,v,_,p,p,_,p,_,_,p,_,i,m,_,v,v,v,v,v,v],
-        /* 5*/ [v,v,v,v,v,v,_,y,_,_,p,p,p,p,p,_,i,_,v,v,v,v,v,v],
+        /* 5*/ [v,v,v,v,v,v,_,_,_,_,p,p,p,p,p,_,i,_,v,v,v,v,v,v],
         /* 4*/ [v,v,v,v,v,v,_,p,p,_,p,_,_,_,_,_,_,_,v,v,v,v,v,v],
         /* 3*/ [v,v,v,v,v,v,s,p,_,_,_,_,p,s,p,p,_,_,v,v,v,v,v,v],
         /* 2*/ [v,v,v,v,v,v,_,p,p,p,s,p,p,p,p,_,_,_,v,v,v,v,v,v],

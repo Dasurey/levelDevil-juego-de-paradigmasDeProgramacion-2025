@@ -2,8 +2,9 @@ import levelDevil.*
 import niveles.*
 import visualizadores.*
 
-object menu{
+object menu {
     method iniciar(){
+        juegoLevelDevil.detenerMovimientos()
         juegoLevelDevil.limpiar()
 
         self.dibujarMenu()
@@ -26,6 +27,7 @@ object menuPersonaje {
     method image() = imagen
     
     method iniciar(){
+        juegoLevelDevil.detenerMovimientos()
         position = game.at(7, 4)
         game.addVisual(self)
         configTeclado.menuAbierto()
@@ -36,6 +38,7 @@ object menuPersonaje {
     method desplegar() = if(menuElegirPersonajesEstaAbierto) self.cerrar() else self.abrir()
 
     method cerrar(){
+        juegoLevelDevil.detenerMovimientos()
         position = game.at(7, 4)
         imagen = imagenes.first()
         configTeclado.menuAbierto()
@@ -43,6 +46,7 @@ object menuPersonaje {
     }
 
     method abrir(){
+        juegoLevelDevil.detenerMovimientos()
         juegoLevelDevil.limpiar()
         position = game.at(0,0)
         imagen = imagenes.last()
@@ -168,10 +172,7 @@ object tecladoNormal inherits TecladoBase {
     override method right() { gestorDeJugadores.moverA(derecha.aplicarCantidad(1)) }
 
     override method r() { gestorNiveles.reiniciarNivel() }
-    override method m() {
-        juegoLevelDevil.detenerMovimientos()
-        menu.iniciar()
-    }
+    override method m() {  menu.iniciar() }
 }
 
 object tecladoInvertido inherits TecladoBase {
@@ -181,10 +182,7 @@ object tecladoInvertido inherits TecladoBase {
     override method right() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(1)) }
 
     override method r() { gestorNiveles.reiniciarNivel() }
-    override method m() {
-        juegoLevelDevil.detenerMovimientos()
-        menu.iniciar()
-    }
+    override method m() {  menu.iniciar() }
 }
 
 object tecladoDoble inherits TecladoBase {
@@ -194,10 +192,7 @@ object tecladoDoble inherits TecladoBase {
     override method right() { gestorDeJugadores.moverA(derecha.aplicarCantidad(2)) }
 
     override method r() { gestorNiveles.reiniciarNivel() }
-    override method m() {
-        juegoLevelDevil.detenerMovimientos()
-        menu.iniciar()
-    }
+    override method m() {  menu.iniciar() }
 }
 
 // Direcciones
