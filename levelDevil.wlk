@@ -44,6 +44,17 @@ object juegoLevelDevil {
             .filter({ visual => visual.toString().contains("moverPinchoMovil_") })
             .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
     }
+
+    /*
+    Fijarse si anda esto despues
+    method detenerMovimientos() {
+        configTeclado.juegoBloqueado()
+        // Detener todos los PinchosMovil: buscamos visuales que implementen detenerMovimiento()
+        game.allVisuals()
+            .filter({ visual => visual.respondsTo("detenerMovimiento") })
+            .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
+    }
+    */
 }
 
 object gestorDeJugadores {
