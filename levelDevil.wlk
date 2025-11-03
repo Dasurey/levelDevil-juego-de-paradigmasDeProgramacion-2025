@@ -3,6 +3,8 @@ import tecladoYMenu.*
 import visualizadores.*
 
 object juegoLevelDevil {
+    var property nivelActual = nivel1
+
     const sonidoMenu = game.sound("Jugando.mp3")
 
     method iniciar() {
@@ -32,9 +34,34 @@ object juegoLevelDevil {
     }
 
     method limpiar() {
-        gestorNiveles.limpiar()
         gestorVisualizadores.limpiar()
         game.allVisuals().forEach({ visual => game.removeVisual(visual) })
+    }
+    
+    method cantidadNivelesDesde(nivel) {
+        if (nivel.siguienteNivel() == null) {
+            return 0
+        }
+        return 1 + self.cantidadNivelesDesde(nivel.siguienteNivel())
+    }
+    
+    method cantidadNiveles() = self.cantidadNivelesDesde(nivel1)
+
+    method numeroDeNivel() = nivelActual.numeroDeNivel()
+    
+    method iniciarNivel() {
+        nivelActual.iniciar()
+    }
+
+    method siguienteNivel() {
+        nivelActual = nivelActual.siguienteNivel()
+        self.iniciarNivel()
+    }
+    
+    method reiniciarNivel() {
+        self.detenerMovimientos()
+        self.limpiar()
+        self.iniciarNivel()
     }
 
     method detenerMovimientos() {
@@ -43,6 +70,14 @@ object juegoLevelDevil {
         game.allVisuals()
             .filter({ visual => visual.toString().contains("PinchoMovil") })
             .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
+    }
+
+    method volverAIniciarDeCero(jugador) {
+        gestorDeJugadores.resetearPuntaje()
+        gestorDeJugadores.reiniciarVidas()
+        gestorDeJugadores.seleccionarPersonaje(jugador)
+        self.nivelActual(nivel1)
+        self.iniciarNivel()
     }
 }
 
@@ -106,8 +141,9 @@ class Personaje {
         vidasActuales = vidasPorDefecto
     }
     
-    const imagenes
-    var imagen = imagenes.first()
+    const imagenMuerto = "ExplosionAlMorir.gif"
+    const imagenVivo
+    var imagen = imagenVivo
     method image() = imagen
 
     const imagenesDeMeta
@@ -138,13 +174,12 @@ class Personaje {
         gestorVisualizadores.actualizarVidas(vidasActuales)
         if (vidasActuales <= 0) {
             juegoLevelDevil.detenerMovimientos()
-            imagen = imagenes.last()
+            imagen = imagenMuerto
             game.schedule(2000, {
                 self.sumaDePuntaje(self.puntajeTemporalPerdido())
-                gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
                 self.reiniciarVidas()
-                gestorVisualizadores.actualizarVidas(vidasActuales)
-                imagen = imagenes.first()
+                juegoLevelDevil.reiniciarNivel() // delegás en el gestor lo que pasa al morir
+                imagen = imagenVivo
             })
         }
     }
@@ -204,13 +239,13 @@ object nahYoGanare {
     method potencialDefensivoExtra() = 150
 }
 
-object jugadorLevelDevil inherits Personaje(position = game.at(0, 0), rol = explorador, imagenes = ["JugadorLevelDevil_V1.png", "ExplosionAlMorir.gif"], vidasActuales = 1, vidasPorDefecto = 1, imagenesDeMeta = ["MetaConJugadorLevelDevilParte1.png", "MetaConJugadorLevelDevilParte2.png", "MetaConJugadorLevelDevilParte3.png"]) {}
+object jugadorLevelDevil inherits Personaje(position = game.at(0, 0), rol = explorador, imagenVivo = "JugadorLevelDevil_V1.png", vidasActuales = 1, vidasPorDefecto = 1, imagenesDeMeta = ["MetaConJugadorLevelDevilParte1.png", "MetaConJugadorLevelDevilParte2.png", "MetaConJugadorLevelDevilParte3.png"]) {}
 
-object zombie inherits Personaje(position = game.at(0, 0), rol = muertoVivo, imagenes = ["Zombie.png", "ExplosionAlMorir.gif"], vidasActuales = 5, vidasPorDefecto = 5, imagenesDeMeta = ["MetaConZombieParte1.png", "MetaConZombieParte2.png", "MetaConZombieParte3.png"]) {}
+object zombie inherits Personaje(position = game.at(0, 0), rol = muertoVivo, imagenVivo = "Zombie.png", vidasActuales = 5, vidasPorDefecto = 5, imagenesDeMeta = ["MetaConZombieParte1.png", "MetaConZombieParte2.png", "MetaConZombieParte3.png"]) {}
 
-object miniMessi inherits Personaje(position = game.at(0, 0), rol = gambetiador, imagenes = ["MiniMessi.png", "ExplosionAlMorir.gif"], vidasActuales = 4, vidasPorDefecto = 4, imagenesDeMeta = ["MetaConMiniMessiParte1.png", "MetaConMiniMessiParte2.png", "MetaConMiniMessiParte3.png"]) {}
+object miniMessi inherits Personaje(position = game.at(0, 0), rol = gambetiador, imagenVivo = "MiniMessi.png", vidasActuales = 4, vidasPorDefecto = 4, imagenesDeMeta = ["MetaConMiniMessiParte1.png", "MetaConMiniMessiParte2.png", "MetaConMiniMessiParte3.png"]) {}
 
-object satoruGojo inherits Personaje(position = game.at(0, 0), rol = nahYoGanare, imagenes = ["SatoruGojo_V2.png", "SatoruGojoMuerto_V2.png"], vidasActuales = 2, vidasPorDefecto = 2, imagenesDeMeta = ["MetaConSatoruGojoParte1_V2.png", "MetaConSatoruGojoParte2_V2.png", "MetaConSatoruGojoParte3_V2.png"]) {}
+object satoruGojo inherits Personaje(position = game.at(0, 0), rol = nahYoGanare, imagenVivo = "SatoruGojo_V2.png", imagenMuerto = "SatoruGojoMuerto_V2.png", vidasActuales = 2, vidasPorDefecto = 2, imagenesDeMeta = ["MetaConSatoruGojoParte1_V2.png", "MetaConSatoruGojoParte2_V2.png", "MetaConSatoruGojoParte3_V2.png"]) {}
 
 class Piso {
     var property position
@@ -263,11 +298,17 @@ class Pared {
 class Meta {
     var property position
 
-    const imagenes = ["Meta_V2.png"] + gestorDeJugadores.imagenesDeMeta()
+    const sonidoGanador = game.sound("Victoria.mp3")
+    const imagenDeMeta = "Meta_V2.png"
+    const imagenesDeMetaConJugador = gestorDeJugadores.imagenesDeMeta()
 
-    var imagen = imagenes.first()
+    var imagen = imagenDeMeta
 
     method image() = imagen
+
+    method ponerImagen(){
+        game.addVisual(self)
+    }
 
     method esPisable() = true
 
@@ -276,20 +317,16 @@ class Meta {
     method interactuarConPersonaje(pj) {
         juegoLevelDevil.detenerMovimientos()
         pj.sumaDePuntaje(pj.puntajeTemporalPerdido() + pj.puntajeTemporalGanado())
-        pj.resetearPuntajeTemporal()
         game.removeVisual(gestorDeJugadores.jugadorActual())
-        const sonidoGanador = game.sound("Victoria.mp3")
         sonidoGanador.volume(1)
         sonidoGanador.play()
-        imagen = imagenes.get(1)
+        imagen = imagenesDeMetaConJugador.get(0)
         game.schedule(333, {
-            imagen = imagenes.get(2)
+            imagen = imagenesDeMetaConJugador.get(1)
             game.schedule(333, {
-                imagen = imagenes.get(3)
+                imagen = imagenesDeMetaConJugador.get(2)
                 game.schedule(333, {
-                    // Rehabilitamos los controles después del cambio de nivel
-                    configTeclado.juegoEnMarcha()
-                    gestorNiveles.siguienteNivel()
+                    juegoLevelDevil.siguienteNivel()
                 })
             })
         })
@@ -299,14 +336,18 @@ class Meta {
 class Moneda {
     var property position
 
+    const sonidoMoneda = game.sound("Moneda.mp3")
     method image() = "Moneda_V2.png"
+
+    method ponerImagen(){
+        game.addVisual(self)
+    }
 
     method esPisable() = true
 
     method esMeta() = false
 
     method interactuarConPersonaje(pj) {
-        const sonidoMoneda = game.sound("Moneda.mp3")
         sonidoMoneda.volume(1)
         sonidoMoneda.play()
         pj.sumaDePuntajeTemporalGanado(100)
@@ -317,9 +358,15 @@ class Moneda {
 class ObjetoMorible {
     var property position
 
-    method ataque()
+    const sonidoMuerte = game.sound("Muerte.mp3")
     
     method image()
+
+    method ponerImagen(){
+        game.addVisual(self)
+    }
+
+    method ataque()
 
     method esPisable() = true
 
@@ -327,7 +374,6 @@ class ObjetoMorible {
 
     method interactuarConPersonaje(pj) {
         if(pj.potencialDefensivo() < self.ataque()) {
-            const sonidoMuerte = game.sound("Muerte.mp3")
             sonidoMuerte.volume(1)
             sonidoMuerte.play()
             pj.restaDePuntajeTemporalPerdido(50)
@@ -344,7 +390,6 @@ class MonedaFalsa inherits ObjetoMorible {
     override method interactuarConPersonaje(pj) {
         game.removeVisual(self)
         if(pj.potencialDefensivo() < self.ataque()) {
-            const sonidoMuerte = game.sound("Muerte.mp3")
             sonidoMuerte.volume(1)
             sonidoMuerte.play()
             pj.restaDePuntajeTemporalPerdido(100)

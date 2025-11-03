@@ -14,14 +14,14 @@ object menu {
     
     method dibujarMenu(){
         new VisualSoloLectura(image = "Logo_V1.png", position = game.at(8, 7)).ponerImagen()
-        menuPersonaje.iniciar()
+        menuDePersonaje.iniciar()
     }
 }
 
-object menuPersonaje {
+object menuDePersonaje {
     var property position = game.at(7, 4)
     var menuElegirPersonajesEstaAbierto = false
-    const imagenes = ["MenuCerrado.png", "Personajes_V2.png"]
+    const imagenes = ["MenuCerrado.png", "MenuDePersonajes_V2.png"]
     var imagen = imagenes.first()
     
     method image() = imagen
@@ -121,11 +121,11 @@ object tecladoBase inherits TecladoBase {}
 
 class TecladoMenu inherits TecladoBase {
     override method j() {
-        gestorNiveles.iniciarNivel()
+        juegoLevelDevil.iniciarNivel()
     }
 
     override method p() {
-        menuPersonaje.desplegar()
+        menuDePersonaje.desplegar()
     }
 }
 
@@ -133,35 +133,19 @@ object tecladoMenu inherits TecladoMenu {}
 
 object tecladoMenuElegirPersonajes inherits TecladoBase {
     override method num1() {
-        gestorDeJugadores.resetearPuntaje()
-        gestorDeJugadores.reiniciarVidas()
-        gestorDeJugadores.seleccionarPersonaje(jugadorLevelDevil)
-        gestorNiveles.nivelActual(nivel1)
-        gestorNiveles.iniciarNivel()
+        juegoLevelDevil.volverAIniciarDeCero(jugadorLevelDevil)
     }
 
     override method num2() {
-        gestorDeJugadores.resetearPuntaje()
-        gestorDeJugadores.reiniciarVidas()
-        gestorDeJugadores.seleccionarPersonaje(zombie)
-        gestorNiveles.nivelActual(nivel1)
-        gestorNiveles.iniciarNivel()
+        juegoLevelDevil.volverAIniciarDeCero(zombie)
     }
 
     override method num3() {
-        gestorDeJugadores.resetearPuntaje()
-        gestorDeJugadores.reiniciarVidas()
-        gestorDeJugadores.seleccionarPersonaje(miniMessi)
-        gestorNiveles.nivelActual(nivel1)
-        gestorNiveles.iniciarNivel()
+        juegoLevelDevil.volverAIniciarDeCero(miniMessi)
     }
 
     override method num4() {
-        gestorDeJugadores.resetearPuntaje()
-        gestorDeJugadores.reiniciarVidas()
-        gestorDeJugadores.seleccionarPersonaje(satoruGojo)
-        gestorNiveles.nivelActual(nivel1)
-        gestorNiveles.iniciarNivel()
+        juegoLevelDevil.volverAIniciarDeCero(satoruGojo)
     }
 }
 
@@ -171,7 +155,7 @@ object tecladoNormal inherits TecladoBase {
     override method left() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(1)) }
     override method right() { gestorDeJugadores.moverA(derecha.aplicarCantidad(1)) }
 
-    override method r() { gestorNiveles.reiniciarNivel() }
+    override method r() { juegoLevelDevil.reiniciarNivel() }
     override method m() {  menu.iniciar() }
 }
 
@@ -181,7 +165,7 @@ object tecladoInvertido inherits TecladoBase {
     override method left() { gestorDeJugadores.moverA(derecha.aplicarCantidad(1)) }
     override method right() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(1)) }
 
-    override method r() { gestorNiveles.reiniciarNivel() }
+    override method r() { juegoLevelDevil.reiniciarNivel() }
     override method m() {  menu.iniciar() }
 }
 
@@ -191,7 +175,7 @@ object tecladoDoble inherits TecladoBase {
     override method left() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(2)) }
     override method right() { gestorDeJugadores.moverA(derecha.aplicarCantidad(2)) }
 
-    override method r() { gestorNiveles.reiniciarNivel() }
+    override method r() { juegoLevelDevil.reiniciarNivel() }
     override method m() {  menu.iniciar() }
 }
 

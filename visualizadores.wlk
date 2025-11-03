@@ -13,7 +13,6 @@ class VisualSoloLectura {
     }
 }
 
-// Visualizador de texto
 class VisualizadorTexto {
     const property position
     var property text = ""
@@ -25,7 +24,7 @@ class VisualizadorTexto {
     }
 }
 
-// Visualizador de puntaje
+// Lo cree asi porque de la manera que lo hacia sin herencia no funcionaba
 class VisualizadorPuntaje inherits VisualizadorTexto {
     override method text() = "                   PUNTOS = " + gestorDeJugadores.jugadorActual().puntajeCompleto().toString()
 
@@ -49,7 +48,7 @@ object gestorVisualizadores {
     var visualizadorPuntajeActivo = false
     
     method iniciar() {
-        self.limpiar() // Limpiamos todo primero
+        self.limpiar()
         visualizadorPuntaje.ponerTexto()
         game.onTick(100, "actualizarPuntaje", { visualizadorPuntaje.ponerTexto() })
         visualizadorPuntajeActivo = true
@@ -63,15 +62,13 @@ object gestorVisualizadores {
     }
     
     method actualizarNiveles() {
-        const numeroNivelActual = gestorNiveles.nivelActual().numero()
+        const numeroNivelActual = juegoLevelDevil.numeroDeNivel()
         gestorVisualizadorNiveles.actualizarNiveles(numeroNivelActual)
     }
 
     method limpiar() {
-        // Primero removemos todos los eventos
         game.removeTickEvent("actualizarPuntaje")
         
-        // Luego limpiamos todos los visualizadores
         if (game.hasVisual(visualizadorPuntaje)) {
             game.removeVisual(visualizadorPuntaje)
         }
@@ -82,7 +79,6 @@ object gestorVisualizadores {
     }
 }
 
-// Gestor de visualización de vidas
 object gestorVisualizadorVidas {
     const visualizadores = []
 
@@ -103,12 +99,11 @@ object gestorVisualizadorVidas {
     }
 }
 
-// Gestor de visualización de niveles
 object gestorVisualizadorNiveles {
     const visualizadores = []
     
     method cantidadNiveles() {
-        return gestorNiveles.cantidadNiveles()
+        return juegoLevelDevil.cantidadNiveles()
     }
     
     method limpiar() {

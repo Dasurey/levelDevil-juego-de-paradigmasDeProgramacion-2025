@@ -2,62 +2,24 @@ import levelDevil.*
 import tecladoYMenu.*
 import visualizadores.*
 
-//          Administra los niveles
-object gestorNiveles {
-    var property nivelActual = nivel1
-    
-    method cantidadNivelesDesde(nivel) {
-        if (nivel.siguienteNivel() == null) {
-            return 0
-        }
-        return 1 + self.cantidadNivelesDesde(nivel.siguienteNivel())
-    }
-    
-    method cantidadNiveles() = self.cantidadNivelesDesde(nivel1)
-    
-    method iniciarNivel() {
-        nivelActual.iniciar()
-    }
-
-    method siguienteNivel() {
-        nivelActual = nivelActual.siguienteNivel()
-        self.iniciarNivel()
-    }
-
-    method limpiar() {
-        game.allVisuals().forEach({ visual => game.removeVisual(visual) })
-    }
-    
-    method reiniciarNivel() {
-        juegoLevelDevil.detenerMovimientos()
-        self.limpiar()
-        gestorDeJugadores.resetearPuntajeTemporal()
-        configTeclado.juegoEnMarcha() // Rehabilitar controles
-        self.iniciarNivel()
-    }
-}
-
-//*==========================| Niveles |==========================
-
+// Nivel Base
 class NivelBase {
     method mapaDeCuadricula() = [] /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
     
     var property siguienteNivel = null
     
-    method numero() // Cada nivel debe implementar este método
+    method numeroDeNivel() // Cada nivel debe implementar este método
 
     method iniciar() {
-        // Limpiar pantalla
+        gestorDeJugadores.resetearPuntajeTemporal()
         juegoLevelDevil.limpiar()
 
-        //Dibujo UI
         new VisualSoloLectura(image="BotonMenu.png",position = game.at(22,11)).ponerImagen()
         new VisualSoloLectura(image="BotonReiniciar.png",position = game.at(0,0)).ponerImagen()
 
         // Dibujar el nivel usando el mapaDeCuadricula
         self.dibujarNivel()
         
-        // Agregar jugador
         self.dibujarJugador()
 
         // Habilitar controles
@@ -118,7 +80,7 @@ object m {
     method agregarAlNivel(x, y) {
         const meta = new Meta(position = game.at(x, y))
         _.agregarAlNivel(x, y)
-        game.addVisual(meta)
+        meta.ponerImagen()
     }
 }
 
@@ -127,7 +89,7 @@ object d {
     method agregarAlNivel(x, y) {
         const moneda = new Moneda(position = game.at(x, y))
         _.agregarAlNivel(x, y)
-        game.addVisual(moneda)
+        moneda.ponerImagen()
     }
 }
 
@@ -136,7 +98,7 @@ object f {
     method agregarAlNivel(x, y) {
         const monedaFalsa = new MonedaFalsa(position = game.at(x, y))
         _.agregarAlNivel(x, y)
-        game.addVisual(monedaFalsa)
+        monedaFalsa.ponerImagen()
     }
 }
 
@@ -145,7 +107,7 @@ object s {
     method agregarAlNivel(x, y) {
         const pincho = new Pincho(position = game.at(x, y))
         _.agregarAlNivel(x, y)
-        game.addVisual(pincho)
+        pincho.ponerImagen()
     }
 }
 
@@ -154,7 +116,7 @@ object i {
     method agregarAlNivel(x, y) {
         const pinchoInv = new PinchoInvisible(position = game.at(x, y))
         _.agregarAlNivel(x, y)
-        game.addVisual(pinchoInv)
+        pinchoInv.ponerImagen()
         pinchoInv.hacerVisible()
     }
 }
@@ -164,7 +126,7 @@ object n {
     method agregarAlNivel(x, y) {
         const pinchoInvInst = new PinchoInvisibleInstantaneo(position = game.at(x, y))
         _.agregarAlNivel(x, y)
-        game.addVisual(pinchoInvInst)
+        pinchoInvInst.ponerImagen()
     }
 }
 
@@ -173,7 +135,7 @@ object y {
     method agregarAlNivel(x, y) {
         const pinchoMov = new PinchoMovil(position = game.at(x, y))
         _.agregarAlNivel(x, y)
-        game.addVisual(pinchoMov)
+        pinchoMov.ponerImagen()
         pinchoMov.moverPinchoMovil()
     }
 }
@@ -197,7 +159,7 @@ object a {
 //*==========================| Niveles Instanciados |==========================
 
 object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
-    override method numero() = 1
+    override method numeroDeNivel() = 1
     
     override method mapaDeCuadricula() = [
         /* Nivel 1 - El engaño (fácil en apariencia) */
@@ -217,7 +179,7 @@ object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
 }
 
 object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
-    override method numero() = 2
+    override method numeroDeNivel() = 2
     
     override method mapaDeCuadricula() = [
         /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
@@ -244,7 +206,7 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
 }
 
 object nivel3 inherits NivelBase(siguienteNivel = nivel4) {
-    override method numero() = 3
+    override method numeroDeNivel() = 3
     
     override method mapaDeCuadricula() = [
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
@@ -268,7 +230,7 @@ object nivel3 inherits NivelBase(siguienteNivel = nivel4) {
 }
 
 object nivel4 inherits NivelBase(siguienteNivel = nivel5) {
-    override method numero() = 4
+    override method numeroDeNivel() = 4
     
     override method mapaDeCuadricula() = [
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
@@ -287,7 +249,7 @@ object nivel4 inherits NivelBase(siguienteNivel = nivel5) {
 }
 
 object nivel5 inherits NivelBase(siguienteNivel = nivel6) {
-    override method numero() = 5
+    override method numeroDeNivel() = 5
     
     override method mapaDeCuadricula() = [
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
@@ -311,7 +273,7 @@ object nivel5 inherits NivelBase(siguienteNivel = nivel6) {
 }
 
 object nivel6 inherits NivelBase(siguienteNivel = nivel7) {
-    override method numero() = 6
+    override method numeroDeNivel() = 6
     
     override method mapaDeCuadricula() = [
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
@@ -335,7 +297,7 @@ object nivel6 inherits NivelBase(siguienteNivel = nivel7) {
 }
 
 object nivel7 inherits NivelBase(siguienteNivel = creditosFinales) {
-    override method numero() = 7
+    override method numeroDeNivel() = 7
     
     override method mapaDeCuadricula() = [
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
