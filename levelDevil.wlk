@@ -3,11 +3,17 @@ import tecladoYMenu.*
 import visualizadores.*
 
 object juegoLevelDevil {
+    const sonidoMenu = game.sound("Jugando.mp3")
+
     method iniciar() {
         game.title("Level Devil")
         game.height(12)
         game.width(24)
         game.boardGround("Fondo.png")
+
+        sonidoMenu.shouldLoop(true)
+        sonidoMenu.volume(0.1)
+        sonidoMenu.play()
 
         // Activar Colisiones
         self.activarColisiones()
@@ -133,6 +139,9 @@ class Personaje {
         if (vidasActuales <= 0) {
             juegoLevelDevil.detenerMovimientos()
             imagen = imagenes.last()
+            const sonidoMuerte = game.sound("Muerte.mp3")
+            sonidoMuerte.volume(1)
+            sonidoMuerte.play()
             game.schedule(2000, {
                 self.sumaDePuntaje(self.puntajeTemporalPerdido())
                 gestorNiveles.reiniciarNivel() // delegás en el gestor lo que pasa al morir
@@ -272,12 +281,15 @@ class Meta {
         pj.sumaDePuntaje(pj.puntajeTemporalPerdido() + pj.puntajeTemporalGanado())
         pj.resetearPuntajeTemporal()
         game.removeVisual(gestorDeJugadores.jugadorActual())
+        const sonidoGanador = game.sound("Victoria.mp3")
+        sonidoGanador.volume(1)
+        sonidoGanador.play()
         imagen = imagenes.get(1)
-        game.schedule(1000, {
+        game.schedule(333, {
             imagen = imagenes.get(2)
-            game.schedule(1000, {
+            game.schedule(333, {
                 imagen = imagenes.get(3)
-                game.schedule(1000, {
+                game.schedule(333, {
                     // Rehabilitamos los controles después del cambio de nivel
                     configTeclado.juegoEnMarcha()
                     gestorNiveles.siguienteNivel()
@@ -297,6 +309,9 @@ class Moneda {
     method esMeta() = false
 
     method interactuarConPersonaje(pj) {
+        const sonidoMoneda = game.sound("Moneda.mp3")
+        sonidoMoneda.volume(1)
+        sonidoMoneda.play()
         pj.sumaDePuntajeTemporalGanado(100)
         game.removeVisual(self)
     }

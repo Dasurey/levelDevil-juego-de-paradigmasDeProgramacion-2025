@@ -7,6 +7,10 @@ object menu{
         juegoLevelDevil.limpiar()
 
         self.dibujarMenu()
+        const sonidoMenu = game.sound("Jugando.mp3")
+        sonidoMenu.shouldLoop(true)
+        sonidoMenu.volume(0.1)
+        sonidoMenu.play()
 
         configTeclado.menuAbierto()
     }

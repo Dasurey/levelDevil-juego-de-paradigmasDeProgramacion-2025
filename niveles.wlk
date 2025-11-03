@@ -65,8 +65,6 @@ class NivelBase {
         
         // Actualizar visualizador de niveles y vidas
         gestorVisualizadores.iniciar()
-
-        gestorNiveles.nivelActual(self)
     }
 
     // Método para dibujar el nivel basado en el mapaDeCuadricula
