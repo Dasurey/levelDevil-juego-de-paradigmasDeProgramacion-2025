@@ -177,7 +177,7 @@ object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
     ]
 }
 
-object nivel2 inherits NivelBase(siguienteNivel = nivel2) {
+object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
     override method numeroDeNivel() = 2
     
     override method mapaDeCuadricula() = [
