@@ -196,23 +196,21 @@ object a {
 
 //*==========================| Niveles Instanciados |==========================
 
-object nivel1 inherits NivelBase(siguienteNivel = creditosFinales) {
+object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
     override method numero() = 1
     
     override method mapaDeCuadricula() = [
-        /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
-        // 24 columnas x 12 filas
-                // 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+        /* Nivel 1 - El engaño (fácil en apariencia) */
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        /* 9*/ [v,v,v,v,v,v,_,p,p,p,p,p,p,p,p,p,_,_,v,v,v,v,v,v],
+        /* 9*/ [v,v,v,v,v,v,s,p,p,p,p,p,p,p,p,p,_,_,v,v,v,v,v,v],
         /* 8*/ [v,v,v,v,v,v,_,_,_,_,p,d,d,d,d,p,_,_,v,v,v,v,v,v],
-        /* 7*/ [v,v,v,v,v,v,j,p,_,_,_,_,p,p,d,p,_,_,v,v,v,v,v,v],
+        /* 7*/ [v,v,v,v,v,v,j,p,_,_,_,_,p,p,d,p,s,_,v,v,v,v,v,v],
         /* 6*/ [v,v,v,v,v,v,_,p,p,_,p,_,_,p,_,i,m,_,v,v,v,v,v,v],
-        /* 5*/ [v,v,v,v,v,v,_,y,_,_,p,p,p,p,p,_,n,_,v,v,v,v,v,v],
+        /* 5*/ [v,v,v,v,v,v,_,y,_,_,p,p,p,p,p,_,i,_,v,v,v,v,v,v],
         /* 4*/ [v,v,v,v,v,v,_,p,p,_,p,_,_,_,_,_,_,_,v,v,v,v,v,v],
-        /* 3*/ [v,v,v,v,v,v,_,p,_,_,_,_,p,p,p,p,_,_,v,v,v,v,v,v],
-        /* 2*/ [v,v,v,v,v,v,_,p,p,p,_,p,p,_,p,_,_,_,v,v,v,v,v,v],
+        /* 3*/ [v,v,v,v,v,v,s,p,_,_,_,_,p,s,p,p,_,_,v,v,v,v,v,v],
+        /* 2*/ [v,v,v,v,v,v,_,p,p,p,s,p,p,p,p,_,_,_,v,v,v,v,v,v],
         /* 1*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* 0*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,a,v,v,v,v]
     ]
@@ -227,10 +225,10 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
                     // x = 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
         /* y = 11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        /* y = 9*/  [v,v,v,v,v,v,p,p,p,_,_,m,_,_,p,p,_,_,v,v,v,v,v,v],
-        /* y = 8*/  [v,v,v,v,v,v,_,p,_,_,p,p,p,_,_,_,_,_,v,v,v,v,v,v],
+        /* y = 9*/  [v,v,v,v,v,v,p,p,p,_,_,m,n,_,p,p,_,_,v,v,v,v,v,v],
+        /* y = 8*/  [v,v,v,v,v,v,_,p,_,_,p,p,p,_,_,_,y,_,v,v,v,v,v,v],
         /* y = 7*/  [v,v,v,v,v,v,p,_,_,p,_,_,_,p,_,_,_,_,v,v,v,v,v,v],
-        /* y = 6*/  [v,v,v,v,v,v,p,_,p,_,_,p,_,p,p,i,_,_,v,v,v,v,v,v],
+        /* y = 6*/  [v,v,v,v,v,v,p,_,p,_,y,p,_,p,p,i,_,_,v,v,v,v,v,v],
         /* y = 5*/  [v,v,v,v,v,v,_,_,_,_,p,_,_,_,p,_,f,_,v,v,v,v,v,v],
         /* y = 4*/  [v,v,v,v,v,v,_,p,_,p,p,_,p,_,_,_,d,_,v,v,v,v,v,v],
         /* y = 3*/  [v,v,v,v,v,v,_,_,_,_,p,_,_,_,p,p,_,_,v,v,v,v,v,v],
@@ -238,32 +236,124 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
         /* y = 1*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 0*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
     ]
+
+    override method iniciar() {
+        super()
+        configTeclado.cambiarTecladoA(tecladoInvertido)
+    }
 }
 
-object nivel3 inherits NivelBase(siguienteNivel = creditosFinales) {
+object nivel3 inherits NivelBase(siguienteNivel = nivel4) {
     override method numero() = 3
     
     override method mapaDeCuadricula() = [
-        /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
-        // 24 columnas x 12 filas
-                    // x = 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
-        /* y = 11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        /* y = 10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        /* y = 9*/  [v,v,v,v,v,v,_,_,_,_,_,m,_,_,_,_,_,_,v,v,v,v,v,v],
-        /* y = 8*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
-        /* y = 7*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
-        /* y = 6*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
-        /* y = 5*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
-        /* y = 4*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
-        /* y = 3*/  [v,v,v,v,v,v,_,_,_,p,p,p,_,_,_,_,_,_,v,v,v,v,v,v],
-        /* y = 2*/  [v,v,v,v,v,v,_,_,_,p,s,j,_,_,_,_,_,_,v,v,v,v,v,v],
-        /* y = 1*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        /* y = 0*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
+        /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /* 9*/ [v,v,v,v,v,v,j,_,d,d,f,m,_,d,d,f,_,_,v,v,v,v,v,v],
+        /* 8*/ [v,v,v,v,v,v,_,p,_,_,_,p,_,_,_,p,_,_,v,v,v,v,v,v],
+        /* 7*/ [v,v,v,v,v,v,_,_,d,n,d,_,d,_,d,_,_,_,v,v,v,v,v,v],
+        /* 6*/ [v,v,v,v,v,v,_,p,_,p,i,y,i,p,_,p,_,_,v,v,v,v,v,v],
+        /* 5*/ [v,v,v,v,v,v,_,_,d,_,d,f,d,_,d,_,_,_,v,v,v,v,v,v],
+        /* 4*/ [v,v,v,v,v,v,_,p,_,p,i,y,i,p,n,p,_,_,v,v,v,v,v,v],
+        /* 3*/ [v,v,v,v,v,v,_,_,d,_,d,_,d,_,d,_,_,_,v,v,v,v,v,v],
+        /* 2*/ [v,v,v,v,v,v,_,p,_,_,_,p,_,_,_,p,_,_,v,v,v,v,v,v],
+        /* 1*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /* 0*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
     ]
-    
+
     override method iniciar() {
         super()
-        // Configurar el teclado invertido para este nivel
+        configTeclado.cambiarTecladoA(tecladoDoble)
+    }
+}
+
+object nivel4 inherits NivelBase(siguienteNivel = nivel5) {
+    override method numero() = 4
+    
+    override method mapaDeCuadricula() = [
+        /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /* 9*/ [v,v,v,v,v,v,_,j,d,f,n,m,f,d,d,_,_,_,v,v,v,v,v,v],
+        /* 8*/ [v,v,v,v,v,v,p,_,_,_,i,_,i,_,_,p,_,_,v,v,v,v,v,v],
+        /* 7*/ [v,v,v,v,v,v,_,_,d,_,d,_,d,_,d,_,_,_,v,v,v,v,v,v],
+        /* 6*/ [v,v,v,v,v,v,p,_,_,p,i,f,i,p,_,p,_,_,v,v,v,v,v,v],
+        /* 5*/ [v,v,v,v,v,v,_,_,d,_,d,d,d,_,d,_,_,_,v,v,v,v,v,v],
+        /* 4*/ [v,v,v,v,v,v,p,_,_,p,i,f,i,p,_,p,_,_,v,v,v,v,v,v],
+        /* 3*/ [v,v,v,v,v,v,_,_,d,_,d,_,d,_,d,_,n,_,v,v,v,v,v,v],
+        /* 2*/ [v,v,v,v,v,v,p,_,_,_,i,_,i,_,_,p,d,_,v,v,v,v,v,v],
+        /* 1*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /* 0*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
+    ]
+}
+
+object nivel5 inherits NivelBase(siguienteNivel = nivel6) {
+    override method numero() = 5
+    
+    override method mapaDeCuadricula() = [
+        /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /* 9*/ [v,v,v,v,v,v,j,_,d,d,f,_,d,d,d,f,d,_,v,v,v,v,v,v],
+        /* 8*/ [v,v,v,v,v,v,_,_,s,_,_,_,_,_,s,_,_,_,v,v,v,v,v,v],
+        /* 7*/ [v,v,v,v,v,v,_,p,_,_,d,d,d,_,_,p,_,_,v,v,v,v,v,v],
+        /* 6*/ [v,v,v,v,v,v,_,_,s,_,f,f,f,_,s,_,_,_,v,v,v,v,v,v],
+        /* 5*/ [v,v,v,v,v,v,_,p,_,_,d,i,d,_,_,p,_,_,v,v,v,v,v,v],
+        /* 4*/ [v,v,v,v,v,v,_,_,s,_,f,f,f,_,s,_,_,_,v,v,v,v,v,v],
+        /* 3*/ [v,v,v,v,v,v,_,p,_,_,d,d,d,_,_,p,_,_,v,v,v,v,v,v],
+        /* 2*/ [v,v,v,v,v,v,_,_,s,_,_,_,_,_,s,m,_,_,v,v,v,v,v,v],
+        /* 1*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /* 0*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
+    ]
+
+    override method iniciar() {
+        super()
+        configTeclado.cambiarTecladoA(tecladoInvertido)
+    }
+}
+
+object nivel6 inherits NivelBase(siguienteNivel = nivel7) {
+    override method numero() = 6
+    
+    override method mapaDeCuadricula() = [
+        /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /* 9*/ [v,v,v,v,v,v,j,_,d,f,d,_,d,f,d,_,d,_,v,v,v,v,v,v],
+        /* 8*/ [v,v,v,v,v,v,_,s,_,y,_,_,_,y,_,s,_,_,v,v,v,v,v,v],
+        /* 7*/ [v,v,v,v,v,v,_,_,d,_,d,d,d,_,d,_,_,_,v,v,v,v,v,v],
+        /* 6*/ [v,v,v,v,v,v,_,s,_,i,f,f,f,n,_,s,_,_,v,v,v,v,v,v],
+        /* 5*/ [v,v,v,v,v,v,_,_,d,_,d,d,d,_,d,_,_,_,v,v,v,v,v,v],
+        /* 4*/ [v,v,v,v,v,v,_,s,_,i,f,f,f,n,_,s,_,_,v,v,v,v,v,v],
+        /* 3*/ [v,v,v,v,v,v,_,_,d,_,d,d,d,_,d,_,_,_,v,v,v,v,v,v],
+        /* 2*/ [v,v,v,v,v,v,_,s,_,y,_,m,_,y,_,s,_,_,v,v,v,v,v,v],
+        /* 1*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /* 0*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
+    ]
+
+    override method iniciar() {
+        super()
+        configTeclado.cambiarTecladoA(tecladoDoble)
+    }
+}
+
+object nivel7 inherits NivelBase(siguienteNivel = creditosFinales) {
+    override method numero() = 7
+    
+    override method mapaDeCuadricula() = [
+        /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /* 9*/ [v,v,v,v,v,v,j,d,d,d,d,f,d,d,d,d,d,_,v,v,v,v,v,v],
+        /* 8*/ [v,v,v,v,v,v,_,p,_,p,i,_,i,p,_,p,_,_,v,v,v,v,v,v],
+        /* 7*/ [v,v,v,v,v,v,_,_,f,_,d,y,d,_,_,_,_,_,v,v,v,v,v,v],
+        /* 6*/ [v,v,v,v,v,v,_,p,_,p,i,d,f,p,_,p,_,_,v,v,v,v,v,v],
+        /* 5*/ [v,v,v,v,v,v,_,_,f,_,d,f,d,_,f,_,_,_,v,v,v,v,v,v],
+        /* 4*/ [v,v,v,v,v,v,_,p,y,p,_,_,d,p,_,p,_,_,v,v,v,v,v,v],
+        /* 3*/ [v,v,v,v,v,v,_,_,f,_,d,n,d,_,f,_,_,_,v,v,v,v,v,v],
+        /* 2*/ [v,v,v,v,v,v,_,p,_,p,n,_,_,p,_,p,_,m,v,v,v,v,v,v],
+        /* 1*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        /* 0*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
+    ]
+
+    override method iniciar() {
+        super()
         configTeclado.cambiarTecladoA(tecladoInvertido)
     }
 }
