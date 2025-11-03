@@ -27,7 +27,7 @@ class VisualizadorTexto {
 
 // Visualizador de puntaje
 class VisualizadorPuntaje inherits VisualizadorTexto {
-    override method text() = "           PUNTOS = " + gestorDeJugadores.jugadorActual().puntajeCompleto().toString()
+    override method text() = "                   PUNTOS = " + gestorDeJugadores.jugadorActual().puntajeCompleto().toString()
 
     override method ponerTexto() {
         if (game.hasVisual(self)) {
