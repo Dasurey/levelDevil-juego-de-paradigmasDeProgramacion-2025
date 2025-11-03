@@ -357,8 +357,6 @@ class Moneda {
 
 class ObjetoMorible {
     var property position
-
-    const sonidoMuerte = game.sound("Muerte.mp3")
     
     method image()
 
@@ -374,6 +372,7 @@ class ObjetoMorible {
 
     method interactuarConPersonaje(pj) {
         if(pj.potencialDefensivo() < self.ataque()) {
+            const sonidoMuerte = game.sound("Muerte.mp3")
             sonidoMuerte.volume(1)
             sonidoMuerte.play()
             pj.restaDePuntajeTemporalPerdido(50)
@@ -390,6 +389,7 @@ class MonedaFalsa inherits ObjetoMorible {
     override method interactuarConPersonaje(pj) {
         game.removeVisual(self)
         if(pj.potencialDefensivo() < self.ataque()) {
+            const sonidoMuerte = game.sound("Muerte.mp3")
             sonidoMuerte.volume(1)
             sonidoMuerte.play()
             pj.restaDePuntajeTemporalPerdido(100)
@@ -435,7 +435,7 @@ class PinchoInvisible inherits ObjetoMorible {
     // La imagen depende de la propiedad 'visible'
     override method image() {
         if (visible) {
-            return "PinchoTriple_V1.png"
+            return "PinchoSimple_V1.png"
         } else {
             return null
         }

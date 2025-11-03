@@ -31,7 +31,7 @@ class NivelBase {
 
     // Método para dibujar el nivel basado en el mapaDeCuadricula
     method dibujarNivel() {
-        const elementos = [_, j, p, m, d, f, s, n, i, y, a]
+        const elementos = [_, j, p, m, d, f, s, n, i, h, a]
         
         elementos.forEach({ tipo =>
             var y = game.height() - 1  // Empezamos desde la altura máxima
@@ -131,7 +131,7 @@ object n {
 }
 
 // Pincho Movil
-object y {
+object h {
     method agregarAlNivel(x, y) {
         const pinchoMov = new PinchoMovil(position = game.at(x, y))
         _.agregarAlNivel(x, y)
@@ -156,8 +156,7 @@ object a {
     }
 }
 
-//*==========================| Niveles Instanciados |==========================
-
+// Niveles específicos
 object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
     override method numeroDeNivel() = 1
     
@@ -178,7 +177,7 @@ object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
     ]
 }
 
-object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
+object nivel2 inherits NivelBase(siguienteNivel = nivel2) {
     override method numeroDeNivel() = 2
     
     override method mapaDeCuadricula() = [
@@ -188,9 +187,9 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
         /* y = 11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 9*/  [v,v,v,v,v,v,p,p,p,_,_,m,n,_,p,p,_,_,v,v,v,v,v,v],
-        /* y = 8*/  [v,v,v,v,v,v,_,p,_,_,p,p,p,_,_,_,y,_,v,v,v,v,v,v],
+        /* y = 8*/  [v,v,v,v,v,v,_,p,_,_,p,p,p,_,_,_,h,_,v,v,v,v,v,v],
         /* y = 7*/  [v,v,v,v,v,v,p,_,_,p,_,_,_,p,_,_,_,_,v,v,v,v,v,v],
-        /* y = 6*/  [v,v,v,v,v,v,p,_,p,_,y,p,_,p,p,i,_,_,v,v,v,v,v,v],
+        /* y = 6*/  [v,v,v,v,v,v,p,_,p,_,h,p,_,p,p,i,_,_,v,v,v,v,v,v],
         /* y = 5*/  [v,v,v,v,v,v,_,_,_,_,p,_,_,_,p,_,f,_,v,v,v,v,v,v],
         /* y = 4*/  [v,v,v,v,v,v,_,p,_,p,p,_,p,_,_,_,d,_,v,v,v,v,v,v],
         /* y = 3*/  [v,v,v,v,v,v,_,_,_,_,p,_,_,_,p,p,_,_,v,v,v,v,v,v],
@@ -211,13 +210,13 @@ object nivel3 inherits NivelBase(siguienteNivel = nivel4) {
     override method mapaDeCuadricula() = [
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        /* 9*/ [v,v,v,v,v,v,j,_,d,d,f,m,_,d,d,f,_,_,v,v,v,v,v,v],
+        /* 9*/ [v,v,v,v,v,v,j,_,d,_,f,_,d,_,f,_,d,_,v,v,v,v,v,v],
         /* 8*/ [v,v,v,v,v,v,_,p,_,_,_,p,_,_,_,p,_,_,v,v,v,v,v,v],
         /* 7*/ [v,v,v,v,v,v,_,_,d,n,d,_,d,_,d,_,_,_,v,v,v,v,v,v],
-        /* 6*/ [v,v,v,v,v,v,_,p,_,p,i,y,i,p,_,p,_,_,v,v,v,v,v,v],
-        /* 5*/ [v,v,v,v,v,v,_,_,d,_,d,f,d,_,d,_,_,_,v,v,v,v,v,v],
-        /* 4*/ [v,v,v,v,v,v,_,p,_,p,i,y,i,p,n,p,_,_,v,v,v,v,v,v],
-        /* 3*/ [v,v,v,v,v,v,_,_,d,_,d,_,d,_,d,_,_,_,v,v,v,v,v,v],
+        /* 6*/ [v,v,v,v,v,v,_,p,_,p,i,h,i,p,_,p,_,_,v,v,v,v,v,v],
+        /* 5*/ [v,v,v,v,v,v,_,_,d,_,d,m,d,_,d,_,_,_,v,v,v,v,v,v],
+        /* 4*/ [v,v,v,v,v,v,_,p,_,p,i,h,i,p,n,p,_,_,v,v,v,v,v,v],
+        /* 3*/ [v,v,v,v,v,v,_,_,d,_,d,_,d,_,d,_,f,_,v,v,v,v,v,v],
         /* 2*/ [v,v,v,v,v,v,_,p,_,_,_,p,_,_,_,p,_,_,v,v,v,v,v,v],
         /* 1*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* 0*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
@@ -279,13 +278,13 @@ object nivel6 inherits NivelBase(siguienteNivel = nivel7) {
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* 9*/ [v,v,v,v,v,v,j,_,d,f,d,_,d,f,d,_,d,_,v,v,v,v,v,v],
-        /* 8*/ [v,v,v,v,v,v,_,s,_,y,_,_,_,y,_,s,_,_,v,v,v,v,v,v],
+        /* 8*/ [v,v,v,v,v,v,_,s,_,h,_,_,_,h,_,s,_,_,v,v,v,v,v,v],
         /* 7*/ [v,v,v,v,v,v,_,_,d,_,d,d,d,_,d,_,_,_,v,v,v,v,v,v],
         /* 6*/ [v,v,v,v,v,v,_,s,_,i,f,f,f,n,_,s,_,_,v,v,v,v,v,v],
         /* 5*/ [v,v,v,v,v,v,_,_,d,_,d,d,d,_,d,_,_,_,v,v,v,v,v,v],
         /* 4*/ [v,v,v,v,v,v,_,s,_,i,f,f,f,n,_,s,_,_,v,v,v,v,v,v],
         /* 3*/ [v,v,v,v,v,v,_,_,d,_,d,d,d,_,d,_,_,_,v,v,v,v,v,v],
-        /* 2*/ [v,v,v,v,v,v,_,s,_,y,_,m,_,y,_,s,_,_,v,v,v,v,v,v],
+        /* 2*/ [v,v,v,v,v,v,_,s,_,h,_,m,_,h,_,s,_,_,v,v,v,v,v,v],
         /* 1*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* 0*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
     ]
@@ -304,10 +303,10 @@ object nivel7 inherits NivelBase(siguienteNivel = creditosFinales) {
         /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* 9*/ [v,v,v,v,v,v,j,d,d,d,d,f,d,d,d,d,d,_,v,v,v,v,v,v],
         /* 8*/ [v,v,v,v,v,v,_,p,_,p,i,_,i,p,_,p,_,_,v,v,v,v,v,v],
-        /* 7*/ [v,v,v,v,v,v,_,_,f,_,d,y,d,_,_,_,_,_,v,v,v,v,v,v],
+        /* 7*/ [v,v,v,v,v,v,_,_,f,_,d,h,d,_,_,_,_,_,v,v,v,v,v,v],
         /* 6*/ [v,v,v,v,v,v,_,p,_,p,i,d,f,p,_,p,_,_,v,v,v,v,v,v],
         /* 5*/ [v,v,v,v,v,v,_,_,f,_,d,f,d,_,f,_,_,_,v,v,v,v,v,v],
-        /* 4*/ [v,v,v,v,v,v,_,p,y,p,_,_,d,p,_,p,_,_,v,v,v,v,v,v],
+        /* 4*/ [v,v,v,v,v,v,_,p,h,p,_,_,d,p,_,p,_,_,v,v,v,v,v,v],
         /* 3*/ [v,v,v,v,v,v,_,_,f,_,d,n,d,_,f,_,_,_,v,v,v,v,v,v],
         /* 2*/ [v,v,v,v,v,v,_,p,_,p,n,_,_,p,_,p,_,m,v,v,v,v,v,v],
         /* 1*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
