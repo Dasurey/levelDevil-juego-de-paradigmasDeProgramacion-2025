@@ -41,7 +41,7 @@ object juegoLevelDevil {
         configTeclado.juegoBloqueado()
         // Detener todos los PinchosMovil
         game.allVisuals()
-            .filter({ visual => visual.toString().contains("PinchoMovil") })
+            .filter({ visual => visual.toString().contains("moverPinchoMovil_") })
             .forEach({ pinchoMovil => pinchoMovil.detenerMovimiento() })
     }
 }

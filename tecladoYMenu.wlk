@@ -172,7 +172,10 @@ object tecladoNormal inherits TecladoBase {
     override method right() { gestorDeJugadores.moverA(derecha.aplicarCantidad(1)) }
 
     override method r() { gestorNiveles.reiniciarNivel() }
-    override method m() { menu.iniciar() }
+    override method m() {
+        juegoLevelDevil.detenerMovimientos()
+        menu.iniciar()
+    }
 }
 
 object tecladoInvertido inherits TecladoBase {
@@ -182,7 +185,10 @@ object tecladoInvertido inherits TecladoBase {
     override method right() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(1)) }
 
     override method r() { gestorNiveles.reiniciarNivel() }
-    override method m() { menu.iniciar() }
+    override method m() {
+        juegoLevelDevil.detenerMovimientos()
+        menu.iniciar()
+    }
 }
 
 object tecladoDoble inherits TecladoBase {
@@ -192,7 +198,10 @@ object tecladoDoble inherits TecladoBase {
     override method right() { gestorDeJugadores.moverA(derecha.aplicarCantidad(2)) }
 
     override method r() { gestorNiveles.reiniciarNivel() }
-    override method m() { menu.iniciar() }
+    override method m() {
+        juegoLevelDevil.detenerMovimientos()
+        menu.iniciar()
+    }
 }
 
 // Direcciones
