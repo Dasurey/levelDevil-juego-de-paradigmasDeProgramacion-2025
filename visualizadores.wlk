@@ -32,7 +32,7 @@ class VisualizadorPuntaje inherits VisualizadorTexto {
         if (game.hasVisual(self)) {
             game.removeVisual(self)
         }
-        game.addVisual(self)
+        super()
     }
 }
 
