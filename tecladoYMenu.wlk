@@ -170,10 +170,10 @@ object tecladoInvertido inherits TecladoBase {
 }
 
 object tecladoEnManesillasDeReloj inherits TecladoBase {
-    override method up() { gestorDeJugadores.moverA(derecha) }
-    override method right() { gestorDeJugadores.moverA(abajo) }
-    override method down() { gestorDeJugadores.moverA(izquierda) }
-    override method left() { gestorDeJugadores.moverA(arriba) }
+    override method up() { gestorDeJugadores.moverA(izquierda) }
+    override method right() { gestorDeJugadores.moverA(arriba) }
+    override method down() { gestorDeJugadores.moverA(derecha) }
+    override method left() { gestorDeJugadores.moverA(abajo) }
 
     override method r() { juegoLevelDevil.reiniciarNivel() }
     override method m() {  menu.iniciar() }
