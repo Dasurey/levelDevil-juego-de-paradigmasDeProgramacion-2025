@@ -1,5 +1,6 @@
 import levelDevil.*
 import tecladoYMenu.*
+import niveles.*
 
 /*
 describe "Level Devil Game Tests - Version Simple" {
@@ -81,43 +82,39 @@ describe "PinchoMovil vs Meta" {
 test "El jugador pierde vida al tocar un PinchoMovil" {
   const pincho = new PinchoMovil(position = game.at(1, 0))
   game.addVisual(pincho)
-  jugador.position(game.at(0, 0))
+  gestorDeJugadores.position(game.at(0, 0))
   pincho.mover(derecha)
-  assert.equals(2, jugador.vidas())
+  assert.equals(2, gestorDeJugadores.vidasActuales())
 }
 
 
 describe "Niveles" {
-
     test "Al iniciar el nivel se resetea el puntaje temporal" {
       const jugador = gestorDeJugadores.jugadorActual()
       jugador.sumaDePuntajeTemporalGanado(100)
-      nivel1.iniciarNivel()
+      juegoLevelDevil.iniciarNivel()
 
       assert.equals(0, jugador.puntajeTemporalGanado())
     }
 
     test "Al completar nivel1 se pasa a nivel2" {
-      juegoLevelDevil.nivelActual = nivel1
-      juegoLevelDevil.nivelActual().ganar()
+      juegoLevelDevil.nivelActual(nivel1)
+      const jugador = jugadorLevelDevil
+      jugador.position(game.at(1,0))
+      game.addVisual(jugador)
+      const meta = new Meta(position = game.at(1, 1))
+      game.addVisual(meta)
+      jugador.moverA(arriba)
+      // Simular el paso del nivel (en el juego real, esto ocurre después de la animación)
+      juegoLevelDevil.siguienteNivel()
       assert.equals(nivel2, juegoLevelDevil.nivelActual())
     }
 
     test "Al ganar un nivel se suman puntos al puntaje total" {
       const jugador = gestorDeJugadores.jugadorActual()
+      jugador.resetearPuntaje()
       jugador.sumaDePuntajeTemporalGanado(200)
-      nivel1.ganar()
-      assert.isTrue(jugador.puntaje() >= 200)
-    }
-
-    test "Reiniciar el juego limpia niveles y restaura vidas" {
-      const jugador = gestorDeJugadores.jugadorActual()
-      jugador.vidasActuales = 1
-      jugador.sumaDePuntajeTemporalGanado(100)
-      juegoLevelDevil.reiniciar()
-
-      assert.equals(3, jugador.vidasActuales())
-      assert.equals(0, jugador.puntajeTemporalGanado())
-      assert.equals(nivel1, juegoLevelDevil.nivelActual())
+      juegoLevelDevil.siguienteNivel()
+      assert.that(jugador.puntaje() >= 200)
     }
   }

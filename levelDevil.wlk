@@ -5,6 +5,8 @@ import visualizadores.*
 object juegoLevelDevil {
     var property nivelActual = nivel1
 
+    method nivelActual() = nivelActual
+
     const sonidoMenu = game.sound("Jugando.mp3")
 
     method iniciar() {
@@ -54,6 +56,8 @@ object juegoLevelDevil {
     }
 
     method siguienteNivel() {
+        // Primero, sumar el puntaje temporal al puntaje total antes de cambiar de nivel
+        gestorDeJugadores.sumarPuntajeTemporalAlTotal()
         nivelActual = nivelActual.siguienteNivel()
         self.iniciarNivel()
     }
@@ -61,6 +65,7 @@ object juegoLevelDevil {
     method reiniciarNivel() {
         self.detenerMovimientos()
         self.limpiar()
+        gestorDeJugadores.reiniciarVidas()
         self.iniciarNivel()
     }
 
@@ -111,6 +116,14 @@ object gestorDeJugadores {
 
     method reiniciarVidas() {
         jugadorActual.reiniciarVidas()
+    }
+    
+    method vidasActuales(cantidad) {
+        jugadorActual.vidasActuales(cantidad)
+    }
+
+    method sumarPuntajeTemporalAlTotal() {
+        jugadorActual.sumaDePuntaje(jugadorActual.puntajeTemporalPerdido() + jugadorActual.puntajeTemporalGanado())
     }
 
     method seleccionarPersonaje(jugador) {
@@ -213,6 +226,10 @@ class Personaje {
     }
 
     method puntajeCompleto() = self.puntaje() + self.puntajeTemporalGanado() + self.puntajeTemporalPerdido()
+
+    method sumarPuntajeTemporalAlTotal() {
+        self.sumaDePuntaje(self.puntajeTemporalPerdido() + self.puntajeTemporalGanado())
+    }
 }
 
 object explorador {
@@ -316,7 +333,6 @@ class Meta {
 
     method interactuarConPersonaje(pj) {
         juegoLevelDevil.detenerMovimientos()
-        pj.sumaDePuntaje(pj.puntajeTemporalPerdido() + pj.puntajeTemporalGanado())
         game.removeVisual(gestorDeJugadores.jugadorActual())
         sonidoGanador.volume(1)
         sonidoGanador.play()

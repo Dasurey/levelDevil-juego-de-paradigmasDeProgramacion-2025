@@ -189,12 +189,12 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
                     // x = 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
         /* y = 11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        /* y = 9*/  [v,v,v,v,v,v,p,p,p,_,_,m,n,_,p,p,f,_,v,v,v,v,v,v],
-        /* y = 8*/  [v,v,v,v,v,v,_,p,_,_,p,p,p,d,d,_,h,_,v,v,v,v,v,v],
-        /* y = 7*/  [v,v,v,v,v,v,p,d,d,p,_,_,_,p,d,_,_,_,v,v,v,v,v,v],
-        /* y = 6*/  [v,v,v,v,v,v,p,d,p,_,h,p,_,p,p,i,_,_,v,v,v,v,v,v],
-        /* y = 5*/  [v,v,v,v,v,v,_,_,_,_,p,_,_,_,p,_,f,_,v,v,v,v,v,v],
-        /* y = 4*/  [v,v,v,v,v,v,_,p,_,p,p,_,p,_,_,_,d,_,v,v,v,v,v,v],
+        /* y = 9*/  [v,v,v,v,v,v,p,n,p,_,_,m,n,_,p,p,f,_,v,v,v,v,v,v],
+        /* y = 8*/  [v,v,v,v,v,v,f,d,_,_,p,p,p,d,d,_,h,_,v,v,v,v,v,v],
+        /* y = 7*/  [v,v,v,v,v,v,p,d,d,p,d,_,h,p,d,_,_,_,v,v,v,v,v,v],
+        /* y = 6*/  [v,v,v,v,v,v,p,d,p,_,_,p,_,_,p,i,_,_,v,v,v,v,v,v],
+        /* y = 5*/  [v,v,v,v,v,v,_,_,p,_,_,_,_,_,p,_,f,_,v,v,v,v,v,v],
+        /* y = 4*/  [v,v,v,v,v,v,_,p,_,_,p,p,p,_,_,_,d,_,v,v,v,v,v,v],
         /* y = 3*/  [v,v,v,v,v,v,_,_,_,_,p,_,_,_,p,p,_,_,v,v,v,v,v,v],
         /* y = 2*/  [v,v,v,v,v,v,_,_,_,s,j,_,_,_,_,_,d,f,v,v,v,v,v,v],
         /* y = 1*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
@@ -218,13 +218,13 @@ object nivel3 inherits NivelBase(siguienteNivel = nivel4) {
         /* y = 11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 9*/  [v,v,v,v,v,v,p,s,_,_,p,p,p,p,p,p,m,p,v,v,v,v,v,v],
-        /* y = 8*/  [v,v,v,v,v,v,p,_,p,_,d,h,_,d,_,_,_,p,v,v,v,v,v,v],
-        /* y = 7*/  [v,v,v,v,v,v,p,_,_,_,p,p,p,p,p,p,_,p,v,v,v,v,v,v],
-        /* y = 6*/  [v,v,v,v,v,v,p,_,p,_,d,_,f,_,f,p,_,p,v,v,v,v,v,v],
-        /* y = 5*/  [v,v,v,v,v,v,p,_,p,p,i,p,i,p,i,p,_,p,v,v,v,v,v,v],
-        /* y = 4*/  [v,v,v,v,v,v,p,_,_,_,_,_,_,_,_,p,_,p,v,v,v,v,v,v],
-        /* y = 3*/  [v,v,v,v,v,v,p,p,p,p,p,d,p,p,p,p,i,p,v,v,v,v,v,v],
-        /* y = 2*/  [v,v,v,v,v,v,_,j,_,_,_,_,_,_,_,_,_,n,v,v,v,v,v,v],
+        /* y = 8*/  [v,v,v,v,v,v,p,_,p,_,d,_,_,d,_,_,_,p,v,v,v,v,v,v],
+        /* y = 7*/  [v,v,v,v,v,v,p,_,_,_,p,_,_,p,p,p,_,p,v,v,v,v,v,v],
+        /* y = 6*/  [v,v,v,v,v,v,p,_,p,_,d,_,d,_,f,p,_,p,v,v,v,v,v,v],
+        /* y = 5*/  [v,v,v,v,v,v,p,_,p,p,n,p,i,p,i,p,_,d,v,v,v,v,v,v],
+        /* y = 4*/  [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,p,f,p,v,v,v,v,v,v],
+        /* y = 3*/  [v,v,v,v,v,v,_,p,p,p,p,d,p,p,p,p,i,p,v,v,v,v,v,v],
+        /* y = 2*/  [v,v,v,v,v,v,_,_,j,s,_,_,_,_,_,_,_,n,v,v,v,v,v,v],
         /* y = 1*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 0*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
     ]
@@ -322,7 +322,7 @@ object nivel7 inherits NivelBase(siguienteNivel = creditosFinales) {
         /* y = 8*/  [v,v,v,v,v,v,d,_,_,p,_,_,_,_,p,_,_,_,v,v,v,v,v,v],
         /* y = 7*/  [v,v,v,v,v,v,d,p,_,_,_,_,_,_,_,_,p,m,v,v,v,v,v,v],
         /* y = 6*/  [v,v,v,v,v,v,p,_,_,_,_,p,p,_,_,_,_,p,v,v,v,v,v,v],
-        /* y = 5*/  [v,v,v,v,v,v,f,p,_,_,_,p,p,_,_,_,p,i,v,v,v,v,v,v],
+        /* y = 5*/  [v,v,v,v,v,v,f,p,_,_,f,p,p,d,_,_,p,i,v,v,v,v,v,v],
         /* y = 4*/  [v,v,v,v,v,v,_,d,p,_,p,d,d,p,_,p,d,_,v,v,v,v,v,v],
         /* y = 3*/  [v,v,v,v,v,v,_,p,_,_,_,_,_,_,_,_,p,d,v,v,v,v,v,v],
         /* y = 2*/  [v,v,v,v,v,v,j,_,_,_,p,p,p,p,n,_,_,_,v,v,v,v,v,v],
@@ -339,16 +339,18 @@ object nivel7 inherits NivelBase(siguienteNivel = creditosFinales) {
 object creditosFinales {
     method siguienteNivel() = null
 
+    const puntajeMinimoParaGanar = 3500
+
     method iniciar() {
         // Limpiar todo, incluyendo visualizadores
         juegoLevelDevil.limpiar()
         juegoLevelDevil.detenerMovimientos()
-        if(gestorDeJugadores.puntaje() > 4000) {
+        if(gestorDeJugadores.puntaje() > puntajeMinimoParaGanar) {
             new VisualSoloLectura(image="JuegoTerminadoGano.png", position = game.at(0, 0)).ponerImagen()
         } else {
             new VisualSoloLectura(image="JuegoTerminadoPerdio.png", position = game.at(0, 0)).ponerImagen()
         }
-        game.schedule(9000, {
+        game.schedule(10000, {
             juegoLevelDevil.limpiar()
             new VisualSoloLectura(image="CreditosFinales.png", position = game.at(0, 0)).ponerImagen()
             game.stop()
