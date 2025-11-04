@@ -159,7 +159,7 @@ object a {
 // Niveles específicos
 object nivel1 inherits NivelBase(siguienteNivel = nivel2) {
     override method numeroDeNivel() = 1
-    
+
     override method mapaDeCuadricula() = [
         /* Nivel 1 - El engaño (fácil en apariencia) */
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
@@ -193,7 +193,7 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
         /* y = 5*/  [v,v,v,v,v,v,_,_,_,_,p,_,_,_,p,_,f,_,v,v,v,v,v,v],
         /* y = 4*/  [v,v,v,v,v,v,_,p,_,p,p,_,p,_,_,_,d,_,v,v,v,v,v,v],
         /* y = 3*/  [v,v,v,v,v,v,_,_,_,_,p,_,_,_,p,p,_,_,v,v,v,v,v,v],
-        /* y = 2*/  [v,v,v,v,v,v,_,_,_,_,_,j,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* y = 2*/  [v,v,v,v,v,v,_,_,_,s,j,_,_,_,_,_,_,_,v,v,v,v,v,v],
         /* y = 1*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* y = 0*/  [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
     ]
@@ -207,19 +207,20 @@ object nivel2 inherits NivelBase(siguienteNivel = nivel3) {
 object nivel3 inherits NivelBase(siguienteNivel = nivel4) {
     override method numeroDeNivel() = 3
     
+    // Daungeon games
     override method mapaDeCuadricula() = [
     /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
         // 24 columnas x 12 filas
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        /* 9*/ [v,v,v,v,v,v,j,_,d,_,f,_,d,_,f,_,d,_,v,v,v,v,v,v],
-        /* 8*/ [v,v,v,v,v,v,_,p,_,_,_,p,_,_,_,p,_,_,v,v,v,v,v,v],
-        /* 7*/ [v,v,v,v,v,v,_,_,d,n,d,_,d,_,d,_,_,_,v,v,v,v,v,v],
-        /* 6*/ [v,v,v,v,v,v,_,p,_,p,i,h,i,p,_,p,_,_,v,v,v,v,v,v],
-        /* 5*/ [v,v,v,v,v,v,_,_,d,_,d,m,d,_,d,_,_,_,v,v,v,v,v,v],
-        /* 4*/ [v,v,v,v,v,v,_,p,_,p,i,h,i,p,n,p,_,_,v,v,v,v,v,v],
-        /* 3*/ [v,v,v,v,v,v,_,_,d,_,d,_,d,_,d,_,f,_,v,v,v,v,v,v],
-        /* 2*/ [v,v,v,v,v,v,_,p,_,_,_,p,_,_,_,p,_,_,v,v,v,v,v,v],
+        /* 9*/ [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* 8*/ [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,_,v,v,v,v,v,v],
+        /* 7*/ [v,v,v,v,v,v,_,_,_,_,_,_,_,h,_,_,_,_,v,v,v,v,v,v],
+        /* 6*/ [v,v,v,v,v,v,_,_,_,_,_,_,_,_,_,_,_,p,v,v,v,v,v,v],
+        /* 5*/ [v,v,v,v,v,v,_,_,p,_,_,_,n,_,_,_,_,p,v,v,v,v,v,v],
+        /* 4*/ [v,v,v,v,v,v,p,p,_,_,_,_,_,f,_,_,_,p,v,v,v,v,v,v],
+        /* 3*/ [v,v,v,v,v,v,j,_,_,d,d,f,_,_,_,p,p,_,v,v,v,v,v,v],
+        /* 2*/ [v,v,v,v,v,v,s,n,_,_,_,d,_,_,_,_,_,_,v,v,v,v,v,v],
         /* 1*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* 0*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v]
     ]
