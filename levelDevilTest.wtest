@@ -21,6 +21,14 @@ describe "Level Devil Game Tests - Version Simple" {
     assert.notEquals(positionInicial, jugador.position())
   }
 
+  test "el jugador gana puntaje al recoger moneda" {
+      const pj = new Personaje(position = game.at(0,0), rol = explorador, vidasActuales = 1, vidasPorDefecto = 1)
+      const moneda = new Moneda(position = game.at(0,0))
+      moneda.interactuarConPersonaje(pj)
+      assert.that(pj.puntajeTemporalGanado, is(100))
+  }
+
+
   test "pincho puede ser creado" {
     const pincho = new Pincho(position = game.at(1, 1))
     assert.equals(game.at(1, 1), pincho.position())
