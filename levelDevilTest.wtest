@@ -70,6 +70,15 @@ describe "PinchoMovil vs Meta" {
   }
 }
 
+test "El jugador pierde vida al tocar un PinchoMovil" {
+  const pincho = new PinchoMovil(position = game.at(1, 0))
+  game.addVisual(pincho)
+  jugador.position(game.at(0, 0))
+  pincho.mover(derecha)
+  assert.equals(2, jugador.vidas())
+}
+
+
 describe "Niveles" {
   test "Al iniciar el nivel se resetea el puntaje temporal" {
     gestorDeJugadores.agregarPuntosTemporales(50)
@@ -82,5 +91,22 @@ describe "Niveles" {
     nivel1.ganar()
     assert.equals(juegoLevelDevil.nivelActual(), nivel2)
   }
+
+test "Al ganar un nivel se suman puntos al puntaje total" {
+  gestorDeJugadores.resetearPuntajeGlobal()
+  nivel1.iniciar()
+  nivel1.ganar()
+  assert.isTrue(gestorDeJugadores.puntajeGlobal() > 0)
+}
+
+test "Reiniciar el juego limpia niveles y restaura vidas" {
+  jugador.vidas(1)
+  gestorDeJugadores.agregarPuntosTemporales(50)
+  juegoLevelDevil.reiniciar()
+  
+  assert.equals(3, jugador.vidas())
+  assert.equals(0, gestorDeJugadores.puntajeTemporal())
+  assert.equals("menuPrincipal", juegoLevelDevil.estadoActual())
+}
 }
  
