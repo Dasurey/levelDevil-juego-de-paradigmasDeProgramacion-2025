@@ -208,6 +208,8 @@ object nivel3 inherits NivelBase(siguienteNivel = nivel4) {
     override method numeroDeNivel() = 3
     
     override method mapaDeCuadricula() = [
+    /* Recomendable no usar la fila y = 0 o 1 o 10 o 11 ni la x = 0 o 1 o 22 o 23 */
+        // 24 columnas x 12 filas
         /*11*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /*10*/ [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         /* 9*/ [v,v,v,v,v,v,j,_,d,_,f,_,d,_,f,_,d,_,v,v,v,v,v,v],
@@ -224,7 +226,7 @@ object nivel3 inherits NivelBase(siguienteNivel = nivel4) {
 
     override method iniciar() {
         super()
-        configTeclado.cambiarTecladoA(tecladoDoble)
+        configTeclado.cambiarTecladoA(tecladoEnManesillasDeReloj)
     }
 }
 
@@ -291,7 +293,7 @@ object nivel6 inherits NivelBase(siguienteNivel = nivel7) {
 
     override method iniciar() {
         super()
-        configTeclado.cambiarTecladoA(tecladoDoble)
+        configTeclado.cambiarTecladoA(tecladoEnManesillasDeReloj)
     }
 }
 
@@ -331,7 +333,7 @@ object creditosFinales {
         } else {
             new VisualSoloLectura(image="JuegoTerminadoPerdio.png", position = game.at(0, 0)).ponerImagen()
         }
-        game.schedule(5000, {
+        game.schedule(9000, {
             juegoLevelDevil.limpiar()
             new VisualSoloLectura(image="CreditosFinales.png", position = game.at(0, 0)).ponerImagen()
             game.stop()

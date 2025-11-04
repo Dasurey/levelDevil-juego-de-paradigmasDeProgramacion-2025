@@ -150,38 +150,50 @@ object tecladoMenuElegirPersonajes inherits TecladoBase {
 }
 
 object tecladoNormal inherits TecladoBase {
-    override method up() { gestorDeJugadores.moverA(arriba.aplicarCantidad(1)) }
-    override method down() { gestorDeJugadores.moverA(abajo.aplicarCantidad(1)) }
-    override method left() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(1)) }
-    override method right() { gestorDeJugadores.moverA(derecha.aplicarCantidad(1)) }
+    override method up() { gestorDeJugadores.moverA(arriba) }
+    override method down() { gestorDeJugadores.moverA(abajo) }
+    override method left() { gestorDeJugadores.moverA(izquierda) }
+    override method right() { gestorDeJugadores.moverA(derecha) }
 
     override method r() { juegoLevelDevil.reiniciarNivel() }
     override method m() {  menu.iniciar() }
 }
 
 object tecladoInvertido inherits TecladoBase {
-    override method up() { gestorDeJugadores.moverA(abajo.aplicarCantidad(1)) }
-    override method down() { gestorDeJugadores.moverA(arriba.aplicarCantidad(1)) }
-    override method left() { gestorDeJugadores.moverA(derecha.aplicarCantidad(1)) }
-    override method right() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(1)) }
+    override method up() { gestorDeJugadores.moverA(abajo) }
+    override method down() { gestorDeJugadores.moverA(arriba) }
+    override method left() { gestorDeJugadores.moverA(derecha) }
+    override method right() { gestorDeJugadores.moverA(izquierda) }
 
     override method r() { juegoLevelDevil.reiniciarNivel() }
     override method m() {  menu.iniciar() }
 }
 
+object tecladoEnManesillasDeReloj inherits TecladoBase {
+    override method up() { gestorDeJugadores.moverA(derecha) }
+    override method right() { gestorDeJugadores.moverA(abajo) }
+    override method down() { gestorDeJugadores.moverA(izquierda) }
+    override method left() { gestorDeJugadores.moverA(arriba) }
+
+    override method r() { juegoLevelDevil.reiniciarNivel() }
+    override method m() {  menu.iniciar() }
+}
+
+/*
 object tecladoDoble inherits TecladoBase {
-    override method up() { gestorDeJugadores.moverA(arriba.aplicarCantidad(2)) }
-    override method down() { gestorDeJugadores.moverA(abajo.aplicarCantidad(2)) }
-    override method left() { gestorDeJugadores.moverA(izquierda.aplicarCantidad(2)) }
-    override method right() { gestorDeJugadores.moverA(derecha.aplicarCantidad(2)) }
+    override method up() { gestorDeJugadores.moverA(arriba.cantidadDeMovimientos(2)) }
+    override method down() { gestorDeJugadores.moverA(abajo.cantidadDeMovimientos(2)) }
+    override method left() { gestorDeJugadores.moverA(izquierda.cantidadDeMovimientos(2)) }
+    override method right() { gestorDeJugadores.moverA(derecha.cantidadDeMovimientos(2)) }
 
     override method r() { juegoLevelDevil.reiniciarNivel() }
     override method m() {  menu.iniciar() }
 }
+*/
 
 // Direcciones
 class Movimiento {
-    var property cantidadPositions = 1
+    //var movimientosQueDaElPersonaje = 1
 
     method puedeMoverse(position) {
         // Verificar que esté dentro de los límites del juego
@@ -204,24 +216,26 @@ class Movimiento {
     
     method moverEnDireccion(position)
 
-    method aplicarCantidad(cantidad) {
-        cantidadPositions = cantidad
+    /*
+    method cantidadDeMovimientos(cantidad) {
+        movimientosQueDaElPersonaje = cantidad
         return self
     }
+    */
 }
 
 object arriba inherits Movimiento {
-    override method moverEnDireccion(position) = position.up(cantidadPositions)
+    override method moverEnDireccion(position) = position.up(1)
 }
 
 object abajo inherits Movimiento {
-    override method moverEnDireccion(position) = position.down(cantidadPositions)
+    override method moverEnDireccion(position) = position.down(1)
 }
 
 object izquierda inherits Movimiento {
-    override method moverEnDireccion(position) = position.left(cantidadPositions)
+    override method moverEnDireccion(position) = position.left(1)
 }
 
 object derecha inherits Movimiento {
-    override method moverEnDireccion(position) = position.right(cantidadPositions)
+    override method moverEnDireccion(position) = position.right(1)
 }
