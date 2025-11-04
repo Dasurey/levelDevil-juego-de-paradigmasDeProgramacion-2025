@@ -69,3 +69,18 @@ describe "PinchoMovil vs Meta" {
     assert.notEquals(meta.position(), pincho.position())
   }
 }
+
+describe "Niveles" {
+  test "Al iniciar el nivel se resetea el puntaje temporal" {
+    gestorDeJugadores.agregarPuntosTemporales(50)
+    nivel1.iniciar()
+    assert.equals(0, gestorDeJugadores.puntajeTemporal())
+  }
+
+  test "Al completar nivel1 se pasa a nivel2" {
+    nivel1.iniciar()
+    nivel1.ganar()
+    assert.equals(juegoLevelDevil.nivelActual(), nivel2)
+  }
+}
+ 
