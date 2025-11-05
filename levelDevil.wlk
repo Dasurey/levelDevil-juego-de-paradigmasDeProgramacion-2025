@@ -250,8 +250,8 @@ object miniMessi inherits JugadorNoCansado(
     imagenesDeMeta = ["MetaConMiniMessiParte1.png", "MetaConMiniMessiParte2.png", "MetaConMiniMessiParte3.png"]) {}
 
 object satoruGojo inherits JugadorNoCansado(
-    position = game.at(0, 0), potencialDefensivoExtra = 150, imagenVivo = "SatoruGojo_V2.png", imagenMuerto = "SatoruGojoMuerto_V2.png", vidasActuales = 2, vidasPorDefecto = 2, 
-    imagenesDeMeta = ["MetaConSatoruGojoParte1_V2.png", "MetaConSatoruGojoParte2_V2.png", "MetaConSatoruGojoParte3_V2.png"]) {}
+    position = game.at(0, 0), potencialDefensivoExtra = 150, imagenVivo = "SatoruGojo_V2.png", imagenMuerto = "SatoruGojoMuerto_V2.png", vidasActuales = 2,
+    vidasPorDefecto = 2, imagenesDeMeta = ["MetaConSatoruGojoParte1_V2.png", "MetaConSatoruGojoParte2_V2.png", "MetaConSatoruGojoParte3_V2.png"]) {}
 
 class Piso {
     var property position
