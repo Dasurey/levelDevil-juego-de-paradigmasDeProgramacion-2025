@@ -80,11 +80,14 @@ describe "PinchoMovil vs Meta" {
 }
 
 test "El jugador pierde vida al tocar un PinchoMovil" {
-  const pincho = new PinchoMovil(position = game.at(1, 0))
+  satoruGojo.reiniciarVidas()
+  const pincho = new PinchoMovilTesteable(position = game.at(2, 0))
+  satoruGojo.position(game.at(1, 0))
   game.addVisual(pincho)
-  gestorDeJugadores.position(game.at(0, 0))
-  pincho.mover(derecha)
-  assert.equals(2, gestorDeJugadores.vidasActuales())
+  game.addVisual(satoruGojo)
+  pincho.moverEn(izquierda)
+  pincho.interactuarConPersonaje(satoruGojo)
+  assert.equals(1, satoruGojo.vidasActuales())
 }
 
 
