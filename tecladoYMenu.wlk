@@ -21,8 +21,9 @@ object menu {
 object menuDePersonaje {
     var property position = game.at(7, 4)
     var menuElegirPersonajesEstaAbierto = false
-    const imagenes = ["MenuCerrado.png", "MenuDePersonajes_V2.png"]
-    var imagen = imagenes.first()
+    const imagenMenuGeneral = "MenuGeneral.png"
+    const imagenMenuPersonajes = "MenuDePersonajes_V2.png"
+    var imagen = imagenMenuGeneral
     
     method image() = imagen
     
@@ -32,7 +33,7 @@ object menuDePersonaje {
         game.addVisual(self)
         configTeclado.menuAbierto()
         menuElegirPersonajesEstaAbierto = false
-        imagen = imagenes.first()
+        imagen = imagenMenuGeneral
     }
 
     method desplegar() = if(menuElegirPersonajesEstaAbierto) self.cerrar() else self.abrir()
@@ -40,7 +41,7 @@ object menuDePersonaje {
     method cerrar(){
         juegoLevelDevil.detenerMovimientos()
         position = game.at(7, 4)
-        imagen = imagenes.first()
+        imagen = imagenMenuGeneral
         configTeclado.menuAbierto()
         menuElegirPersonajesEstaAbierto = false
     }
@@ -49,7 +50,7 @@ object menuDePersonaje {
         juegoLevelDevil.detenerMovimientos()
         juegoLevelDevil.limpiar()
         position = game.at(0,0)
-        imagen = imagenes.last()
+        imagen = imagenMenuPersonajes
         game.addVisual(self)
         configTeclado.menuAbiertoElegirPersonajes()
         menuElegirPersonajesEstaAbierto = true
@@ -149,55 +150,38 @@ object tecladoMenuElegirPersonajes inherits TecladoBase {
     }
 }
 
-object tecladoNormal inherits TecladoBase {
+class TecladoGeneral inherits TecladoBase {
+    override method r() { juegoLevelDevil.reiniciarNivel() }
+    override method m() {  menu.iniciar() }
+}
+
+object tecladoNormal inherits TecladoGeneral {
     override method up() { gestorDeJugadores.moverA(arriba) }
     override method down() { gestorDeJugadores.moverA(abajo) }
     override method left() { gestorDeJugadores.moverA(izquierda) }
     override method right() { gestorDeJugadores.moverA(derecha) }
-
-    override method r() { juegoLevelDevil.reiniciarNivel() }
-    override method m() {  menu.iniciar() }
 }
 
-object tecladoInvertido inherits TecladoBase {
+object tecladoInvertido inherits TecladoGeneral {
     override method up() { gestorDeJugadores.moverA(abajo) }
     override method down() { gestorDeJugadores.moverA(arriba) }
     override method left() { gestorDeJugadores.moverA(derecha) }
     override method right() { gestorDeJugadores.moverA(izquierda) }
-
-    override method r() { juegoLevelDevil.reiniciarNivel() }
-    override method m() {  menu.iniciar() }
 }
 
-object tecladoEnManesillasDeReloj inherits TecladoBase {
+object tecladoEnManesillasDeReloj inherits TecladoGeneral {
     override method up() { gestorDeJugadores.moverA(izquierda) }
     override method right() { gestorDeJugadores.moverA(arriba) }
     override method down() { gestorDeJugadores.moverA(derecha) }
     override method left() { gestorDeJugadores.moverA(abajo) }
-
-    override method r() { juegoLevelDevil.reiniciarNivel() }
-    override method m() {  menu.iniciar() }
 }
-
-/*
-object tecladoDoble inherits TecladoBase {
-    override method up() { gestorDeJugadores.moverA(arriba.cantidadDeMovimientos(2)) }
-    override method down() { gestorDeJugadores.moverA(abajo.cantidadDeMovimientos(2)) }
-    override method left() { gestorDeJugadores.moverA(izquierda.cantidadDeMovimientos(2)) }
-    override method right() { gestorDeJugadores.moverA(derecha.cantidadDeMovimientos(2)) }
-
-    override method r() { juegoLevelDevil.reiniciarNivel() }
-    override method m() {  menu.iniciar() }
-}
-*/
 
 // Direcciones
 class Movimiento {
-    //var movimientosQueDaElPersonaje = 1
-
     method puedeMoverse(position) {
         // Verificar que esté dentro de los límites del juego
-        if (!position.x().between(0, game.width() - 1) or !position.y().between(0, game.height() - 1)) {
+        const noSalirDelMapa = !position.x().between(0, game.width() - 1) or !position.y().between(0, game.height() - 1)
+        if (noSalirDelMapa) {
             return false
         }
         return game.getObjectsIn(position).size() > 0
@@ -215,13 +199,6 @@ class Movimiento {
     }
     
     method moverEnDireccion(position)
-
-    /*
-    method cantidadDeMovimientos(cantidad) {
-        movimientosQueDaElPersonaje = cantidad
-        return self
-    }
-    */
 }
 
 object arriba inherits Movimiento {

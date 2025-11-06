@@ -339,6 +339,7 @@ object nivel7 inherits NivelBase(siguienteNivel = creditosFinales) {
 object creditosFinales {
     method siguienteNivel() = null
 
+    // Hay 4500 puntos posibles en el juego
     const puntajeMinimoParaGanar = 3500
 
     method iniciar() {
