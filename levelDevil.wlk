@@ -362,6 +362,8 @@ class Moneda {
 
 class ObjetoMorible {
     var property position
+
+    method restaDePuntajeAlMorir() = 50
     
     method image()
 
@@ -380,26 +382,22 @@ class ObjetoMorible {
             const sonidoMuerte = game.sound("Muerte.mp3")
             sonidoMuerte.volume(1)
             sonidoMuerte.play()
-            pj.restaDePuntajeTemporalPerdido(50)
+            pj.restaDePuntajeTemporalPerdido(self.restaDePuntajeAlMorir())
             pj.morir()
         }
     }
 }
 
 class MonedaFalsa inherits ObjetoMorible {
+    override method restaDePuntajeAlMorir() = 100
+
     override method ataque() = 500
 
     override method image() = "Moneda_V2.png"
 
     override method interactuarConPersonaje(pj) {
         game.removeVisual(self)
-        if(pj.potencialDefensivo() < self.ataque()) {
-            const sonidoMuerte = game.sound("Muerte.mp3")
-            sonidoMuerte.volume(1)
-            sonidoMuerte.play()
-            pj.restaDePuntajeTemporalPerdido(100)
-            pj.morir()
-        }
+        super(pj)
     }
 }
 
