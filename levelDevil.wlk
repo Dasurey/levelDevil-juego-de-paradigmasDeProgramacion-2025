@@ -410,7 +410,7 @@ class Pincho inherits ObjetoMorible {
 class PinchoInvisibleInstantaneo inherits ObjetoMorible {
     override method ataque() = 400
 
-    var property visible = false // comienza invisible
+    var visible = false // comienza invisible
 
     // La imagen depende de la propiedad 'visible'
     override method image() {
@@ -470,8 +470,11 @@ class PinchoMovil inherits ObjetoMorible {
         const destino = direccionAleatoria.moverEnDireccion(position)
         const objetosEnDestino = game.getObjectsIn(destino)
 
+        const esMetaEnDestino = objetosEnDestino.any({obj => obj.esMeta()})
+        const validarPosition = direccionAleatoria.validarPosition(destino)
+
         // Mover sólo si está dentro de límites, hay objetos, todos son pisables y NO hay una Meta
-        if (!objetosEnDestino.any({obj => obj.esMeta()}) and direccionAleatoria.validarPosition(destino)) {
+        if (!esMetaEnDestino and validarPosition) {
             position = destino
         }
     }

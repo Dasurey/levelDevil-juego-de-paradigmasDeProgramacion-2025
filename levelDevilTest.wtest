@@ -50,7 +50,10 @@ class PinchoMovilTesteable inherits PinchoMovil {
         const destino = direccion.moverEnDireccion(position)
         const objetosEnDestino = game.getObjectsIn(destino)
 
-        if (!objetosEnDestino.any({obj => obj.esMeta()}) and direccion.validarPosition(destino)) {
+        const esMetaEnDestino = objetosEnDestino.any({obj => obj.esMeta()})
+        const validarPosition = direccion.validarPosition(destino)
+
+        if (!esMetaEnDestino and validarPosition) {
             position = destino
         }
     }

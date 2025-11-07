@@ -29,7 +29,8 @@ class VisualizadorPuntaje inherits VisualizadorTexto {
     override method text() = "                   PUNTOS = " + gestorDeJugadores.jugadorActual().puntajeCompleto().toString()
 
     override method ponerTexto() {
-        if (game.hasVisual(self)) {
+        const estaElTexto = game.hasVisual(self)
+        if (estaElTexto) {
             game.removeVisual(self)
         }
         super()
@@ -68,8 +69,10 @@ object gestorVisualizadores {
 
     method limpiar() {
         game.removeTickEvent("actualizarPuntaje")
-        
-        if (game.hasVisual(visualizadorPuntaje)) {
+
+        const estaElTexto = game.hasVisual(visualizadorPuntaje)
+
+        if (estaElTexto) {
             game.removeVisual(visualizadorPuntaje)
         }
         gestorVisualizadorVidas.limpiar()

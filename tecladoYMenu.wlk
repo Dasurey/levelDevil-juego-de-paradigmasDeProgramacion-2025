@@ -191,7 +191,8 @@ class Movimiento {
     
     method calcularNuevaPosition(positionActual) {
         const nuevaPosition = self.moverEnDireccion(positionActual)
-        if(self.validarPosition(nuevaPosition)){
+        const validarPosition = self.validarPosition(nuevaPosition)
+        if(validarPosition){
             return nuevaPosition
         } else {
             return positionActual

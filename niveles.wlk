@@ -342,11 +342,15 @@ object creditosFinales {
     // Hay 4500 puntos posibles en el juego
     const puntajeMinimoParaGanar = 3500
 
+    method esMayorElPuntajePersonajeActualQueElMinimoParaGanar() {
+        return gestorDeJugadores.puntaje() > puntajeMinimoParaGanar
+    }
+
     method iniciar() {
         // Limpiar todo, incluyendo visualizadores
         juegoLevelDevil.limpiar()
         juegoLevelDevil.detenerMovimientos()
-        if(gestorDeJugadores.puntaje() > puntajeMinimoParaGanar) {
+        if(self.esMayorElPuntajePersonajeActualQueElMinimoParaGanar()) {
             new VisualSoloLectura(image="JuegoTerminadoGano.png", position = game.at(0, 0)).ponerImagen()
         } else {
             new VisualSoloLectura(image="JuegoTerminadoPerdio.png", position = game.at(0, 0)).ponerImagen()
