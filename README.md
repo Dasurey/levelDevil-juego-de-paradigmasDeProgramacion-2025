@@ -16,13 +16,13 @@ El juego consta de pasar niveles evitando ser trolleado en el intento y ganando 
 
 ## Capturas
 ### Pantalla de Inicio
-<img width="1080" alt="Pantalla de Inicio" src="imagenesDeReadme/PantallaDeInicio.png" />
+<img width="1080" alt="Pantalla de Inicio" src="ImagenesDeReadme/PantallaDeInicio.png" />
 
 ### Pantalla de Personajes
-<img width="1080" alt="Pantalla de Personajes" src="imagenesDeReadme/PantallaDePersonajes.png" />
+<img width="1080" alt="Pantalla de Personajes" src="ImagenesDeReadme/PantallaDePersonajes.png" />
 
 ### Juego Primer Nivel
-<img width="1080" alt="Primer Nivel Visual" src="imagenesDeReadme/PrimerNivelVisual.png" />
+<img width="1080" alt="Primer Nivel Visual" src="ImagenesDeReadme/PrimerNivelVisual.png" />
 
 ## Reglas de Juego / Instrucciones
 Para poder juagar:
@@ -41,4 +41,4 @@ Para poder juagar:
 ![Flechas](<assets/Flechas.png>)
 
 ## Explicaciones teóricas y diagramas
-![Diagrama Estatico de Level Devil](<imagenesDeReadme/DiagramaEstaticoDeLevelDevil.svg>)
+![Diagrama Estatico de Level Devil](<ImagenesDeReadme/DiagramaEstaticoDeLevelDevil.svg>)
