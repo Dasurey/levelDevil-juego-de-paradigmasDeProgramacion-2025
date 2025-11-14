@@ -18,10 +18,10 @@ El juego consta de pasar niveles evitando ser trolleado en el intento y ganando 
 ### Pantalla de Inicio
 <img width="1080" alt="Pantalla de Inicio" src="imagenesDeReadme/PantallaDeInicio.png" />
 
-### Pantalla de personajes
+### Pantalla de Personajes
 <img width="1080" alt="Pantalla de Personajes" src="imagenesDeReadme/PantallaDePersonajes.png" />
 
-### Juego 1er nivel
+### Juego Primer Nivel
 <img width="1080" alt="Primer Nivel Visual" src="imagenesDeReadme/PrimerNivelVisual.png" />
 
 ## Reglas de Juego / Instrucciones
