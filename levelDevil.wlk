@@ -5,8 +5,6 @@ import visualizadores.*
 object juegoLevelDevil {
     var property nivelActual = nivel1
 
-    method nivelActual() = nivelActual
-
     const sonidoMenu = game.sound("Jugando.mp3")
 
     method iniciar() {

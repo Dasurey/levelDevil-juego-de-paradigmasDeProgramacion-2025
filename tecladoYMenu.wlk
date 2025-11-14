@@ -121,38 +121,22 @@ class TecladoBase {
 object tecladoBase inherits TecladoBase {}
 
 class TecladoMenu inherits TecladoBase {
-    override method j() {
-        juegoLevelDevil.iniciarNivel()
-    }
-
-    override method p() {
-        menuDePersonaje.desplegar()
-    }
+    override method j() { juegoLevelDevil.iniciarNivel() }
+    override method p() { menuDePersonaje.desplegar() }
 }
 
 object tecladoMenu inherits TecladoMenu {}
 
 object tecladoMenuElegirPersonajes inherits TecladoBase {
-    override method num1() {
-        juegoLevelDevil.volverAIniciarDeCero(jugadorLevelDevil)
-    }
-
-    override method num2() {
-        juegoLevelDevil.volverAIniciarDeCero(zombie)
-    }
-
-    override method num3() {
-        juegoLevelDevil.volverAIniciarDeCero(miniMessi)
-    }
-
-    override method num4() {
-        juegoLevelDevil.volverAIniciarDeCero(satoruGojo)
-    }
+    override method num1() { juegoLevelDevil.volverAIniciarDeCero(jugadorLevelDevil) }
+    override method num2() { juegoLevelDevil.volverAIniciarDeCero(zombie) }
+    override method num3() { juegoLevelDevil.volverAIniciarDeCero(miniMessi) }
+    override method num4() { juegoLevelDevil.volverAIniciarDeCero(satoruGojo) }
 }
 
 class TecladoGeneral inherits TecladoBase {
     override method r() { juegoLevelDevil.reiniciarNivel() }
-    override method m() {  menu.iniciar() }
+    override method m() { menu.iniciar() }
 }
 
 object tecladoNormal inherits TecladoGeneral {
