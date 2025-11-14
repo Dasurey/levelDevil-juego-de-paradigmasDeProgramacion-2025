@@ -1,7 +1,7 @@
 UTN - Facultad Regional Buenos Aires - Materia Paradigmas de Programación
 
 <div>
-    <img src="assets/Logo_V1.png" alt="Logo de Level Devil" style="background-color:#6d1102; display:block;"/>
+    <img src="ImagenesDeReadme/Logo_V3.png" alt="Logo de Level Devil"/>
 </div>
 
 ## Equipo de desarrollo:
