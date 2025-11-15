@@ -2,47 +2,51 @@ import levelDevil.*
 import tecladoYMenu.*
 import niveles.*
 
-/*
-describe "Level Devil Game Tests - Version Simple" {
 
-  method initialize() {
-    jugador.position(game.at(0, 0))
-    jugador.vidas(3)
-    jugador.puntaje(0)
+  describe "Interacciones con objetos" {
+
+    test "Al interactuar con una Moneda el jugador gana 100 puntos" {
+    const jugador = gestorDeJugadores.jugadorActual()
+    jugador.resetearPuntaje()
+
+    const moneda = new Moneda(position = game.at(2, 1))
+    game.addVisual(moneda)
+
+    jugador.position(game.at(2, 1))
+
+    moneda.interactuarConPersonaje(jugador)
+
+    assert.equals(100, jugador.puntajeTemporalGanado())
+  } 
+
+  test "Al interactuar con una Moneda Falsa el jugador pierde 100 puntos" {
+    const jugador = gestorDeJugadores.jugadorActual()
+    jugador.resetearPuntaje()
+
+    const monedaFalsa = new MonedaFalsa(position = game.at(2, 1))
+    game.addVisual(monedaFalsa)
+
+    jugador.position(game.at(2, 1))
+
+    monedaFalsa.interactuarConPersonaje(jugador)
+
+    assert.equals(-100, jugador.puntajeTemporalPerdido())
   }
 
-  test "jugador inicial tiene 3 vidas y 0 puntos" {
-    assert.equals(3, jugador.vidas())
-    assert.equals(0, jugador.puntaje())
+  test "Al interactuar con un pincho invisible el jugador muere, por ende se queda sin vidas" {
+
+    const jugador = gestorDeJugadores.jugadorActual()
+    jugador.resetearPuntaje() 
+
+    const pincho = new PinchoInvisible(position = game.at(1,1))
+    game.addVisual(pincho)
+
+    pincho.interactuarConPersonaje(jugador)
+
+    assert.equals(0,jugador.vidasActuales())
+  } 
+
   }
-
-  test "jugador puede moverse a posición válida" {
-    const positionInicial = jugador.position()
-    //jugador.mover(derecha)
-    assert.notEquals(positionInicial, jugador.position())
-  }
-
-  test "el jugador gana puntaje al recoger moneda" {
-      const pj = new Personaje(position = game.at(0,0), rol = explorador, vidasActuales = 1, vidasPorDefecto = 1)
-      const moneda = new Moneda(position = game.at(0,0))
-      moneda.interactuarConPersonaje(pj)
-      assert.that(pj.puntajeTemporalGanado, is(100))
-  }
-
-
-  test "pincho puede ser creado" {
-    const pincho = new Pincho(position = game.at(1, 1))
-    assert.equals(game.at(1, 1), pincho.position())
-    assert.equals("pinchoTriple.png", pincho.image())
-  }
-
-  test "meta puede ser creada" {
-    const meta = new Meta(position = game.at(8, 8))
-    assert.equals(game.at(8, 8), meta.position())
-    assert.equals("Meta_V2.png", meta.image())
-  }
-
-}*/
 
 // Extensión de PinchoMovil para testing que permite mover en una dirección específica
 class PinchoMovilTesteable inherits PinchoMovil {
@@ -123,4 +127,5 @@ describe "Niveles" {
       juegoLevelDevil.siguienteNivel()
       assert.that(jugador.puntaje() >= 200)
     }
+    
   }
