@@ -2,10 +2,8 @@ import levelDevil.*
 import tecladoYMenu.*
 import niveles.*
 
-
-  describe "Interacciones con objetos" {
-
-    test "Al interactuar con una Moneda el jugador gana 100 puntos" {
+describe "Interacciones con objetos" {
+  test "Al interactuar con una Moneda el jugador gana 100 puntos" {
     const jugador = gestorDeJugadores.jugadorActual()
     jugador.resetearPuntaje()
 
@@ -34,7 +32,6 @@ import niveles.*
   }
 
   test "Al interactuar con un pincho invisible el jugador muere, por ende se queda sin vidas" {
-
     const jugador = gestorDeJugadores.jugadorActual()
     jugador.resetearPuntaje() 
 
@@ -46,21 +43,21 @@ import niveles.*
     assert.equals(0,jugador.vidasActuales())
   } 
 
-  }
+}
 
 // Extensión de PinchoMovil para testing que permite mover en una dirección específica
 class PinchoMovilTesteable inherits PinchoMovil {
-    method moverEn(direccion) {
-        const destino = direccion.moverEnDireccion(position)
-        const objetosEnDestino = game.getObjectsIn(destino)
+  method moverEn(direccion) {
+    const destino = direccion.moverEnDireccion(position)
+    const objetosEnDestino = game.getObjectsIn(destino)
 
-        const esMetaEnDestino = objetosEnDestino.any({obj => obj.esMeta()})
-        const validarPosition = direccion.validarPosition(destino)
+    const esMetaEnDestino = objetosEnDestino.any({obj => obj.esMeta()})
+    const validarPosition = direccion.validarPosition(destino)
 
-        if (!esMetaEnDestino and validarPosition) {
-            position = destino
-        }
+    if (!esMetaEnDestino and validarPosition) {
+      position = destino
     }
+  }
 }
 
 describe "PinchoMovil vs Meta" {
@@ -84,48 +81,50 @@ describe "PinchoMovil vs Meta" {
     // Esperamos que el PinchoMovil NO haya cambiado su posición hacia la Meta.
     assert.notEquals(meta.position(), pincho.position())
   }
-}
 
-test "El jugador pierde vida al tocar un PinchoMovil" {
-  satoruGojo.reiniciarVidas()
-  const pincho = new PinchoMovilTesteable(position = game.at(2, 0))
-  satoruGojo.position(game.at(1, 0))
-  game.addVisual(pincho)
-  game.addVisual(satoruGojo)
-  pincho.moverEn(izquierda)
-  pincho.interactuarConPersonaje(satoruGojo)
-  assert.equals(1, satoruGojo.vidasActuales())
+  test "El jugador pierde vida al tocar un PinchoMovil" {
+    satoruGojo.reiniciarVidas()
+    const pincho = new PinchoMovilTesteable(position = game.at(2, 0))
+
+    satoruGojo.position(game.at(1, 0))
+    game.addVisual(pincho)
+    game.addVisual(satoruGojo)
+
+    pincho.moverEn(izquierda)
+    pincho.interactuarConPersonaje(satoruGojo)
+
+    assert.equals(1, satoruGojo.vidasActuales())
+  }
 }
 
 
 describe "Niveles" {
-    test "Al iniciar el nivel se resetea el puntaje temporal" {
-      const jugador = gestorDeJugadores.jugadorActual()
-      jugador.sumaDePuntajeTemporalGanado(100)
-      juegoLevelDevil.iniciarNivel()
+  test "Al iniciar el nivel se resetea el puntaje temporal" {
+    const jugador = gestorDeJugadores.jugadorActual()
+    jugador.sumaDePuntajeTemporalGanado(100)
+    juegoLevelDevil.iniciarNivel()
 
-      assert.equals(0, jugador.puntajeTemporalGanado())
-    }
-
-    test "Al completar nivel1 se pasa a nivel2" {
-      juegoLevelDevil.nivelActual(nivel1)
-      const jugador = jugadorLevelDevil
-      jugador.position(game.at(1,0))
-      game.addVisual(jugador)
-      const meta = new Meta(position = game.at(1, 1))
-      game.addVisual(meta)
-      jugador.moverA(arriba)
-      // Simular el paso del nivel (en el juego real, esto ocurre después de la animación)
-      juegoLevelDevil.siguienteNivel()
-      assert.equals(nivel2, juegoLevelDevil.nivelActual())
-    }
-
-    test "Al ganar un nivel se suman puntos al puntaje total" {
-      const jugador = gestorDeJugadores.jugadorActual()
-      jugador.resetearPuntaje()
-      jugador.sumaDePuntajeTemporalGanado(200)
-      juegoLevelDevil.siguienteNivel()
-      assert.that(jugador.puntaje() >= 200)
-    }
-    
+    assert.equals(0, jugador.puntajeTemporalGanado())
   }
+
+  test "Al completar nivel1 se pasa a nivel2" {
+    juegoLevelDevil.nivelActual(nivel1)
+    const jugador = jugadorLevelDevil
+    jugador.position(game.at(1,0))
+    game.addVisual(jugador)
+    const meta = new Meta(position = game.at(1, 1))
+    game.addVisual(meta)
+    jugador.moverA(arriba)
+    // Simular el paso del nivel (en el juego real, esto ocurre después de la animación)
+    juegoLevelDevil.siguienteNivel()
+    assert.equals(nivel2, juegoLevelDevil.nivelActual())
+  }
+
+  test "Al ganar un nivel se suman puntos al puntaje total" {
+    const jugador = gestorDeJugadores.jugadorActual()
+    jugador.resetearPuntaje()
+    jugador.sumaDePuntajeTemporalGanado(200)
+    juegoLevelDevil.siguienteNivel()
+    assert.that(jugador.puntaje() >= 200)
+  }
+}
