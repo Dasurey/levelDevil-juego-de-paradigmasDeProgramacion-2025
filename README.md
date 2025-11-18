@@ -48,11 +48,11 @@ Para poder jugar:
 Una forma de aplicar polimorfismo en nuestro juego fue mediante las colisiones o interacciones entre el personaje y los obstáculos. Implementamos el método `interactuarConPersonaje()` que tenía un comportamiento distinto dependiendo del obstáculo y de esta manera logramos que todos los obstáculos entiendan el mismo mensaje.
 
 #### ***Herencia***
-Personajes
+##### Personajes
 Tenemos cuatro jugadores modelados como objetos que heredan de la clases `JugadorCansado` o `JugadorNoCansado` y a su vez estas últimas heredan de la clase `Personaje`.
 
-Niveles
+##### Niveles
 El juego cuenta con 7 niveles que heredan de la clase `NivelBase`.
 
-Objetos Moribles
+##### Objetos Moribles
 Contamos con la clase `ObjetoMorible` y de ellan heredan las clases `MonedaFalsa`, `Pincho`, `PinchoInvisibleInstantaneo`, `PinchoInvisible` y `PinchoMovil`.
