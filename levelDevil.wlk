@@ -324,12 +324,13 @@ class Meta {
         sonidoGanador.volume(1)
         sonidoGanador.play()
         imagen = imagenesDeMetaConJugador.get(0)
-        game.schedule(500, {
+        game.schedule(650, {
             imagen = imagenesDeMetaConJugador.get(1)
-            game.schedule(500, {
+            game.schedule(650, {
                 imagen = imagenesDeMetaConJugador.get(2)
                 game.schedule(500, {
                     juegoLevelDevil.siguienteNivel()
+                    game.schedule(200, {})
                 })
             })
         })
