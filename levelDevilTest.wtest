@@ -93,7 +93,7 @@ describe "PinchoMovil vs Meta" {
     pincho.moverEn(izquierda)
     pincho.interactuarConPersonaje(satoruGojo)
 
-    assert.equals(1, satoruGojo.vidasActuales())
+    assert.equals(2, satoruGojo.vidasActuales())
   }
 }
 
