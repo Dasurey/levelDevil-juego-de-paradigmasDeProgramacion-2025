@@ -19,8 +19,6 @@ class NivelBase {
 
         // Dibujar el nivel usando el mapaDeCuadricula
         self.dibujarNivel()
-        
-        self.dibujarJugador()
 
         // Habilitar controles
         configTeclado.juegoEnMarcha()
@@ -31,21 +29,33 @@ class NivelBase {
 
     // Método para dibujar el nivel basado en el mapaDeCuadricula
     method dibujarNivel() {
-        const elementos = [_, j, p, m, d, f, s, n, i, h, a]
-        
-        elementos.forEach({ tipo =>
-            var y = game.height() - 1  // Empezamos desde la altura máxima
-            var x = 0                  // Empezamos desde el borde izquierdo
-            self.mapaDeCuadricula().forEach({ fila =>
-                x = 0
-                fila.forEach({ celda =>
-                    if(celda == tipo) {
-                        celda.agregarAlNivel(x, y)
-                    }
-                    x += 1
-                })
-                y -= 1
+        self.ponerEnElMapa({ celda, x, y => 
+            if(celda.agregarPiso()) {
+                _.agregarAlNivel(x, y)
+            }
+        })
+        self.ponerEnElMapa({ celda, x, y => 
+            if(celda.esJugador()) {
+                celda.agregarAlNivel(x, y)
+                self.dibujarJugador()
+            }
+        })
+        self.ponerEnElMapa({ celda, x, y => 
+            if(!celda.esPiso() and !celda.esJugador()) {
+                celda.agregarAlNivel(x, y)
+            }
+        })
+    }
+
+    method ponerEnElMapa(accion) {
+        var y = game.height() - 1
+        self.mapaDeCuadricula().forEach({ fila =>
+            var x = 0
+            fila.forEach({ celda =>
+                accion.apply(celda, x, y)
+                x += 1
             })
+            y -= 1
         })
     }
 
@@ -54,21 +64,33 @@ class NivelBase {
     }
 }
 
+class AgregadoDeClasesObjectos {
+    method agregarPiso() = true
+
+    method esPiso() = false
+
+    method esJugador() = false
+}
+
 // Vacio
-object v {
+object v inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(_x, _y) {}
+
+    override method agregarPiso() = false
 }
 
 // Piso
-object _ {
+object _ inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const piso = new Piso(position = game.at(x, y))
         piso.ponerImagen()
     }
+
+    override method esPiso() = true
 }
 
 // Pared
-object p {
+object p inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const pared = new Pared(position = game.at(x, y))
         pared.ponerImagen()
@@ -76,84 +98,80 @@ object p {
 }
 
 // Meta
-object m {
+object m inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const meta = new Meta(position = game.at(x, y))
-        _.agregarAlNivel(x, y)
         meta.ponerImagen()
     }
 }
 
 // Moneda
-object d {
+object d inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const moneda = new Moneda(position = game.at(x, y))
-        _.agregarAlNivel(x, y)
         moneda.ponerImagen()
     }
 }
 
 // Moneda Falsa
-object f {
+object f inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const monedaFalsa = new MonedaFalsa(position = game.at(x, y))
-        _.agregarAlNivel(x, y)
         monedaFalsa.ponerImagen()
     }
 }
 
 // Pincho
-object s {
+object s inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const pincho = new Pincho(position = game.at(x, y))
-        _.agregarAlNivel(x, y)
         pincho.ponerImagen()
     }
 }
 
 // Pincho Invisible
-object i {
+object i inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const pinchoInv = new PinchoInvisible(position = game.at(x, y))
-        _.agregarAlNivel(x, y)
         pinchoInv.ponerImagen()
         pinchoInv.hacerVisible()
     }
 }
 
 // Pincho Invisible Instantaneo
-object n {
+object n inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const pinchoInvInst = new PinchoInvisibleInstantaneo(position = game.at(x, y))
-        _.agregarAlNivel(x, y)
         pinchoInvInst.ponerImagen()
     }
 }
 
 // Pincho Movil
-object h {
+object h inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const pinchoMov = new PinchoMovil(position = game.at(x, y))
-        _.agregarAlNivel(x, y)
         pinchoMov.ponerImagen()
         pinchoMov.moverPinchoMovil()
     }
 }
 
 // Jugador
-object j {
+object j inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const jugador = gestorDeJugadores.jugadorActual()
         jugador.position(game.at(x, y))
-        _.agregarAlNivel(x, y)
     }
+
+    override method esJugador() = true
 }
 
-object a {
+object a inherits AgregadoDeClasesObjectos {
     method agregarAlNivel(x, y) {
         const flechas = new VisualSoloLectura(image="Flechas.png", position = game.at(x, y))
         flechas.ponerImagen()
     }
+
+    override method agregarPiso() = false
 }
 
 // Niveles específicos
