@@ -1,6 +1,6 @@
 # Level Devil 👿
 
-> Es un juego troll donde pasarás 7 niveles evitando trampas, recolectando monedas y consta de 4 personajes con sus diferentes características que te ayudaran para pasar los niveles. Se utilizaron los conceptos de la materia *Paradigmas de Programación* para su desarrollo.
+> Es un juego troll donde pasarás 7 niveles evitando trampas, recolectando monedas y consta de 4 personajes con sus diferentes características que te tratarán para pasar los niveles. Se utilizaron los conceptos de la materia *Paradigmas de Programación* para su desarrollo.
 
 <div align="center">
     <img src="ImagenesDeReadme/Logo_V3.png" alt="Logo de Level Devil" width="300"/>
