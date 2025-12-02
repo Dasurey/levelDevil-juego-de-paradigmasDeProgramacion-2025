@@ -28,7 +28,7 @@
 - ✅ Evitar trampas y enemigos que te "trollearán" en el intento
 - ✅ Recolectar monedas para maximizar tu puntuación
 - ✅ Elegir entre 4 personajes únicos con diferentes características
-- ✅ Demostrar dominio de conceptos como polimorfismo, herencia y encapsulamiento
+- ✅ Demostrar dominio de conceptos como polimorfismo, herencia, encapsulamiento, abstracción y recursividad
 
 ## 📸 Capturas del Juego
 
@@ -86,11 +86,13 @@
 
 ## 📚 Fundamentos Técnicos
 
-Este proyecto es una aplicación práctica de conceptos clave de Programación Orientada a Objetos:
+Este proyecto es una aplicación práctica de conceptos clave de la materia *Paradigmas de Programación*:
 
-- **Polimorfismo** 🔄
-- **Herencia** 🧬
-- **Encapsulamiento** 🔒
+- **Polimorfismo** 🔄 - Objetos responden de forma distinta a los mismos mensajes
+- **Herencia** 🧬 - Jerarquía de clases reutilizando código
+- **Encapsulamiento** 🔒 - Datos privados expuestos mediante métodos públicos
+- **Recursividad** 🔁 - Funciones que se llaman a sí mismas para resolver problemas complejos
+- **Abstracción** 🎯 - Simplificación ocultando detalles innecesarios y enfocándose en lo esencial 
 
 Para una explicación detallada de la arquitectura, el diseño de clases y los principios aplicados, consulta:
 

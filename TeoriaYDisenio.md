@@ -208,6 +208,34 @@ Esto garantiza que los pisos estén siempre en el fondo y el jugador sea accesib
 
 ---
 
+## ***Recursividad***
+
+> Técnica de programación en la que una función se llama a sí misma directa o indirectamente, resolviendo un problema subdividiéndolo en subproblemas más pequeños del mismo tipo. Toda función recursiva debe contar con un caso base (condición de parada) para evitar bucles infinitos.
+
+### Aplicación Real: Contar Niveles Restantes
+
+La recursividad se aplica de manera práctica en el método `cantidadNivelesDesde()` de `juegoLevelDevil`. Este método cuenta cuántos niveles quedan por jugar a partir de un nivel dado:
+
+```wollok
+method cantidadNivelesDesde(nivel) {
+    // CASO BASE: si no hay siguiente nivel, hemos llegado al final
+    if (nivel.siguienteNivel() == null) {
+        return 0
+    }
+    // CASO RECURSIVO: contar 1 + los niveles del siguiente nivel
+    return 1 + self.cantidadNivelesDesde(nivel.siguienteNivel())
+}
+```
+
+### Caso Base y Recursivo
+
+Esta es una implementación clara de los dos componentes esenciales de la recursividad:
+
+- **Caso Base** `(if nivel.siguienteNivel() == null)`: Detiene la recursión
+- **Caso Recursivo** `(1 + self.cantidadNivelesDesde(...))`: Avanza hacia el caso base
+
+---
+
 ## ***Gestión de Eventos: Game Loop***
 
 El juego utiliza varios mecanismos de eventos:
