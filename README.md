@@ -6,7 +6,7 @@
     <img src="ImagenesDeReadme/Logo_V3.png" alt="Logo de Level Devil" width="300"/>
 </div>
 
-**Desarrollado por:** Grupo **GroupNotFound** para la materia *Paradigmas de Programación* - UTN Facultad Regional de Buenos Aires
+**Desarrollado por:** Grupo **GroupNotFound** para la materia *Paradigmas de Programación* K1054 martes a la noche, 2025 Anual - UTN Facultad Regional de Buenos Aires
 
 ---
 
