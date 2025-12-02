@@ -65,6 +65,7 @@
 ### Paso 4: Domina los 7 Niveles
 - Completa todos los niveles para ganar el juego
 - Tu objetivo final: **Llegar al Nivel 7 con la mayor cantidad de puntos**
+- **Necesitas conseguir al menos 3500 puntos para ganar** 🏆
 
 > ⚠️ **Advertencia:** Algunos niveles tienen un teclado impredecible. ¡Mantente alerta!
 

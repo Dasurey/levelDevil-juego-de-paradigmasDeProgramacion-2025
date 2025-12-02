@@ -67,7 +67,7 @@ class NivelBase {
     }
 }
 
-class AgregadoDeClasesObjectos {
+class AgregadoDeClasesObjetos {
     method agregarPiso() = true
 
     method esPiso() = false
@@ -76,14 +76,14 @@ class AgregadoDeClasesObjectos {
 }
 
 // Vacio
-object v inherits AgregadoDeClasesObjectos {
+object v inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(_x, _y) {}
 
     override method agregarPiso() = false
 }
 
 // Piso
-object _ inherits AgregadoDeClasesObjectos {
+object _ inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const piso = new Piso(position = game.at(x, y))
         piso.ponerImagen()
@@ -93,7 +93,7 @@ object _ inherits AgregadoDeClasesObjectos {
 }
 
 // Pared
-object p inherits AgregadoDeClasesObjectos {
+object p inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const pared = new Pared(position = game.at(x, y))
         pared.ponerImagen()
@@ -101,7 +101,7 @@ object p inherits AgregadoDeClasesObjectos {
 }
 
 // Meta
-object m inherits AgregadoDeClasesObjectos {
+object m inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const meta = new Meta(position = game.at(x, y))
         meta.ponerImagen()
@@ -109,7 +109,7 @@ object m inherits AgregadoDeClasesObjectos {
 }
 
 // Moneda
-object d inherits AgregadoDeClasesObjectos {
+object d inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const moneda = new Moneda(position = game.at(x, y))
         moneda.ponerImagen()
@@ -117,7 +117,7 @@ object d inherits AgregadoDeClasesObjectos {
 }
 
 // Moneda Falsa
-object f inherits AgregadoDeClasesObjectos {
+object f inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const monedaFalsa = new MonedaFalsa(position = game.at(x, y))
         monedaFalsa.ponerImagen()
@@ -125,7 +125,7 @@ object f inherits AgregadoDeClasesObjectos {
 }
 
 // Pincho
-object s inherits AgregadoDeClasesObjectos {
+object s inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const pincho = new Pincho(position = game.at(x, y))
         pincho.ponerImagen()
@@ -133,7 +133,7 @@ object s inherits AgregadoDeClasesObjectos {
 }
 
 // Pincho Invisible
-object i inherits AgregadoDeClasesObjectos {
+object i inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const pinchoInv = new PinchoInvisible(position = game.at(x, y))
         pinchoInv.ponerImagen()
@@ -142,7 +142,7 @@ object i inherits AgregadoDeClasesObjectos {
 }
 
 // Pincho Invisible Instantaneo
-object n inherits AgregadoDeClasesObjectos {
+object n inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const pinchoInvInst = new PinchoInvisibleInstantaneo(position = game.at(x, y))
         pinchoInvInst.ponerImagen()
@@ -150,7 +150,7 @@ object n inherits AgregadoDeClasesObjectos {
 }
 
 // Pincho Movil
-object h inherits AgregadoDeClasesObjectos {
+object h inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const pinchoMov = new PinchoMovil(position = game.at(x, y))
         pinchoMov.ponerImagen()
@@ -159,7 +159,7 @@ object h inherits AgregadoDeClasesObjectos {
 }
 
 // Jugador
-object j inherits AgregadoDeClasesObjectos {
+object j inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const jugador = gestorDeJugadores.jugadorActual()
         jugador.position(game.at(x, y))
@@ -168,7 +168,7 @@ object j inherits AgregadoDeClasesObjectos {
     override method esJugador() = true
 }
 
-object a inherits AgregadoDeClasesObjectos {
+object a inherits AgregadoDeClasesObjetos {
     method agregarAlNivel(x, y) {
         const flechas = new VisualSoloLectura(image="Flechas.png", position = game.at(x, y))
         flechas.ponerImagen()

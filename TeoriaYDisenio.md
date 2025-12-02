@@ -22,7 +22,7 @@ De esta manera, el sistema de colisiones utiliza un único mensaje que todos ent
 
 ### Agregación de Elementos al Nivel: `agregarAlNivel(x, y)`
 
-Otro ejemplo clave de polimorfismo es el método `agregarAlNivel(x, y)`, implementado por la clase `AgregadoDeClasesObjectos` y todas sus subclases (objetos especiales). Cada tipo de elemento en el mapa se agrega de manera diferente:
+Otro ejemplo clave de polimorfismo es el método `agregarAlNivel(x, y)`, implementado por la clase `AgregadoDeClasesObjetos` y todas sus subclases (objetos especiales). Cada tipo de elemento en el mapa se agrega de manera diferente:
 
 - **v (vacío)**: No agrega nada al mapa
 - **_ (piso)**: Crea una instancia de `Piso` con imagen aleatoria
