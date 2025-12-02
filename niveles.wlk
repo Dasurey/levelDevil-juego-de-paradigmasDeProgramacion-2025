@@ -20,6 +20,9 @@ class NivelBase {
         // Dibujar el nivel usando el mapaDeCuadricula
         self.dibujarNivel()
 
+        // Activar Colisiones
+        juegoLevelDevil.activarColisiones()
+
         // Habilitar controles
         configTeclado.juegoEnMarcha()
         

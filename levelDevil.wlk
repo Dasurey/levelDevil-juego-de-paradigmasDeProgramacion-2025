@@ -17,20 +17,21 @@ object juegoLevelDevil {
         sonidoMenu.volume(0.1)
         sonidoMenu.play()
 
-        // Activar Colisiones
-        self.activarColisiones()
-
         configTeclado.iniciar()
 
         //Inicio el menu
         menu.iniciar()
     }
+    
+    const jugadoresActivosConColisiones = []
 
     method activarColisiones() {
-        game.onCollideDo(jugadorLevelDevil, { elemento => elemento.interactuarConPersonaje(jugadorLevelDevil) })
-        game.onCollideDo(zombie, { elemento => elemento.interactuarConPersonaje(zombie) })
-        game.onCollideDo(miniMessi, { elemento => elemento.interactuarConPersonaje(miniMessi) })
-        game.onCollideDo(satoruGojo, { elemento => elemento.interactuarConPersonaje(satoruGojo) })
+        if(!jugadoresActivosConColisiones.contains(gestorDeJugadores.jugadorActual())) {
+            jugadoresActivosConColisiones.add(gestorDeJugadores.jugadorActual())
+            game.onCollideDo(gestorDeJugadores.jugadorActual(), { elemento => 
+                elemento.interactuarConPersonaje(gestorDeJugadores.jugadorActual()) 
+            })
+        }
     }
 
     method limpiar() {
@@ -359,7 +360,7 @@ class Moneda {
     }
 }
 
-class ObjetoMorible {
+class ObjectoMortal {
     var property position
 
     method restaDePuntajeAlMorir() = 50
@@ -387,7 +388,7 @@ class ObjetoMorible {
     }
 }
 
-class MonedaFalsa inherits ObjetoMorible {
+class MonedaFalsa inherits ObjectoMortal {
     override method restaDePuntajeAlMorir() = 100
 
     override method ataque() = 500
@@ -400,13 +401,13 @@ class MonedaFalsa inherits ObjetoMorible {
     }
 }
 
-class Pincho inherits ObjetoMorible {
+class Pincho inherits ObjectoMortal {
     override method ataque() = 180
     
     override method image() = "PinchoSimple_V1.png"
 }
 
-class PinchoInvisibleInstantaneo inherits ObjetoMorible {
+class PinchoInvisibleInstantaneo inherits ObjectoMortal {
     override method ataque() = 400
 
     var visible = false // comienza invisible
@@ -426,7 +427,7 @@ class PinchoInvisibleInstantaneo inherits ObjetoMorible {
     }
 }
 
-class PinchoInvisible inherits ObjetoMorible {
+class PinchoInvisible inherits ObjectoMortal {
     override method ataque() = 150
 
     // Genero un id por instancia para no pisar otros onTick
@@ -456,7 +457,7 @@ class PinchoInvisible inherits ObjetoMorible {
     }
 }
 
-class PinchoMovil inherits ObjetoMorible {
+class PinchoMovil inherits ObjectoMortal {
     override method ataque() = 250
 
     const tickId = "moverPinchoMovil_" + self.identity()

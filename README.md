@@ -1,58 +1,97 @@
-UTN - Facultad Regional Buenos Aires - Materia Paradigmas de Programación
+# Level Devil 👿
 
-<div>
-    <img src="ImagenesDeReadme/Logo_V3.png" alt="Logo de Level Devil"/>
+> Un juego de plataformas donde pasarás niveles evitando trampas, recolectando monedas y demostrando tus habilidades de programación orientada a objetos.
+
+<div align="center">
+    <img src="ImagenesDeReadme/Logo_V3.png" alt="Logo de Level Devil" width="300"/>
 </div>
 
-## Equipo de desarrollo:
-- [Dario Asurey](https://github.com/Dasurey)
+**Desarrollado por:** Grupo **GroupNotFound** para la materia *Paradigmas de Programación* - UTN Regional Buenos Aires
 
-- [Mayra Garcia](https://github.com/mayraegarcia)
+---
 
-- [Agustin Fernandez](https://github.com/Agustinf019)
+## 👥 Equipo de Desarrollo
 
-## Introducción
-El juego consta de pasar niveles evitando ser trolleado en el intento y ganando la mayor cantidad puntos obteniendo monedas.
+| Desarrollador | GitHub |
+|---|---|
+| Dario Asurey | [@Dasurey](https://github.com/Dasurey) |
+| Mayra Garcia | [@mayraegarcia](https://github.com/mayraegarcia) |
+| Agustin Fernandez | [@Agustinf019](https://github.com/Agustinf019) |
 
-## Capturas
+---
+
+## 🎮 Acerca del Juego
+
+**Level Devil** es un desafiante juego de plataformas donde deberás:
+
+- ✅ Navegar a través de 7 niveles de dificultad creciente
+- ✅ Evitar trampas y enemigos que te "trollearán" en el intento
+- ✅ Recolectar monedas para maximizar tu puntuación
+- ✅ Elegir entre 4 personajes únicos con diferentes características
+- ✅ Demostrar dominio de conceptos como polimorfismo, herencia y encapsulamiento
+
+## 📸 Capturas del Juego
+
 ### Pantalla de Inicio
-<img width="1080" alt="Pantalla de Inicio" src="ImagenesDeReadme/PantallaDeInicio.png" />
+<div align="center">
+<img src="ImagenesDeReadme/PantallaDeInicio.png" alt="Pantalla de Inicio" width="600"/>
+</div>
 
-### Pantalla de Personajes
-<img width="1080" alt="Pantalla de Personajes" src="ImagenesDeReadme/PantallaDePersonajes.png" />
+### Menú de Selección de Personajes
+<div align="center">
+<img src="ImagenesDeReadme/PantallaDePersonajes.png" alt="Pantalla de Personajes" width="600"/>
+</div>
 
-### Juego Primer Nivel
-<img width="1080" alt="Primer Nivel Visual" src="ImagenesDeReadme/PrimerNivelVisual.png" />
+### Gameplay - Primer Nivel
+<div align="center">
+<img src="ImagenesDeReadme/PrimerNivelVisual.png" alt="Primer Nivel Visual" width="600"/>
+</div>
 
-## Reglas de Juego / Instrucciones
-Para poder jugar:
-1. Seleccionar un personaje con la letra P y luego un numero del 1 al 4.
-2. Estar atento (te vas a morir varias veces jaja).
-3. Los movimientos se realizan con la flechas del juego (Ojo, en algunos niveles el teclado se vuelve loco).
-4. Para pasar completamente el juego se debe llegar al nivel 7 con la mayor cantidad de puntos
+## 🕹️ Cómo Jugar
 
-### Controles:
-- Para seleccionar personaje P
-- Para jugar J
-- Para reiniciar R
-- Para ir al menú M
-- Para moverse: Flechas up, down, left y right
+### Paso 1: Selecciona tu Personaje
+- Presiona **P** seguido de un número **1-4** para elegir tu personaje
+- Cada personaje tiene habilidades únicas
 
-![Flechas](<assets/Flechas.png>)
+### Paso 2: Comienza el Juego
+- Presiona **J** para iniciar
 
-## Explicaciones teóricas y diagramas
-![Diagrama Estatico de Level Devil](<ImagenesDeReadme/DiagramaEstaticoDeLevelDevil.svg>)
+### Paso 3: Navega los Niveles
+- Usa las **flechas del teclado** (↑ ↓ ← →) para moverte
+- Recolecta todas las monedas que puedas
+- Evita los pinchos, enemigos y trampas
+- Alcanza la meta para completar el nivel
 
-### Conceptos teóricos aplicados
-#### ***Polimorfismo***
-Una forma de aplicar polimorfismo en nuestro juego fue mediante las colisiones o interacciones entre el personaje y los obstáculos. Implementamos el método `interactuarConPersonaje()` que tenía un comportamiento distinto dependiendo del obstáculo y de esta manera logramos que todos los obstáculos entiendan el mismo mensaje.
+### Paso 4: Domina los 7 Niveles
+- Completa todos los niveles para ganar el juego
+- Tu objetivo final: **Llegar al Nivel 7 con la mayor cantidad de puntos**
 
-#### ***Herencia***
-##### - Personajes
-Tenemos cuatro jugadores modelados como objetos que heredan de la clases `JugadorCansado` o `JugadorNoCansado` y a su vez estas últimas heredan de la clase `Personaje`.
+> ⚠️ **Advertencia:** Algunos niveles tienen un teclado impredecible. ¡Mantente alerta!
 
-##### - Niveles
-El juego cuenta con 7 niveles que heredan de la clase `NivelBase`.
+## ⌨️ Controles
 
-##### - Objetos Moribles
-Contamos con la clase `ObjetoMorible` y de ellan heredan las clases `MonedaFalsa`, `Pincho`, `PinchoInvisibleInstantaneo`, `PinchoInvisible` y `PinchoMovil`.
+<div align="center">
+
+| Tecla | Acción |
+|:---:|:---|
+| **P** + **1-4** | Seleccionar personaje |
+| **J** | Jugar / Iniciar nivel |
+| **R** | Reiniciar nivel actual |
+| **M** | Ir al menú principal |
+| **↑ ↓ ← →** | Movimiento del personaje |
+
+![Flechas de Control](assets/Flechas.png)
+
+</div>
+
+## 📚 Fundamentos Técnicos
+
+Este proyecto es una aplicación práctica de conceptos clave de Programación Orientada a Objetos:
+
+- **Polimorfismo** 🔄
+- **Herencia** 🧬
+- **Encapsulamiento** 🔒
+
+Para una explicación detallada de la arquitectura, el diseño de clases y los principios aplicados, consulta:
+
+👉 **[Teoría, Diseño Técnico y Fundamentos de la Solución](./TeoriaYDisenio.md)**
