@@ -360,7 +360,7 @@ class Moneda {
     }
 }
 
-class ObjectoMortal {
+class ObjetoMortal {
     var property position
 
     method restaDePuntajeAlMorir() = 50
@@ -388,7 +388,7 @@ class ObjectoMortal {
     }
 }
 
-class MonedaFalsa inherits ObjectoMortal {
+class MonedaFalsa inherits ObjetoMortal {
     override method restaDePuntajeAlMorir() = 100
 
     override method ataque() = 500
@@ -401,13 +401,13 @@ class MonedaFalsa inherits ObjectoMortal {
     }
 }
 
-class Pincho inherits ObjectoMortal {
+class Pincho inherits ObjetoMortal {
     override method ataque() = 180
     
     override method image() = "PinchoSimple_V1.png"
 }
 
-class PinchoInvisibleInstantaneo inherits ObjectoMortal {
+class PinchoInvisibleInstantaneo inherits ObjetoMortal {
     override method ataque() = 400
 
     var visible = false // comienza invisible
@@ -427,7 +427,7 @@ class PinchoInvisibleInstantaneo inherits ObjectoMortal {
     }
 }
 
-class PinchoInvisible inherits ObjectoMortal {
+class PinchoInvisible inherits ObjetoMortal {
     override method ataque() = 150
 
     // Genero un id por instancia para no pisar otros onTick
@@ -457,7 +457,7 @@ class PinchoInvisible inherits ObjectoMortal {
     }
 }
 
-class PinchoMovil inherits ObjectoMortal {
+class PinchoMovil inherits ObjetoMortal {
     override method ataque() = 250
 
     const tickId = "moverPinchoMovil_" + self.identity()

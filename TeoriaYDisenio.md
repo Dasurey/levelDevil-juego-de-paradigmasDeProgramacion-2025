@@ -86,7 +86,7 @@ method potencialDefensivo() = 10 * vidasActuales + potencialDefensivoExtra
 **Implementación:**
 - Se calcula multiplicando las vidas actuales por 10 y sumando un bono defensivo específico de cada personaje
 - El valor se recalcula automáticamente en cada colisión cuando el personaje pierde vidas
-- En `ObjectoMortal.interactuarConPersonaje()`, se compara: si `ataque > potencialDefensivo`, el personaje recibe daño
+- En `ObjetoMortal.interactuarConPersonaje()`, se compara: si `ataque > potencialDefensivo`, el personaje recibe daño
 
 Este sistema demuestra cómo la **herencia permite que todos los personajes compartan la misma lógica defensiva**, pero cada uno puede tener diferentes valores de `vidasActuales` y `potencialDefensivoExtra` según su tipo.
 
@@ -99,7 +99,7 @@ Cada personaje concreto extiende estas funcionalidades con sus características 
 ### Jerarquía de Objetos Mortales
 
 ```
-ObjectoMortal (clase base)
+ObjetoMortal (clase base)
 ├── Pincho
 ├── MonedaFalsa
 ├── PinchoInvisibleInstantaneo
@@ -107,7 +107,7 @@ ObjectoMortal (clase base)
 └── PinchoMovil
 ```
 
-La clase `ObjectoMortal` define el comportamiento base:
+La clase `ObjetoMortal` define el comportamiento base:
 - Cálculo de daño (`ataque()`)
 - Interacción con personajes (`interactuarConPersonaje()`)
 - Pérdida de puntos al morir (`restaDePuntajeAlMorir()`)
