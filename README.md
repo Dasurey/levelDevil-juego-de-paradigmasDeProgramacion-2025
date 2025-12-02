@@ -30,6 +30,26 @@
 - ✅ Elegir entre 4 personajes únicos con diferentes características
 - ✅ Demostrar dominio de conceptos como polimorfismo, herencia, encapsulamiento, abstracción y recursividad
 
+### Sistema de Defensa: Potencial Defensivo
+
+Cada personaje tiene un **potencial defensivo** que determina cuánto daño puede resistir:
+
+```
+Potencial Defensivo = (Vidas × 10) + Bonificación del Personaje
+```
+
+**Cómo funciona:**
+- Si un enemigo tiene **ataque > tu defensa** → ¡Recibes daño y pierdes una vida!
+- Si un enemigo tiene **ataque ≤ tu defensa** → ¡Te proteges y no recibes daño!
+- **Cuanto menos vidas tengas, MENOR será tu defensa** → Te vuelves más vulnerable
+
+**Ejemplo con satoruGojo** (Defensa base +150):
+- Con 3 vidas: `10 × 3 + 150 = 180` (muy fuerte)
+- Con 2 vidas: `10 × 2 + 150 = 170` (vulnerable)
+- Con 1 vida: `10 × 1 + 150 = 160` (peligro extremo)
+
+**Estrategia:** Evita recibir daño para mantener tu defensa alta. ¡Cada golpe te debilita más!
+
 ## 📸 Capturas del Juego
 
 ### Pantalla de Inicio
@@ -66,6 +86,7 @@
 - Completa todos los niveles para ganar el juego
 - Tu objetivo final: **Llegar al Nivel 7 con la mayor cantidad de puntos**
 - **Necesitas conseguir al menos 3500 puntos para ganar** 🏆
+- **Aviso:** Sí, puedes tener puntaje negativo. Felicidades! 🎉
 
 > ⚠️ **Advertencia:** Algunos niveles tienen un teclado impredecible. ¡Mantente alerta!
 

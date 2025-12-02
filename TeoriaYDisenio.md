@@ -75,6 +75,21 @@ Todos los personajes heredan de `Personaje`, lo que les proporciona:
 - Manejo de muerte (`morir()`)
 - Gestión de imágenes y animaciones
 
+#### Sistema de Potencial Defensivo
+
+El `potencialDefensivo()` es un método en la clase `Personaje` que calcula dinámicamente la capacidad del personaje para resistir daño:
+
+```wollok
+method potencialDefensivo() = 10 * vidasActuales + potencialDefensivoExtra
+```
+
+**Implementación:**
+- Se calcula multiplicando las vidas actuales por 10 y sumando un bono defensivo específico de cada personaje
+- El valor se recalcula automáticamente en cada colisión cuando el personaje pierde vidas
+- En `ObjectoMortal.interactuarConPersonaje()`, se compara: si `ataque > potencialDefensivo`, el personaje recibe daño
+
+Este sistema demuestra cómo la **herencia permite que todos los personajes compartan la misma lógica defensiva**, pero cada uno puede tener diferentes valores de `vidasActuales` y `potencialDefensivoExtra` según su tipo.
+
 Cada personaje concreto extiende estas funcionalidades con sus características únicas:
 - `jugadorLevelDevil`: 1 vida, imagen específica
 - `zombie`: 5 vidas, movimiento lento (cansancio = 1)
