@@ -1,12 +1,12 @@
 # Level Devil 👿
 
-> Un juego de plataformas donde pasarás niveles evitando trampas, recolectando monedas y demostrando tus habilidades de programación orientada a objetos.
+> Es un juego troll donde pasarás 7 niveles evitando trampas, recolectando monedas y consta de 4 personajes con sus diferentes características que te ayudaran para pasar los niveles. Se utilizaron los conceptos de la materia *Paradigmas de Programación* para su desarrollo.
 
 <div align="center">
     <img src="ImagenesDeReadme/Logo_V3.png" alt="Logo de Level Devil" width="300"/>
 </div>
 
-**Desarrollado por:** Grupo **GroupNotFound** para la materia *Paradigmas de Programación* - UTN Regional Buenos Aires
+**Desarrollado por:** Grupo **GroupNotFound** para la materia *Paradigmas de Programación* - UTN Facultad Regional de Buenos Aires
 
 ---
 
