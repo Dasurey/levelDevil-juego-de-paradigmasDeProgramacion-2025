@@ -90,7 +90,7 @@ Este proyecto es una aplicación práctica de conceptos clave de la materia *Par
 
 - **Polimorfismo** 🔄 - Objetos responden de forma distinta a los mismos mensajes
 - **Herencia** 🧬 - Jerarquía de clases reutilizando código
-- **Encapsulamiento** 🔒 - Datos privados expuestos mediante métodos públicos
+- **Encapsulamiento** 🔒 - Datos expuestos mediante métodos
 - **Recursividad** 🔁 - Funciones que se llaman a sí mismas para resolver problemas complejos
 - **Abstracción** 🎯 - Simplificación ocultando detalles innecesarios y enfocándose en lo esencial 
 
