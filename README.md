@@ -62,9 +62,15 @@ Potencial Defensivo = (Vidas × 10) + Bonificación del Personaje
 <img src="ImagenesDeReadme/PantallaDePersonajes.png" alt="Pantalla de Personajes" width="600"/>
 </div>
 
-### Gameplay - Primer Nivel
-<div align="center">
-<img src="ImagenesDeReadme/PrimerNivelVisual.png" alt="Primer Nivel Visual" width="600"/>
+### Gameplay - Niveles
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+<img src="ImagenesDeReadme/Nivel1.png" alt="Nivel 1" width="400"/>
+<img src="ImagenesDeReadme/Nivel2.png" alt="Nivel 2" width="400"/>
+<img src="ImagenesDeReadme/Nivel3.png" alt="Nivel 3" width="400"/>
+<img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 4" width="400"/>
+<img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 5" width="400"/>
+<img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 6" width="400"/>
+<img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 7" width="400"/>
 </div>
 
 ## 🕹️ Cómo Jugar
