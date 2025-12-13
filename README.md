@@ -57,7 +57,7 @@ Potencial Defensivo = (Vidas × 10) + Bonificación del Personaje
     <img src="ImagenesDeReadme/PantallaDeInicio.png" alt="Pantalla de Inicio" width="600"/>
 </div>
 
-### Menú de Selección de Personajes
+### 👥 Menú de Selección de Personajes
 <div align="center">
     <img src="ImagenesDeReadme/PantallaDePersonajes.png" alt="Pantalla de Personajes" width="600"/>
 </div>
@@ -65,13 +65,13 @@ Potencial Defensivo = (Vidas × 10) + Bonificación del Personaje
 ### Gameplay - Niveles
 <div align="center">
     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: fit-content;">
-        <img src="ImagenesDeReadme/Nivel1.png" alt="Nivel 1" width="400"/>
-        <img src="ImagenesDeReadme/Nivel2.png" alt="Nivel 2" width="400"/>
-        <img src="ImagenesDeReadme/Nivel3.png" alt="Nivel 3" width="400"/>
-        <img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 4" width="400"/>
-        <img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 5" width="400"/>
-        <img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 6" width="400"/>
-        <img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 7" width="400" style="grid-column: 1 / -1; justify-self: center;"/>
+        <img src="ImagenesDeReadme/Nivel1.png" alt="Nivel 1" width="600"/>
+        <img src="ImagenesDeReadme/Nivel2.png" alt="Nivel 2" width="600"/>
+        <img src="ImagenesDeReadme/Nivel3.png" alt="Nivel 3" width="600"/>
+        <img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 4" width="600"/>
+        <img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 5" width="600"/>
+        <img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 6" width="600"/>
+        <img src="ImagenesDeReadme/Nivel4.png" alt="Nivel 7" width="600" style="grid-column: 1 / -1; justify-self: center;"/>
     </div>
 </div>
 
